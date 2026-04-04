@@ -21,9 +21,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 .hero h2{margin:12px 0 6px;font-size:1.4rem;font-weight:800}.hero p{margin:0;color:rgba(255,255,255,.86);line-height:1.55;max-width:65ch;font-weight:600}
 .hero-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.hero-chip{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.12);font-size:.75rem;font-weight:800}
 .section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}.section-title h2{margin:0;font-size:1rem;font-weight:800}.section-title span{font-size:.68rem;color:var(--text2);font-family:var(--mono)}
-.track-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.ts-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:14px;text-align:center;box-shadow:var(--shadow)}
-.ts-num{font-size:1.4rem;font-family:var(--mono);font-weight:800;color:var(--accent)}.ts-lbl{font-size:.56rem;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:.8px;font-weight:800}
+.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.sum-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:14px;text-align:center;box-shadow:var(--shadow)}.sum-num{font-size:1.35rem;font-weight:800;font-family:var(--mono);color:var(--accent)}.sum-lbl{font-size:.56rem;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:.8px;font-weight:800}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
 .kicker{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-family:var(--mono);margin-bottom:8px}
@@ -35,68 +33,51 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 .step-no{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#ea580c,#fb923c);color:#fff;font-size:1rem;font-weight:800}
 .step-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.step-top h3{margin:0;font-size:1rem;font-weight:800}.step-sub{margin:4px 0 10px;color:var(--text2);font-size:.78rem;font-weight:600;line-height:1.5}
 .badge{padding:6px 10px;border-radius:999px;background:var(--bg3);font-size:.6rem;font-weight:800;font-family:var(--mono)}
-.module-prog-row{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px 0}
-.module-kicker{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-family:var(--mono)}
-.module-pct{font-size:.64rem;font-weight:800;color:var(--accent);font-family:var(--mono)}
-.progbar{height:8px;background:var(--bg3);border-radius:999px;overflow:hidden;margin-bottom:10px}
-.progfill{height:100%;background:linear-gradient(135deg,#ea580c,#fb923c);border-radius:999px;transition:width .3s ease}
-.ck-list{display:grid;gap:8px}.ck{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid transparent;cursor:pointer}.ck input{margin-top:2px}.ck span{font-size:.76rem;color:var(--text2);font-weight:700;line-height:1.45}
-.ck.done{background:rgba(79,70,229,.10);border-color:rgba(79,70,229,.16)}.ck.done span{text-decoration:line-through;color:var(--text3)}
+.module-prog-row{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px 0}.module-kicker{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-family:var(--mono)}.module-pct{font-size:.64rem;font-weight:800;color:var(--accent);font-family:var(--mono)}
+.progbar{height:8px;background:var(--bg3);border-radius:999px;overflow:hidden;margin-bottom:10px}.progfill{height:100%;background:linear-gradient(135deg,#ea580c,#fb923c);border-radius:999px;transition:width .3s ease}
+.ck-list{display:grid;gap:8px}.ck{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid transparent;cursor:pointer}.ck input{margin-top:2px}.ck span{font-size:.76rem;color:var(--text2);font-weight:700;line-height:1.45}.ck.done{background:rgba(79,70,229,.10);border-color:rgba(79,70,229,.16)}.ck.done span{text-decoration:line-through;color:var(--text3)}
 .course-box{display:grid;gap:8px}.course{padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid var(--border)}.course strong{display:block;font-size:.82rem;font-weight:800}.course span{display:block;font-size:.72rem;color:var(--text2);margin-top:3px;font-weight:600;line-height:1.45}
 .books-grid{display:grid;gap:10px}.book{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:flex-start;padding:12px;border-radius:16px;background:var(--bg3)}.book-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#e0e7ff}
 .note{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
-@media (max-width:760px){.grid{grid-template-columns:1fr}.track-summary{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
+@media (max-width:760px){.grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
 </style>
 </head>
 <body>
-<header>
-  <button class="back" onclick="history.back()">←</button>
-  <div class="htxt"><h1>🟠 Claude</h1><p>execution path · workflow and reasoning systems</p></div>
-  <button class="theme-btn" id="themeBtn">🌙</button>
-</header>
+<header><button class="back" onclick="history.back()">←</button><div class="htxt"><h1>🟠 Claude</h1><p>execution path · workflow and reasoning systems</p></div><button class="theme-btn" id="themeBtn">🌙</button></header>
 <div class="wrap">
-  <section class="hero">
-    <div class="hero-k">Elite execution path</div>
-    <h2>Claude for prompting, workflows, MCP, and applied reasoning.</h2>
-    <p>Use this lane to turn Claude into a real build tool: prompt systems, workflow design, structured outputs, and MCP-enabled capability.</p>
-    <div class="hero-row">
-      <div class="hero-chip">Primary path</div>
-      <div class="hero-chip">Companion resources</div>
-      <div class="hero-chip">Live progress</div>
+<section class="hero"><div class="hero-k">Elite execution path</div><h2>Claude for prompting, workflows, MCP, and applied reasoning.</h2><p>Use this lane to turn Claude into a real build tool: prompt systems, workflow design, structured outputs, and MCP-enabled capability.</p><div class="hero-row"><div class="hero-chip">Primary path</div><div class="hero-chip">Companion resources</div><div class="hero-chip">Live progress</div></div></section>
+
+<div class="section-title"><h2>Track Snapshot</h2><span>real progress</span></div>
+<div class="summary-grid">
+  <div class="sum-card"><div class="sum-num" id="overallPct">0%</div><div class="sum-lbl">Overall</div></div>
+  <div class="sum-card"><div class="sum-num" id="doneCount">0</div><div class="sum-lbl">Checkpoints done</div></div>
+  <div class="sum-card"><div class="sum-num" id="nextPriority">-</div><div class="sum-lbl">Next priority</div></div>
+</div>
+
+<div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
+<div class="grid">
+  <article class="card track-card">
+    <div class="kicker">Keep</div>
+    <div class="track-head"><h3>High-leverage path</h3><div class="track-tag">Execution first</div></div>
+    <p>Keep only what directly improves your ability to execute in this lane. This page should feel like a working system, not a topic warehouse.</p>
+    <div class="bullets"><div class="bullet"><div class="check">✓</div><div>Prompt systems</div></div><div class="bullet"><div class="check">✓</div><div>Workflow design</div></div><div class="bullet"><div class="check">✓</div><div>Engineering use</div></div><div class="bullet"><div class="check">✓</div><div>MCP awareness</div></div></div>
+  </article>
+  <article class="card track-card">
+    <div class="kicker">Drop</div>
+    <div class="track-head"><h3>Noise and duplication</h3><div class="track-tag">Clarity wins</div></div>
+    <p>Drop duplicated beginner content, weak filler material, and anything that slows action without improving output.</p>
+    <div class="bullets">
+      <div class="bullet"><div class="check">•</div><div>Multiple overlapping beginner resources</div></div>
+      <div class="bullet"><div class="check">•</div><div>Passive browsing without finishing checkpoints</div></div>
+      <div class="bullet"><div class="check">•</div><div>Reference hoarding without output</div></div>
+      <div class="bullet"><div class="check">•</div><div>Studying disconnected from projects</div></div>
     </div>
-  </section>
+  </article>
+</div>
 
-  <div class="section-title"><h2>Track Snapshot</h2><span>real progress</span></div>
-  <div class="track-summary">
-    <div class="ts-card"><div class="ts-num" id="overallPct">0%</div><div class="ts-lbl">Overall</div></div>
-    <div class="ts-card"><div class="ts-num" id="doneCount">0</div><div class="ts-lbl">Checkpoints done</div></div>
-    <div class="ts-card"><div class="ts-num" id="nextPriority">-</div><div class="ts-lbl">Next priority</div></div>
-  </div>
-
-  <div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
-  <div class="grid">
-    <article class="card track-card">
-      <div class="kicker">Keep</div>
-      <div class="track-head"><h3>High-leverage path</h3><div class="track-tag">Execution first</div></div>
-      <p>Keep only what directly improves your ability to execute in this lane. This page should feel like a working system, not a topic warehouse.</p>
-      <div class="bullets"><div class="bullet"><div class="check">✓</div><div>Prompt systems</div></div><div class="bullet"><div class="check">✓</div><div>Workflow design</div></div><div class="bullet"><div class="check">✓</div><div>Engineering use</div></div><div class="bullet"><div class="check">✓</div><div>MCP awareness</div></div></div>
-    </article>
-    <article class="card track-card">
-      <div class="kicker">Drop</div>
-      <div class="track-head"><h3>Noise and duplication</h3><div class="track-tag">Clarity wins</div></div>
-      <p>Drop passive browsing, duplicated beginner material, and anything that looks like motion but does not improve implementation quality.</p>
-      <div class="bullets">
-        <div class="bullet"><div class="check">•</div><div>Duplicate beginner content across tools and platforms</div></div>
-        <div class="bullet"><div class="check">•</div><div>Topic hopping without finishing a module checkpoint</div></div>
-        <div class="bullet"><div class="check">•</div><div>Reference collection without real output</div></div>
-        <div class="bullet"><div class="check">•</div><div>Studying disconnected from current projects</div></div>
-      </div>
-    </article>
-  </div>
-
-  <div class="section-title"><h2>Primary Path</h2><span>do this in order</span></div>
-  <div class="path-list">
+<div class="section-title"><h2>Primary Path</h2><span>do this in order</span></div>
+<div class="path-list">
         <article class="path-step" data-code="CL0">
           <div class="step-no">CL0</div>
           <div>
@@ -108,7 +89,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
             </div>
             <div class="progbar"><div class="progfill" id="bar-CL0" style="width:0%"></div></div>
             <div class="ck-list"><label class="ck"><input type="checkbox" data-id="c1"><span>Write clear role + task prompts</span></label><label class="ck"><input type="checkbox" data-id="c2"><span>Use examples to shape output quality</span></label><label class="ck"><input type="checkbox" data-id="c3"><span>Request structured outputs consistently</span></label></div>
-            <div class="course-box" style="margin-top:12px"><div class="course"><strong>Primary: Prompt engineering course</strong><span>Use one serious course only, not multiple overlapping intros.</span></div><div class="course"><strong>Checkpoint</strong><span>Create one reusable prompt template you trust.</span></div></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary: one prompt engineering path</strong><span>Use one serious prompting course only, not multiple overlapping intros.</span></div><div class="course"><strong>Checkpoint</strong><span>Create one reusable prompt template you trust.</span></div></div>
           </div>
         </article>
         
@@ -123,7 +104,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
             </div>
             <div class="progbar"><div class="progfill" id="bar-CL1" style="width:0%"></div></div>
             <div class="ck-list"><label class="ck"><input type="checkbox" data-id="c4"><span>Design one repeatable Claude workflow</span></label><label class="ck"><input type="checkbox" data-id="c5"><span>Break a task into reusable Claude steps</span></label><label class="ck"><input type="checkbox" data-id="c6"><span>Document one high-value personal workflow</span></label></div>
-            <div class="course-box" style="margin-top:12px"><div class="course"><strong>Primary focus: repeatability</strong><span>Claude becomes useful when your best workflows are reusable.</span></div><div class="course"><strong>Checkpoint</strong><span>Document one workflow you will reuse weekly.</span></div></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary focus: repeatability</strong><span>Claude becomes useful when your best workflows are reusable.</span></div><div class="course"><strong>Checkpoint</strong><span>Document one workflow you will reuse weekly.</span></div></div>
           </div>
         </article>
         
@@ -138,7 +119,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
             </div>
             <div class="progbar"><div class="progfill" id="bar-CL2" style="width:0%"></div></div>
             <div class="ck-list"><label class="ck"><input type="checkbox" data-id="c7"><span>Use Claude to plan code changes</span></label><label class="ck"><input type="checkbox" data-id="c8"><span>Use Claude to debug with structured reasoning</span></label><label class="ck"><input type="checkbox" data-id="c9"><span>Use Claude to improve technical documentation</span></label></div>
-            <div class="course-box" style="margin-top:12px"><div class="course"><strong>Primary: Claude engineering course</strong><span>Keep one main Claude course, not several similar ones.</span></div><div class="course"><strong>Checkpoint</strong><span>Use Claude to improve a real technical task.</span></div></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary: Claude engineering course</strong><span>Keep one main Claude course, not several similar ones.</span></div><div class="course"><strong>Checkpoint</strong><span>Use Claude to improve a real technical task.</span></div></div>
           </div>
         </article>
         
@@ -153,71 +134,76 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
             </div>
             <div class="progbar"><div class="progfill" id="bar-CL3" style="width:0%"></div></div>
             <div class="ck-list"><label class="ck"><input type="checkbox" data-id="c10"><span>Understand what MCP adds conceptually</span></label><label class="ck"><input type="checkbox" data-id="c11"><span>Map one MCP use case to a real workflow</span></label><label class="ck"><input type="checkbox" data-id="c12"><span>Design one tool-augmented Claude workflow</span></label></div>
-            <div class="course-box" style="margin-top:12px"><div class="course"><strong>Primary: one MCP intro</strong><span>Take one MCP path and stop stacking duplicates.</span></div><div class="course"><strong>Checkpoint</strong><span>Design one tool-enabled workflow you can build later.</span></div></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary: one MCP intro</strong><span>Take one MCP path and stop stacking duplicates.</span></div><div class="course"><strong>Checkpoint</strong><span>Design one tool-enabled workflow you can build later.</span></div></div>
           </div>
         </article>
         </div>
 
-  <div class="section-title"><h2>Companion Courses</h2><span>1 primary + 1 optional</span></div>
-  <article class="card"><div class="course-box"><div class="course"><strong>Primary: One Claude engineering course</strong><span>Use your strongest Claude course as the only active structured path.</span></div><div class="course"><strong>Optional: One MCP intro</strong><span>Use a single MCP introduction as supporting material, not a second main path.</span></div></div></article>
+<div class="section-title"><h2>Companion Courses</h2><span>1 primary + 1 optional</span></div>
+<article class="card"><div class="course-box"><div class="course"><strong>Primary: One Claude engineering course</strong><span>Use your strongest Claude course as the only active structured path.</span></div><div class="course"><strong>Optional: One MCP intro</strong><span>Use a single MCP introduction as supporting material, not a second main path.</span></div></div></article>
 
-  <div class="section-title"><h2>Books / References</h2><span>keep it tight</span></div>
-  <div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong>Anthropic docs</strong><div class="note">Use the docs for model behavior, prompting guidance, and feature reference.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Your own workflow library</strong><div class="note">Document your best prompts and workflow patterns like a private playbook.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Prompt reference notes</strong><div class="note">Keep examples of good prompts, constraints, and structured-output patterns.</div></div></article></div>
+<div class="section-title"><h2>Companion Books</h2><span>tight reference layer</span></div>
+<div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong>Anthropic docs</strong><div class="note">Use the docs for model behavior, prompting guidance, and feature reference.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Your workflow library</strong><div class="note">Document your best prompts and workflows like a private playbook.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Prompt reference notes</strong><div class="note">Keep examples of good prompts, constraints, and structured-output patterns.</div></div></article></div>
 
-  <div class="section-title"><h2>Build Output</h2><span>must produce something real</span></div>
-  <article class="card"><div class="bullets"><div class="bullet"><div class="check">→</div><div>One reusable prompt system</div></div><div class="bullet"><div class="check">→</div><div>One documented Claude workflow</div></div><div class="bullet"><div class="check">→</div><div>One tool-aware Claude workflow design</div></div></div></article>
-
-  <div class="section-title"><h2>Operating rule</h2><span>protect momentum</span></div>
-  <article class="card"><p class="note">Do not collect Claude tips endlessly. Turn Claude into a workflow engine: better prompts, better structure, better tools, better outputs.</p></article>
+<div class="section-title"><h2>Execution Rules</h2><span>protect depth</span></div>
+<div class="grid"><article class="card"><div class="kicker">Rule 1</div><h3>One main Claude path</h3><p>Pick one serious Claude course and one MCP supporting path. Do not run many in parallel.</p></article><article class="card"><div class="kicker">Rule 2</div><h3>Save your best workflows</h3><p>Document your strongest prompts and workflows so Claude becomes reusable, not disposable.</p></article><article class="card"><div class="kicker">Rule 3</div><h3>Prefer structure over magic</h3><p>Good outputs come from role, examples, constraints, and format control.</p></article><article class="card"><div class="kicker">Rule 4</div><h3>Tie Claude to real tasks</h3><p>Use Claude to support coding, planning, summaries, and workflows you already need.</p></article></div>
 </div>
 
-<nav class="bnav"><div class="bnav-inner"><a href="index.html" class="ni "><span>🏠</span><span class="ni-lbl">Home</span></a><a href="linux.html" class="ni "><span>🐧</span><span class="ni-lbl">Linux</span></a><a href="python.html" class="ni "><span>🐍</span><span class="ni-lbl">Python</span></a><a href="ai.html" class="ni "><span>🧠</span><span class="ni-lbl">AI</span></a><a href="claude.html" class="ni active"><span>🟠</span><span class="ni-lbl">Claude</span></a><a href="cloud.html" class="ni "><span>☁️</span><span class="ni-lbl">Cloud</span></a><a href="courses.html" class="ni "><span>📚</span><span class="ni-lbl">Courses</span></a><a href="playbook.html" class="ni "><span>📘</span><span class="ni-lbl">Playbook</span></a></div></nav>
+<nav class="bnav"><div class="bnav-inner">
+    <a href="index.html" class="ni"><span>🏠</span><span class="ni-lbl">Home</span></a>
+    <a href="linux.html" class="ni "><span>🐧</span><span class="ni-lbl">Linux</span></a>
+    <a href="python.html" class="ni "><span>🐍</span><span class="ni-lbl">Python</span></a>
+    <a href="ai.html" class="ni"><span>🧠</span><span class="ni-lbl">AI</span></a>
+    <a href="claude.html" class="ni active"><span>🟠</span><span class="ni-lbl">Claude</span></a>
+    <a href="cloud.html" class="ni "><span>☁️</span><span class="ni-lbl">Cloud</span></a>
+    <a href="courses.html" class="ni"><span>📚</span><span class="ni-lbl">Courses</span></a>
+    <a href="playbook.html" class="ni"><span>📘</span><span class="ni-lbl">Playbook</span></a>
+    </div></nav>
 
 <script>
 (function(){
-  const btn = document.getElementById('themeBtn');
-  const STORE_KEY = "claudeSprint_Mar2026";
-  const MODULES = [{"code": "CL0", "title": "Prompt Foundations", "badge": "foundation", "sub": "Build reliable prompt structure: role, context, examples, constraints, and output formatting.", "items": [{"id": "c1", "label": "Write clear role + task prompts"}, {"id": "c2", "label": "Use examples to shape output quality"}, {"id": "c3", "label": "Request structured outputs consistently"}], "course_map": [{"title": "Primary: Prompt engineering course", "desc": "Use one serious course only, not multiple overlapping intros."}, {"title": "Checkpoint", "desc": "Create one reusable prompt template you trust."}]}, {"code": "CL1", "title": "Workflow Thinking", "badge": "workflow", "sub": "Move from one-off prompting to repeatable workflows that save real effort.", "items": [{"id": "c4", "label": "Design one repeatable Claude workflow"}, {"id": "c5", "label": "Break a task into reusable Claude steps"}, {"id": "c6", "label": "Document one high-value personal workflow"}], "course_map": [{"title": "Primary focus: repeatability", "desc": "Claude becomes useful when your best workflows are reusable."}, {"title": "Checkpoint", "desc": "Document one workflow you will reuse weekly."}]}, {"code": "CL2", "title": "Claude for Engineering", "badge": "engineering", "sub": "Use Claude as a build partner for planning, debugging, and technical reasoning.", "items": [{"id": "c7", "label": "Use Claude to plan code changes"}, {"id": "c8", "label": "Use Claude to debug with structured reasoning"}, {"id": "c9", "label": "Use Claude to improve technical documentation"}], "course_map": [{"title": "Primary: Claude engineering course", "desc": "Keep one main Claude course, not several similar ones."}, {"title": "Checkpoint", "desc": "Use Claude to improve a real technical task."}]}, {"code": "CL3", "title": "MCP & Tool Use", "badge": "tools", "sub": "Turn Claude into a more capable system by understanding tools, MCP, and external context.", "items": [{"id": "c10", "label": "Understand what MCP adds conceptually"}, {"id": "c11", "label": "Map one MCP use case to a real workflow"}, {"id": "c12", "label": "Design one tool-augmented Claude workflow"}], "course_map": [{"title": "Primary: one MCP intro", "desc": "Take one MCP path and stop stacking duplicates."}, {"title": "Checkpoint", "desc": "Design one tool-enabled workflow you can build later."}]}];
-  function getState(){ try { return JSON.parse(localStorage.getItem(STORE_KEY)||'{}') || {}; } catch(e) { return {}; } }
-  function setState(s){ localStorage.setItem(STORE_KEY, JSON.stringify(s)); }
-  function applyTheme(){ const t = localStorage.getItem('theme') || 'light'; document.body.classList.toggle('dark', t === 'dark'); btn.textContent = t === 'dark' ? '☀️' : '🌙'; }
-  btn.onclick = function(){ const next = document.body.classList.contains('dark') ? 'light' : 'dark'; localStorage.setItem('theme', next); applyTheme(); };
-  function modPct(mod, s){ const done = mod.items.filter(x => s[x.id]).length; return mod.items.length ? Math.round(done / mod.items.length * 100) : 0; }
-  function render() {
-    const s = getState();
-    MODULES.forEach(mod => {
-      const pct = modPct(mod, s);
-      const pctEl = document.getElementById('pct-' + mod.code);
-      const barEl = document.getElementById('bar-' + mod.code);
-      if (pctEl) pctEl.textContent = pct + '% complete';
-      if (barEl) barEl.style.width = pct + '%';
-      mod.items.forEach(item => {
-        const input = document.querySelector('input[data-id="' + item.id + '"]');
-        if (!input) return;
-        input.checked = !!s[item.id];
-        const wrap = input.closest('.ck');
-        if (wrap) wrap.classList.toggle('done', !!s[item.id]);
+  const btn=document.getElementById('themeBtn');
+  const STORE_KEY="claudeSprint_Mar2026";
+  const MODULES=[{"code": "CL0", "title": "Prompt Foundations", "badge": "foundation", "sub": "Build reliable prompt structure: role, context, examples, constraints, and output formatting.", "checks": [{"id": "c1", "label": "Write clear role + task prompts"}, {"id": "c2", "label": "Use examples to shape output quality"}, {"id": "c3", "label": "Request structured outputs consistently"}], "mapped": [{"title": "Primary: one prompt engineering path", "desc": "Use one serious prompting course only, not multiple overlapping intros."}, {"title": "Checkpoint", "desc": "Create one reusable prompt template you trust."}]}, {"code": "CL1", "title": "Workflow Thinking", "badge": "workflow", "sub": "Move from one-off prompting to repeatable workflows that save real effort.", "checks": [{"id": "c4", "label": "Design one repeatable Claude workflow"}, {"id": "c5", "label": "Break a task into reusable Claude steps"}, {"id": "c6", "label": "Document one high-value personal workflow"}], "mapped": [{"title": "Primary focus: repeatability", "desc": "Claude becomes useful when your best workflows are reusable."}, {"title": "Checkpoint", "desc": "Document one workflow you will reuse weekly."}]}, {"code": "CL2", "title": "Claude for Engineering", "badge": "engineering", "sub": "Use Claude as a build partner for planning, debugging, and technical reasoning.", "checks": [{"id": "c7", "label": "Use Claude to plan code changes"}, {"id": "c8", "label": "Use Claude to debug with structured reasoning"}, {"id": "c9", "label": "Use Claude to improve technical documentation"}], "mapped": [{"title": "Primary: Claude engineering course", "desc": "Keep one main Claude course, not several similar ones."}, {"title": "Checkpoint", "desc": "Use Claude to improve a real technical task."}]}, {"code": "CL3", "title": "MCP & Tool Use", "badge": "tools", "sub": "Turn Claude into a more capable system by understanding tools, MCP, and external context.", "checks": [{"id": "c10", "label": "Understand what MCP adds conceptually"}, {"id": "c11", "label": "Map one MCP use case to a real workflow"}, {"id": "c12", "label": "Design one tool-augmented Claude workflow"}], "mapped": [{"title": "Primary: one MCP intro", "desc": "Take one MCP path and stop stacking duplicates."}, {"title": "Checkpoint", "desc": "Design one tool-enabled workflow you can build later."}]}];
+  function getState(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')||{};}catch(e){return {};}}
+  function setState(s){localStorage.setItem(STORE_KEY, JSON.stringify(s));}
+  function applyTheme(){const t=localStorage.getItem('theme')||'light';document.body.classList.toggle('dark',t==='dark');btn.textContent=t==='dark'?'☀️':'🌙';}
+  btn.onclick=function(){const next=document.body.classList.contains('dark')?'light':'dark';localStorage.setItem('theme',next);applyTheme();};
+  function modPct(mod,s){const done=mod.checks.filter(x=>s[x.id]).length; return mod.checks.length?Math.round(done/mod.checks.length*100):0;}
+  function render(){
+    const s=getState();
+    MODULES.forEach(mod=>{
+      const pct=modPct(mod,s);
+      const pctEl=document.getElementById('pct-'+mod.code);
+      const barEl=document.getElementById('bar-'+mod.code);
+      if(pctEl) pctEl.textContent=pct+'% complete';
+      if(barEl) barEl.style.width=pct+'%';
+      mod.checks.forEach(item=>{
+        const input=document.querySelector('input[data-id="'+item.id+'"]');
+        if(!input) return;
+        input.checked=!!s[item.id];
+        const wrap=input.closest('.ck');
+        if(wrap) wrap.classList.toggle('done',!!s[item.id]);
       });
     });
-    const allItems = MODULES.flatMap(m => m.items);
-    const done = allItems.filter(x => s[x.id]).length;
-    const overall = allItems.length ? Math.round(done / allItems.length * 100) : 0;
-    document.getElementById('overallPct').textContent = overall + '%';
-    document.getElementById('doneCount').textContent = String(done);
-    const weakest = MODULES.map(m => ({code:m.code, pct:modPct(m, s)})).sort((a,b) => a.pct - b.pct)[0];
-    document.getElementById('nextPriority').textContent = weakest ? weakest.code : '-';
+    const allItems=MODULES.flatMap(m=>m.checks);
+    const done=allItems.filter(x=>s[x.id]).length;
+    const overall=allItems.length?Math.round(done/allItems.length*100):0;
+    document.getElementById('overallPct').textContent=overall+'%';
+    document.getElementById('doneCount').textContent=String(done);
+    const weakest=MODULES.map(m=>({code:m.code,pct:modPct(m,s)})).sort((a,b)=>a.pct-b.pct)[0];
+    document.getElementById('nextPriority').textContent=weakest?weakest.code:'-';
   }
-  document.addEventListener('change', function(e) {
-    const t = e.target;
-    if (!(t instanceof HTMLInputElement)) return;
-    if (!t.matches('input[type="checkbox"][data-id]')) return;
-    const s = getState();
-    s[t.dataset.id] = t.checked;
+  document.addEventListener('change',function(e){
+    const t=e.target;
+    if(!(t instanceof HTMLInputElement)) return;
+    if(!t.matches('input[type="checkbox"][data-id]')) return;
+    const s=getState();
+    s[t.dataset.id]=t.checked;
     setState(s);
     render();
   });
-  applyTheme();
-  render();
+  applyTheme(); render();
 })();
 </script>
 </body>

@@ -21,9 +21,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 .hero h2{margin:12px 0 6px;font-size:1.4rem;font-weight:800}.hero p{margin:0;color:rgba(255,255,255,.86);line-height:1.55;max-width:65ch;font-weight:600}
 .hero-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.hero-chip{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.12);font-size:.75rem;font-weight:800}
 .section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}.section-title h2{margin:0;font-size:1rem;font-weight:800}.section-title span{font-size:.68rem;color:var(--text2);font-family:var(--mono)}
-.track-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.ts-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:14px;text-align:center;box-shadow:var(--shadow)}
-.ts-num{font-size:1.4rem;font-family:var(--mono);font-weight:800;color:var(--accent)}.ts-lbl{font-size:.56rem;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:.8px;font-weight:800}
+.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.sum-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:14px;text-align:center;box-shadow:var(--shadow)}.sum-num{font-size:1.35rem;font-weight:800;font-family:var(--mono);color:var(--accent)}.sum-lbl{font-size:.56rem;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:.8px;font-weight:800}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
 .kicker{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-family:var(--mono);margin-bottom:8px}
@@ -35,68 +33,51 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 .step-no{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#0369a1,#38bdf8);color:#fff;font-size:1rem;font-weight:800}
 .step-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.step-top h3{margin:0;font-size:1rem;font-weight:800}.step-sub{margin:4px 0 10px;color:var(--text2);font-size:.78rem;font-weight:600;line-height:1.5}
 .badge{padding:6px 10px;border-radius:999px;background:var(--bg3);font-size:.6rem;font-weight:800;font-family:var(--mono)}
-.module-prog-row{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px 0}
-.module-kicker{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-family:var(--mono)}
-.module-pct{font-size:.64rem;font-weight:800;color:var(--accent);font-family:var(--mono)}
-.progbar{height:8px;background:var(--bg3);border-radius:999px;overflow:hidden;margin-bottom:10px}
-.progfill{height:100%;background:linear-gradient(135deg,#0369a1,#38bdf8);border-radius:999px;transition:width .3s ease}
-.ck-list{display:grid;gap:8px}.ck{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid transparent;cursor:pointer}.ck input{margin-top:2px}.ck span{font-size:.76rem;color:var(--text2);font-weight:700;line-height:1.45}
-.ck.done{background:rgba(79,70,229,.10);border-color:rgba(79,70,229,.16)}.ck.done span{text-decoration:line-through;color:var(--text3)}
+.module-prog-row{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px 0}.module-kicker{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-family:var(--mono)}.module-pct{font-size:.64rem;font-weight:800;color:var(--accent);font-family:var(--mono)}
+.progbar{height:8px;background:var(--bg3);border-radius:999px;overflow:hidden;margin-bottom:10px}.progfill{height:100%;background:linear-gradient(135deg,#0369a1,#38bdf8);border-radius:999px;transition:width .3s ease}
+.ck-list{display:grid;gap:8px}.ck{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid transparent;cursor:pointer}.ck input{margin-top:2px}.ck span{font-size:.76rem;color:var(--text2);font-weight:700;line-height:1.45}.ck.done{background:rgba(79,70,229,.10);border-color:rgba(79,70,229,.16)}.ck.done span{text-decoration:line-through;color:var(--text3)}
 .course-box{display:grid;gap:8px}.course{padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid var(--border)}.course strong{display:block;font-size:.82rem;font-weight:800}.course span{display:block;font-size:.72rem;color:var(--text2);margin-top:3px;font-weight:600;line-height:1.45}
 .books-grid{display:grid;gap:10px}.book{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:flex-start;padding:12px;border-radius:16px;background:var(--bg3)}.book-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#e0e7ff}
 .note{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
-@media (max-width:760px){.grid{grid-template-columns:1fr}.track-summary{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
+@media (max-width:760px){.grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
 </style>
 </head>
 <body>
-<header>
-  <button class="back" onclick="history.back()">←</button>
-  <div class="htxt"><h1>☁️ Cloud</h1><p>execution path · deploy and production thinking</p></div>
-  <button class="theme-btn" id="themeBtn">🌙</button>
-</header>
+<header><button class="back" onclick="history.back()">←</button><div class="htxt"><h1>☁️ Cloud</h1><p>execution path · deploy and production thinking</p></div><button class="theme-btn" id="themeBtn">🌙</button></header>
 <div class="wrap">
-  <section class="hero">
-    <div class="hero-k">Elite execution path</div>
-    <h2>Cloud architecture, deployment, and infrastructure thinking.</h2>
-    <p>Use this lane to make your systems real: hosting, APIs, storage, networking alignment, logging, and production readiness for your builds.</p>
-    <div class="hero-row">
-      <div class="hero-chip">Primary path</div>
-      <div class="hero-chip">Companion resources</div>
-      <div class="hero-chip">Live progress</div>
+<section class="hero"><div class="hero-k">Elite execution path</div><h2>Cloud architecture, deployment, and infrastructure thinking.</h2><p>Use this lane to make your systems real: hosting, APIs, storage, networking alignment, logging, and production readiness for your builds.</p><div class="hero-row"><div class="hero-chip">Primary path</div><div class="hero-chip">Companion resources</div><div class="hero-chip">Live progress</div></div></section>
+
+<div class="section-title"><h2>Track Snapshot</h2><span>real progress</span></div>
+<div class="summary-grid">
+  <div class="sum-card"><div class="sum-num" id="overallPct">0%</div><div class="sum-lbl">Overall</div></div>
+  <div class="sum-card"><div class="sum-num" id="doneCount">0</div><div class="sum-lbl">Checkpoints done</div></div>
+  <div class="sum-card"><div class="sum-num" id="nextPriority">-</div><div class="sum-lbl">Next priority</div></div>
+</div>
+
+<div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
+<div class="grid">
+  <article class="card track-card">
+    <div class="kicker">Keep</div>
+    <div class="track-head"><h3>High-leverage path</h3><div class="track-tag">Execution first</div></div>
+    <p>Keep only what directly improves your ability to execute in this lane. This page should feel like a working system, not a topic warehouse.</p>
+    <div class="bullets"><div class="bullet"><div class="check">✓</div><div>AWS path</div></div><div class="bullet"><div class="check">✓</div><div>Azure path</div></div><div class="bullet"><div class="check">✓</div><div>Deployment thinking</div></div><div class="bullet"><div class="check">✓</div><div>Networking alignment</div></div></div>
+  </article>
+  <article class="card track-card">
+    <div class="kicker">Drop</div>
+    <div class="track-head"><h3>Noise and duplication</h3><div class="track-tag">Clarity wins</div></div>
+    <p>Drop duplicated beginner content, weak filler material, and anything that slows action without improving output.</p>
+    <div class="bullets">
+      <div class="bullet"><div class="check">•</div><div>Multiple overlapping beginner resources</div></div>
+      <div class="bullet"><div class="check">•</div><div>Passive browsing without finishing checkpoints</div></div>
+      <div class="bullet"><div class="check">•</div><div>Reference hoarding without output</div></div>
+      <div class="bullet"><div class="check">•</div><div>Studying disconnected from projects</div></div>
     </div>
-  </section>
+  </article>
+</div>
 
-  <div class="section-title"><h2>Track Snapshot</h2><span>real progress</span></div>
-  <div class="track-summary">
-    <div class="ts-card"><div class="ts-num" id="overallPct">0%</div><div class="ts-lbl">Overall</div></div>
-    <div class="ts-card"><div class="ts-num" id="doneCount">0</div><div class="ts-lbl">Checkpoints done</div></div>
-    <div class="ts-card"><div class="ts-num" id="nextPriority">-</div><div class="ts-lbl">Next priority</div></div>
-  </div>
-
-  <div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
-  <div class="grid">
-    <article class="card track-card">
-      <div class="kicker">Keep</div>
-      <div class="track-head"><h3>High-leverage path</h3><div class="track-tag">Execution first</div></div>
-      <p>Keep only what directly improves your ability to execute in this lane. This page should feel like a working system, not a topic warehouse.</p>
-      <div class="bullets"><div class="bullet"><div class="check">✓</div><div>AWS path</div></div><div class="bullet"><div class="check">✓</div><div>Azure path</div></div><div class="bullet"><div class="check">✓</div><div>Deployment thinking</div></div><div class="bullet"><div class="check">✓</div><div>Networking alignment</div></div></div>
-    </article>
-    <article class="card track-card">
-      <div class="kicker">Drop</div>
-      <div class="track-head"><h3>Noise and duplication</h3><div class="track-tag">Clarity wins</div></div>
-      <p>Drop passive browsing, duplicated beginner material, and anything that looks like motion but does not improve implementation quality.</p>
-      <div class="bullets">
-        <div class="bullet"><div class="check">•</div><div>Duplicate beginner content across tools and platforms</div></div>
-        <div class="bullet"><div class="check">•</div><div>Topic hopping without finishing a module checkpoint</div></div>
-        <div class="bullet"><div class="check">•</div><div>Reference collection without real output</div></div>
-        <div class="bullet"><div class="check">•</div><div>Studying disconnected from current projects</div></div>
-      </div>
-    </article>
-  </div>
-
-  <div class="section-title"><h2>Primary Path</h2><span>do this in order</span></div>
-  <div class="path-list">
+<div class="section-title"><h2>Primary Path</h2><span>do this in order</span></div>
+<div class="path-list">
         <article class="path-step" data-code="C0">
           <div class="step-no">C0</div>
           <div>
@@ -108,7 +89,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
             </div>
             <div class="progbar"><div class="progfill" id="bar-C0" style="width:0%"></div></div>
             <div class="ck-list"><label class="ck"><input type="checkbox" data-id="a-clf1"><span>Understand IAM basics and least privilege</span></label><label class="ck"><input type="checkbox" data-id="a-clf2"><span>Use the cloud CLI for simple actions</span></label><label class="ck"><input type="checkbox" data-id="a-clf3"><span>Understand regions, zones, and service scope</span></label></div>
-            <div class="course-box" style="margin-top:12px"><div class="course"><strong>Primary: cloud fundamentals course</strong><span>Use one strong fundamentals path to anchor the basics.</span></div><div class="course"><strong>Checkpoint</strong><span>Explain IAM, regions, and core services clearly in your own words.</span></div></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary: cloud fundamentals course</strong><span>Use one strong fundamentals path to anchor the basics.</span></div><div class="course"><strong>Checkpoint</strong><span>Explain IAM, regions, and core services clearly in your own words.</span></div></div>
           </div>
         </article>
         
@@ -123,7 +104,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
             </div>
             <div class="progbar"><div class="progfill" id="bar-C1" style="width:0%"></div></div>
             <div class="ck-list"><label class="ck"><input type="checkbox" data-id="a-clf4"><span>Launch a VM / compute instance</span></label><label class="ck"><input type="checkbox" data-id="a-clf5"><span>Work with object storage</span></label><label class="ck"><input type="checkbox" data-id="a-clf6"><span>Understand cloud networking basics</span></label></div>
-            <div class="course-box" style="margin-top:12px"><div class="course"><strong>Primary focus: infra basics</strong><span>Tie compute, storage, and networking together conceptually.</span></div><div class="course"><strong>Checkpoint</strong><span>Run one small hosted workload and understand where it lives.</span></div></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary focus: infra basics</strong><span>Tie compute, storage, and networking together conceptually.</span></div><div class="course"><strong>Checkpoint</strong><span>Run one small hosted workload and understand where it lives.</span></div></div>
           </div>
         </article>
         
@@ -138,7 +119,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
             </div>
             <div class="progbar"><div class="progfill" id="bar-C2" style="width:0%"></div></div>
             <div class="ck-list"><label class="ck"><input type="checkbox" data-id="a-saa1"><span>Deploy a simple app to a cloud service</span></label><label class="ck"><input type="checkbox" data-id="a-saa2"><span>Understand domain / DNS basics</span></label><label class="ck"><input type="checkbox" data-id="a-saa3"><span>Apply basic cloud security hygiene</span></label></div>
-            <div class="course-box" style="margin-top:12px"><div class="course"><strong>Primary focus: hosting something real</strong><span>Cloud becomes real when one of your tools is actually deployed.</span></div><div class="course"><strong>Checkpoint</strong><span>Deploy one simple app or API endpoint.</span></div></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary focus: hosting something real</strong><span>Cloud becomes real when one of your tools is actually deployed.</span></div><div class="course"><strong>Checkpoint</strong><span>Deploy one simple app or API endpoint.</span></div></div>
           </div>
         </article>
         
@@ -153,71 +134,76 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
             </div>
             <div class="progbar"><div class="progfill" id="bar-C3" style="width:0%"></div></div>
             <div class="ck-list"><label class="ck"><input type="checkbox" data-id="a-saa4"><span>Deploy one AI or automation tool</span></label><label class="ck"><input type="checkbox" data-id="a-saa5"><span>Add basic logging / observability</span></label><label class="ck"><input type="checkbox" data-id="a-saa6"><span>Understand monitoring and failure visibility</span></label></div>
-            <div class="course-box" style="margin-top:12px"><div class="course"><strong>Optional: deeper cloud path</strong><span>Only go deeper after one real deployment exists.</span></div><div class="course"><strong>Checkpoint</strong><span>Make one side project feel production-aware.</span></div></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Optional: deeper cloud path</strong><span>Only go deeper after one real deployment exists.</span></div><div class="course"><strong>Checkpoint</strong><span>Make one side project feel production-aware.</span></div></div>
           </div>
         </article>
         </div>
 
-  <div class="section-title"><h2>Companion Courses</h2><span>1 primary + 1 optional</span></div>
-  <article class="card"><div class="course-box"><div class="course"><strong>Primary: One cloud fundamentals course</strong><span>Use one AWS/Azure foundations path only.</span></div><div class="course"><strong>Optional: One deployment-focused path</strong><span>Add a deeper cloud course only after you deploy something real.</span></div></div></article>
+<div class="section-title"><h2>Companion Courses</h2><span>1 primary + 1 optional</span></div>
+<article class="card"><div class="course-box"><div class="course"><strong>Primary: One cloud fundamentals course</strong><span>Use one AWS/Azure foundations path only.</span></div><div class="course"><strong>Optional: One deployment-focused path</strong><span>Add a deeper cloud course only after you deploy something real.</span></div></div></article>
 
-  <div class="section-title"><h2>Books / References</h2><span>keep it tight</span></div>
-  <div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong>AWS / Azure official docs</strong><div class="note">Use the docs for targeted lookup, not for random wandering.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Your deployment notes</strong><div class="note">Document how you hosted, configured, and secured your first real app.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Cloud architecture references</strong><div class="note">Keep lightweight notes on IAM, networking, and deployment patterns.</div></div></article></div>
+<div class="section-title"><h2>Companion Books</h2><span>tight reference layer</span></div>
+<div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong>AWS / Azure official docs</strong><div class="note">Use the docs for targeted lookup, not for random wandering.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Your deployment notes</strong><div class="note">Document how you hosted, configured, and secured your first real app.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Cloud architecture references</strong><div class="note">Keep lightweight notes on IAM, networking, and deployment patterns.</div></div></article></div>
 
-  <div class="section-title"><h2>Build Output</h2><span>must produce something real</span></div>
-  <article class="card"><div class="bullets"><div class="bullet"><div class="check">→</div><div>One simple deployed app or API</div></div><div class="bullet"><div class="check">→</div><div>One basic DNS / domain setup</div></div><div class="bullet"><div class="check">→</div><div>One project with logging or monitoring visibility</div></div></div></article>
-
-  <div class="section-title"><h2>Operating rule</h2><span>protect momentum</span></div>
-  <article class="card"><p class="note">Do not study cloud in isolation. Use it to host your tools, secure APIs, manage storage, and connect networking instincts to real system delivery.</p></article>
+<div class="section-title"><h2>Execution Rules</h2><span>protect depth</span></div>
+<div class="grid"><article class="card"><div class="kicker">Rule 1</div><h3>Deploy something real</h3><p>Cloud only becomes meaningful when you host an actual tool or service.</p></article><article class="card"><div class="kicker">Rule 2</div><h3>Keep fundamentals tight</h3><p>IAM, compute, storage, DNS, and logging are the core. Master these first.</p></article><article class="card"><div class="kicker">Rule 3</div><h3>Use networking as your edge</h3><p>Your networking background should make cloud infrastructure easier, not harder.</p></article><article class="card"><div class="kicker">Rule 4</div><h3>Production starts small</h3><p>Logging, security hygiene, and visibility matter even for small deployments.</p></article></div>
 </div>
 
-<nav class="bnav"><div class="bnav-inner"><a href="index.html" class="ni "><span>🏠</span><span class="ni-lbl">Home</span></a><a href="linux.html" class="ni "><span>🐧</span><span class="ni-lbl">Linux</span></a><a href="python.html" class="ni "><span>🐍</span><span class="ni-lbl">Python</span></a><a href="ai.html" class="ni "><span>🧠</span><span class="ni-lbl">AI</span></a><a href="claude.html" class="ni "><span>🟠</span><span class="ni-lbl">Claude</span></a><a href="cloud.html" class="ni active"><span>☁️</span><span class="ni-lbl">Cloud</span></a><a href="courses.html" class="ni "><span>📚</span><span class="ni-lbl">Courses</span></a><a href="playbook.html" class="ni "><span>📘</span><span class="ni-lbl">Playbook</span></a></div></nav>
+<nav class="bnav"><div class="bnav-inner">
+    <a href="index.html" class="ni"><span>🏠</span><span class="ni-lbl">Home</span></a>
+    <a href="linux.html" class="ni "><span>🐧</span><span class="ni-lbl">Linux</span></a>
+    <a href="python.html" class="ni "><span>🐍</span><span class="ni-lbl">Python</span></a>
+    <a href="ai.html" class="ni"><span>🧠</span><span class="ni-lbl">AI</span></a>
+    <a href="claude.html" class="ni "><span>🟠</span><span class="ni-lbl">Claude</span></a>
+    <a href="cloud.html" class="ni active"><span>☁️</span><span class="ni-lbl">Cloud</span></a>
+    <a href="courses.html" class="ni"><span>📚</span><span class="ni-lbl">Courses</span></a>
+    <a href="playbook.html" class="ni"><span>📘</span><span class="ni-lbl">Playbook</span></a>
+    </div></nav>
 
 <script>
 (function(){
-  const btn = document.getElementById('themeBtn');
-  const STORE_KEY = "cloudProgress";
-  const MODULES = [{"code": "C0", "title": "Foundation", "badge": "foundation", "sub": "Build the basic cloud language: IAM, CLI use, regions, and service awareness.", "items": [{"id": "a-clf1", "label": "Understand IAM basics and least privilege"}, {"id": "a-clf2", "label": "Use the cloud CLI for simple actions"}, {"id": "a-clf3", "label": "Understand regions, zones, and service scope"}], "course_map": [{"title": "Primary: cloud fundamentals course", "desc": "Use one strong fundamentals path to anchor the basics."}, {"title": "Checkpoint", "desc": "Explain IAM, regions, and core services clearly in your own words."}]}, {"code": "C1", "title": "Core Infrastructure", "badge": "core infra", "sub": "Learn the building blocks: compute, storage, and networking in a cloud environment.", "items": [{"id": "a-clf4", "label": "Launch a VM / compute instance"}, {"id": "a-clf5", "label": "Work with object storage"}, {"id": "a-clf6", "label": "Understand cloud networking basics"}], "course_map": [{"title": "Primary focus: infra basics", "desc": "Tie compute, storage, and networking together conceptually."}, {"title": "Checkpoint", "desc": "Run one small hosted workload and understand where it lives."}]}, {"code": "C2", "title": "Deployment", "badge": "deployment", "sub": "Move from lab thinking to delivery thinking: app hosting, DNS, and security basics.", "items": [{"id": "a-saa1", "label": "Deploy a simple app to a cloud service"}, {"id": "a-saa2", "label": "Understand domain / DNS basics"}, {"id": "a-saa3", "label": "Apply basic cloud security hygiene"}], "course_map": [{"title": "Primary focus: hosting something real", "desc": "Cloud becomes real when one of your tools is actually deployed."}, {"title": "Checkpoint", "desc": "Deploy one simple app or API endpoint."}]}, {"code": "C3", "title": "Production Thinking", "badge": "production", "sub": "Use cloud to support real tools with logging, monitoring, and deployment discipline.", "items": [{"id": "a-saa4", "label": "Deploy one AI or automation tool"}, {"id": "a-saa5", "label": "Add basic logging / observability"}, {"id": "a-saa6", "label": "Understand monitoring and failure visibility"}], "course_map": [{"title": "Optional: deeper cloud path", "desc": "Only go deeper after one real deployment exists."}, {"title": "Checkpoint", "desc": "Make one side project feel production-aware."}]}];
-  function getState(){ try { return JSON.parse(localStorage.getItem(STORE_KEY)||'{}') || {}; } catch(e) { return {}; } }
-  function setState(s){ localStorage.setItem(STORE_KEY, JSON.stringify(s)); }
-  function applyTheme(){ const t = localStorage.getItem('theme') || 'light'; document.body.classList.toggle('dark', t === 'dark'); btn.textContent = t === 'dark' ? '☀️' : '🌙'; }
-  btn.onclick = function(){ const next = document.body.classList.contains('dark') ? 'light' : 'dark'; localStorage.setItem('theme', next); applyTheme(); };
-  function modPct(mod, s){ const done = mod.items.filter(x => s[x.id]).length; return mod.items.length ? Math.round(done / mod.items.length * 100) : 0; }
-  function render() {
-    const s = getState();
-    MODULES.forEach(mod => {
-      const pct = modPct(mod, s);
-      const pctEl = document.getElementById('pct-' + mod.code);
-      const barEl = document.getElementById('bar-' + mod.code);
-      if (pctEl) pctEl.textContent = pct + '% complete';
-      if (barEl) barEl.style.width = pct + '%';
-      mod.items.forEach(item => {
-        const input = document.querySelector('input[data-id="' + item.id + '"]');
-        if (!input) return;
-        input.checked = !!s[item.id];
-        const wrap = input.closest('.ck');
-        if (wrap) wrap.classList.toggle('done', !!s[item.id]);
+  const btn=document.getElementById('themeBtn');
+  const STORE_KEY="cloudProgress";
+  const MODULES=[{"code": "C0", "title": "Foundation", "badge": "foundation", "sub": "Build the basic cloud language: IAM, CLI use, regions, and service awareness.", "checks": [{"id": "a-clf1", "label": "Understand IAM basics and least privilege"}, {"id": "a-clf2", "label": "Use the cloud CLI for simple actions"}, {"id": "a-clf3", "label": "Understand regions, zones, and service scope"}], "mapped": [{"title": "Primary: cloud fundamentals course", "desc": "Use one strong fundamentals path to anchor the basics."}, {"title": "Checkpoint", "desc": "Explain IAM, regions, and core services clearly in your own words."}]}, {"code": "C1", "title": "Core Infrastructure", "badge": "core infra", "sub": "Learn the building blocks: compute, storage, and networking in a cloud environment.", "checks": [{"id": "a-clf4", "label": "Launch a VM / compute instance"}, {"id": "a-clf5", "label": "Work with object storage"}, {"id": "a-clf6", "label": "Understand cloud networking basics"}], "mapped": [{"title": "Primary focus: infra basics", "desc": "Tie compute, storage, and networking together conceptually."}, {"title": "Checkpoint", "desc": "Run one small hosted workload and understand where it lives."}]}, {"code": "C2", "title": "Deployment", "badge": "deployment", "sub": "Move from lab thinking to delivery thinking: app hosting, DNS, and security basics.", "checks": [{"id": "a-saa1", "label": "Deploy a simple app to a cloud service"}, {"id": "a-saa2", "label": "Understand domain / DNS basics"}, {"id": "a-saa3", "label": "Apply basic cloud security hygiene"}], "mapped": [{"title": "Primary focus: hosting something real", "desc": "Cloud becomes real when one of your tools is actually deployed."}, {"title": "Checkpoint", "desc": "Deploy one simple app or API endpoint."}]}, {"code": "C3", "title": "Production Thinking", "badge": "production", "sub": "Use cloud to support real tools with logging, monitoring, and deployment discipline.", "checks": [{"id": "a-saa4", "label": "Deploy one AI or automation tool"}, {"id": "a-saa5", "label": "Add basic logging / observability"}, {"id": "a-saa6", "label": "Understand monitoring and failure visibility"}], "mapped": [{"title": "Optional: deeper cloud path", "desc": "Only go deeper after one real deployment exists."}, {"title": "Checkpoint", "desc": "Make one side project feel production-aware."}]}];
+  function getState(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')||{};}catch(e){return {};}}
+  function setState(s){localStorage.setItem(STORE_KEY, JSON.stringify(s));}
+  function applyTheme(){const t=localStorage.getItem('theme')||'light';document.body.classList.toggle('dark',t==='dark');btn.textContent=t==='dark'?'☀️':'🌙';}
+  btn.onclick=function(){const next=document.body.classList.contains('dark')?'light':'dark';localStorage.setItem('theme',next);applyTheme();};
+  function modPct(mod,s){const done=mod.checks.filter(x=>s[x.id]).length; return mod.checks.length?Math.round(done/mod.checks.length*100):0;}
+  function render(){
+    const s=getState();
+    MODULES.forEach(mod=>{
+      const pct=modPct(mod,s);
+      const pctEl=document.getElementById('pct-'+mod.code);
+      const barEl=document.getElementById('bar-'+mod.code);
+      if(pctEl) pctEl.textContent=pct+'% complete';
+      if(barEl) barEl.style.width=pct+'%';
+      mod.checks.forEach(item=>{
+        const input=document.querySelector('input[data-id="'+item.id+'"]');
+        if(!input) return;
+        input.checked=!!s[item.id];
+        const wrap=input.closest('.ck');
+        if(wrap) wrap.classList.toggle('done',!!s[item.id]);
       });
     });
-    const allItems = MODULES.flatMap(m => m.items);
-    const done = allItems.filter(x => s[x.id]).length;
-    const overall = allItems.length ? Math.round(done / allItems.length * 100) : 0;
-    document.getElementById('overallPct').textContent = overall + '%';
-    document.getElementById('doneCount').textContent = String(done);
-    const weakest = MODULES.map(m => ({code:m.code, pct:modPct(m, s)})).sort((a,b) => a.pct - b.pct)[0];
-    document.getElementById('nextPriority').textContent = weakest ? weakest.code : '-';
+    const allItems=MODULES.flatMap(m=>m.checks);
+    const done=allItems.filter(x=>s[x.id]).length;
+    const overall=allItems.length?Math.round(done/allItems.length*100):0;
+    document.getElementById('overallPct').textContent=overall+'%';
+    document.getElementById('doneCount').textContent=String(done);
+    const weakest=MODULES.map(m=>({code:m.code,pct:modPct(m,s)})).sort((a,b)=>a.pct-b.pct)[0];
+    document.getElementById('nextPriority').textContent=weakest?weakest.code:'-';
   }
-  document.addEventListener('change', function(e) {
-    const t = e.target;
-    if (!(t instanceof HTMLInputElement)) return;
-    if (!t.matches('input[type="checkbox"][data-id]')) return;
-    const s = getState();
-    s[t.dataset.id] = t.checked;
+  document.addEventListener('change',function(e){
+    const t=e.target;
+    if(!(t instanceof HTMLInputElement)) return;
+    if(!t.matches('input[type="checkbox"][data-id]')) return;
+    const s=getState();
+    s[t.dataset.id]=t.checked;
     setState(s);
     render();
   });
-  applyTheme();
-  render();
+  applyTheme(); render();
 })();
 </script>
 </body>
