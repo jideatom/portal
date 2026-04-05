@@ -90,9 +90,34 @@
     const label = thumb.querySelector('.resource-thumb-label');
     if(label){
       if(src) label.textContent = 'Cover added';
-      else if(thumb.classList.contains('awaiting-paste')) label.textContent = 'Double-click to upload cover';
-      else label.textContent = 'Double-click to upload cover';
+      else if(thumb.classList.contains('awaiting-paste')) label.textContent = 'Paste now or double-click to upload';
+      else label.textContent = 'Click, paste, or double-click to upload';
     }
+  }
+
+
+  function normalizeCardLayout(card, kind){
+    if(card.dataset.layoutNormalized === '1') return;
+    card.dataset.layoutNormalized = '1';
+
+    if(kind === 'book'){
+      const legacyIcon = card.querySelector('.book-icon');
+      if(legacyIcon) legacyIcon.remove();
+    }
+
+    const body = document.createElement('div');
+    body.className = 'resource-body';
+
+    const keep = [];
+    Array.from(card.childNodes).forEach(function(node){
+      if(node.nodeType === 1 && (node.classList.contains('resource-thumb') || node.classList.contains('resource-toolbar'))) return;
+      keep.push(node);
+    });
+
+    keep.forEach(function(node){ body.appendChild(node); });
+    const thumb = card.querySelector('.resource-thumb');
+    if(thumb && thumb.nextSibling) card.insertBefore(body, thumb.nextSibling);
+    else card.appendChild(body);
   }
 
   function ensureThumb(card){
@@ -101,7 +126,7 @@
       thumb = document.createElement('div');
       thumb.className = 'resource-thumb';
       thumb.tabIndex = 0;
-      thumb.innerHTML = '<span class="resource-thumb-label">Double-click to upload cover</span><button type="button" class="thumb-clear" title="Clear image">×</button>';
+      thumb.innerHTML = '<span class="resource-thumb-label">Click, paste, or double-click to upload</span><button type="button" class="thumb-clear" title="Clear image">×</button>';
       card.insertBefore(thumb, card.firstChild);
     }
     thumb.dataset.resourceKey = card.dataset.resourceKey;
@@ -202,6 +227,7 @@
     const title = titleEl ? titleEl.textContent.trim() : 'resource';
     card.dataset.resourceKey = track + '::' + kind + '::' + slugify(title);
     ensureThumb(card);
+    normalizeCardLayout(card, kind);
     wireControls(card);
 
     card.addEventListener('click', function(e){
@@ -396,7 +422,7 @@
     const style = document.createElement('style');
     style.id = 'resourceThumbStyles';
     style.textContent = `
-      .resource-card{position:relative;display:grid !important;grid-template-columns:72px 1fr;gap:10px;align-items:start}
+      .resource-card{position:relative;display:grid !important;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:start}.resource-body{grid-column:2;min-width:0}.resource-body strong{display:block;line-height:1.2}.resource-body span,.resource-body .note{display:block;line-height:1.45}.book.resource-card,.course.resource-card,.item.resource-card{padding:12px 14px}
       .resource-thumb,.mini-thumb{width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,rgba(99,102,241,.16),rgba(56,189,248,.16));border:1px dashed rgba(99,102,241,.32);background-size:cover;background-position:center;position:relative;overflow:hidden}
       .mini-thumb{width:52px;height:52px;border-radius:14px;flex-shrink:0}
       .resource-thumb{cursor:pointer;outline:none;display:flex;align-items:flex-end;justify-content:center}
@@ -406,7 +432,7 @@
       .resource-thumb.awaiting-paste::after{content:'Paste now';position:absolute;right:6px;bottom:6px;font-size:.5rem;font-weight:800;background:rgba(15,23,42,.72);color:#fff;padding:4px 6px;border-radius:10px}
       .resource-thumb.dragging{border-style:solid}
       .thumb-clear{position:absolute;top:6px;right:6px;width:20px;height:20px;border:0;border-radius:999px;background:rgba(15,23,42,.72);color:#fff;cursor:pointer;font-weight:800;display:grid;place-items:center;padding:0}
-      .resource-toolbar{grid-column:2;display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+      .resource-toolbar{grid-column:2;display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center}
       .rt-btn{border:0;border-radius:999px;background:var(--bg2,#fff);color:var(--text,#0f172a);padding:6px 10px;font-size:.62rem;font-weight:800;cursor:pointer;box-shadow:0 2px 10px rgba(15,23,42,.06)}
       .resource-card.role-primary::before,.resource-card.role-companion::before,.resource-card.role-book::before,.resource-card.active-focus::after{position:absolute;top:8px;right:10px;font-size:.52rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:4px 6px;border-radius:999px}
       .resource-card.role-primary::before{content:'Primary';background:rgba(79,70,229,.12);color:var(--accent,#4f46e5)}
@@ -423,7 +449,7 @@
       #intelligenceCard strong{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
       #intelligenceCard span{display:block;font-size:.8rem;color:var(--text2,#475569);font-weight:700}
       .intel-launch{display:inline-flex;margin-top:10px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,#2647c8,#6a5cff);color:#fff !important;font-weight:800;text-decoration:none}
-      @media (max-width:760px){.resource-card{grid-template-columns:1fr}.resource-thumb{width:100%;height:112px}.focus-grid{grid-template-columns:1fr}}
+      @media (max-width:760px){.resource-card{grid-template-columns:1fr}.resource-body,.resource-toolbar{grid-column:1}.resource-thumb{width:100%;height:112px}.focus-grid{grid-template-columns:1fr}}
     `;
     document.head.appendChild(style);
   }
