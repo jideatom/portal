@@ -42,26 +42,6 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 .note{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
 @media (max-width:760px){.grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
-
-      .shell-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:14px}
-      .shell-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-      .shell-label{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text2)}
-      .shell-url{flex:1;min-width:220px;border:1px solid var(--border);background:var(--bg3);color:var(--text);padding:10px 12px;border-radius:12px}
-      .shell-chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-      .shell-chip,.shell-btn{border:0;border-radius:12px;padding:9px 12px;font-size:.72rem;font-weight:800;cursor:pointer}
-      .shell-chip{background:var(--bg3);color:var(--text)}
-      .shell-btn{background:linear-gradient(135deg,#2647c8,#6a5cff);color:#fff}
-      .shell-btn.soft{background:var(--bg3);color:var(--text)}
-      .shell-command{width:100%;min-height:120px;border-radius:16px;border:1px solid var(--border);background:#0b1220;color:#d1fae5;padding:14px;font-family:var(--mono);font-size:.78rem;resize:vertical}
-      .shell-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
-      .shell-output{min-height:140px;background:#0b1220;color:#d1fae5;border-radius:16px;padding:14px;white-space:pre-wrap;word-break:break-word;border:1px solid var(--border);margin-top:10px}
-      .shell-status{font-size:.68rem;font-weight:800;color:var(--text2);font-family:var(--mono)}
-      .shell-side{background:var(--bg3);border-radius:16px;padding:12px}
-      .shell-history-item{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.55);border:1px solid var(--border);margin-bottom:8px}
-      .shell-history-item strong{display:block;font-size:.78rem}
-      .shell-history-item span{display:block;font-size:.68rem;color:var(--text2);margin-top:4px}
-      @media (max-width:760px){.shell-grid{grid-template-columns:1fr}}
-
 </style>
 </head>
 <body>
@@ -159,36 +139,6 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 <div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong>Linux Command Line — A Complete Introduction</strong><div class="note">Main command-line book.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Linux for Networking Professionals</strong><div class="note">Directly aligned with your networking edge.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Red Hat RHCSA 10 Cert Guide</strong><div class="note">Main RHCSA companion reference.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Linux Bible</strong><div class="note">Reference only, not a linear study path.</div></div></article></div>
 <div class="section-title"><h2>Execution Rules</h2><span>protect depth</span></div>
 <div class="grid"><article class="card"><div class="kicker">Rule 1</div><h3>Use Linux daily</h3><p>Linux confidence comes from repetition, not from reading alone.</p></article><article class="card"><div class="kicker">Rule 2</div><h3>Troubleshoot from the shell</h3><p>Use the terminal as a real operations interface, not just a learning exercise.</p></article><article class="card"><div class="kicker">Rule 3</div><h3>Leverage your CCNP edge</h3><p>Your networking background should make the Linux networking layer easier to absorb.</p></article><article class="card"><div class="kicker">Rule 4</div><h3>Automate the repetitive</h3><p>Any shell task you repeat should eventually become a script or repeatable flow.</p></article></div>
-
-  <div class="section-title"><h2>Live Shell</h2><span>backend connected</span></div>
-  <article class="card shell-runner" data-shell-track="linux">
-    <div class="shell-grid">
-      <div class="shell-main">
-        <div class="shell-row">
-          <label class="shell-label">Backend URL</label>
-          <input class="shell-url" placeholder="http://127.0.0.1:8000" type="text"/>
-          <button class="shell-btn soft" data-shell-action="save-url" type="button">Save</button>
-          <button class="shell-btn soft" data-shell-action="test-url" type="button">Test</button>
-          <span class="shell-status">Checking...</span>
-        </div>
-        <div class="shell-chip-row">
-          <button class="shell-chip" data-cmd="pwd" type="button">pwd</button><button class="shell-chip" data-cmd="ls" type="button">ls</button><button class="shell-chip" data-cmd="ls -la" type="button">ls -la</button><button class="shell-chip" data-cmd="echo hello" type="button">echo hello</button>
-        </div>
-        <textarea class="shell-command" placeholder="Type one allowed command, then click Run or press Ctrl+Enter"></textarea>
-        <div class="shell-actions">
-          <button class="shell-btn" data-shell-action="run" type="button">Run</button>
-          <button class="shell-btn soft" data-shell-action="clear-output" type="button">Clear Output</button>
-        </div>
-        <pre class="shell-output"></pre>
-        <p class="note">Allowed commands are intentionally restricted for safety. This shell runs through the local/deployed backend, not through GitHub Pages itself.</p>
-      </div>
-      <div class="shell-side">
-        <div class="focus-kicker">Recent shell history</div>
-        <div class="shell-history-list"></div>
-      </div>
-    </div>
-  </article>
-
 </div>
 <nav class="bnav"><div class="bnav-inner">
 <a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a>
@@ -246,9 +196,5 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
   applyTheme(); render();
 })();
 </script>
-
-<script src="assets/js/resource-intelligence.js"></script>
-<script src="assets/js/shell-terminal.js"></script>
-
-</body>
+<script src="assets/js/resource-intelligence.js"></script></body>
 </html>

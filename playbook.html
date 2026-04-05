@@ -4,26 +4,6 @@
 :root{--bg:#f0f2f7;--bg2:#ffffff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,.08);--border2:rgba(15,23,42,.14);--shadow:0 10px 30px rgba(15,23,42,.08);--radius:18px;--accent:#4f46e5;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif}
 body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.10)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans)}button,input,textarea{font-family:var(--sans)}header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:10px}body.dark header{background:rgba(8,12,20,.82)}.back{color:var(--accent);font-size:1.25rem;font-weight:800;background:none;border:none}.htxt{flex:1}.htxt h1{margin:0;font-size:.96rem;font-weight:800}.htxt p{margin:2px 0 0;font-size:.64rem;color:var(--text2);font-family:var(--mono);font-weight:700}.theme-btn{min-width:40px;min-height:40px;border-radius:12px;border:1px solid var(--border2);background:var(--bg2);color:var(--text)}.wrap{max-width:820px;margin:0 auto;padding:16px 16px 92px}.goal-card{border-radius:20px;padding:18px;background:linear-gradient(135deg,#4c1d95,#7c3aed,#8b5cf6);color:#fff;box-shadow:var(--shadow);margin-bottom:14px}.gc-lbl{font-size:.62rem;font-family:var(--mono);font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.76)}.gc-title{font-size:1.06rem;font-weight:800;margin:4px 0}.gc-sub{font-size:.76rem;color:rgba(255,255,255,.82);line-height:1.5}.play-tabs{display:flex;gap:8px;margin:0 0 14px}.play-tab{padding:10px 14px;border-radius:999px;border:1px solid var(--border);background:var(--bg2);font-weight:800;cursor:pointer}.play-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}.play-panel{display:none}.play-panel.active{display:block}.card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow)}.sec-lbl{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-family:var(--mono);margin-bottom:12px}.month-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}.month-hdr{display:flex;align-items:center;gap:10px;padding:14px;cursor:pointer}.month-hdr span{font-weight:800}.month-dot{width:10px;height:10px;border-radius:50%}.month-body{display:none;padding:0 14px 14px}.month-body.open{display:block}.ms-row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}.ms-row:last-child{border-bottom:none}.ms-check{width:20px;height:20px;border-radius:6px;border:2px solid var(--border2);display:grid;place-items:center;font-size:.74rem;cursor:pointer;flex-shrink:0}.ms-check.done{background:#10b981;border-color:#10b981;color:#fff}.ms-copy{flex:1}.ms-title{font-size:.82rem;font-weight:700;line-height:1.4}.ms-title.done{text-decoration:line-through;color:var(--text3)}.ms-date{font-size:.6rem;color:var(--text3);font-family:var(--mono);margin-top:2px}.add-row{display:flex;gap:8px;margin-top:10px}.add-input,.add-date,textarea{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:10px 12px;color:var(--text)}.add-input{flex:1}.add-date{width:140px}.add-btn{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 16px;font-weight:800}.plan-help{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.5;margin-bottom:12px}#playbookPlan{width:100%;min-height:320px;display:block}.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px;text-decoration:none;color:inherit}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}@media (max-width:700px){.add-row{flex-direction:column}}
-
-      .shell-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:14px}
-      .shell-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-      .shell-label{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text2)}
-      .shell-url{flex:1;min-width:220px;border:1px solid var(--border);background:var(--bg3);color:var(--text);padding:10px 12px;border-radius:12px}
-      .shell-chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-      .shell-chip,.shell-btn{border:0;border-radius:12px;padding:9px 12px;font-size:.72rem;font-weight:800;cursor:pointer}
-      .shell-chip{background:var(--bg3);color:var(--text)}
-      .shell-btn{background:linear-gradient(135deg,#2647c8,#6a5cff);color:#fff}
-      .shell-btn.soft{background:var(--bg3);color:var(--text)}
-      .shell-command{width:100%;min-height:120px;border-radius:16px;border:1px solid var(--border);background:#0b1220;color:#d1fae5;padding:14px;font-family:var(--mono);font-size:.78rem;resize:vertical}
-      .shell-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
-      .shell-output{min-height:140px;background:#0b1220;color:#d1fae5;border-radius:16px;padding:14px;white-space:pre-wrap;word-break:break-word;border:1px solid var(--border);margin-top:10px}
-      .shell-status{font-size:.68rem;font-weight:800;color:var(--text2);font-family:var(--mono)}
-      .shell-side{background:var(--bg3);border-radius:16px;padding:12px}
-      .shell-history-item{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.55);border:1px solid var(--border);margin-bottom:8px}
-      .shell-history-item strong{display:block;font-size:.78rem}
-      .shell-history-item span{display:block;font-size:.68rem;color:var(--text2);margin-top:4px}
-      @media (max-width:760px){.shell-grid{grid-template-columns:1fr}}
-
 </style>
 <style>
 .proj-card{background:var(--bg3);border:1px solid var(--border);border-radius:18px;padding:14px;margin-top:12px}
@@ -40,26 +20,6 @@ body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b
 .proj-item input{margin-top:2px}
 .proj-item span{font-size:.76rem;color:var(--text2);font-weight:700;line-height:1.45}
 .proj-item.done span{text-decoration:line-through;color:var(--text3)}
-
-      .shell-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:14px}
-      .shell-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-      .shell-label{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text2)}
-      .shell-url{flex:1;min-width:220px;border:1px solid var(--border);background:var(--bg3);color:var(--text);padding:10px 12px;border-radius:12px}
-      .shell-chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-      .shell-chip,.shell-btn{border:0;border-radius:12px;padding:9px 12px;font-size:.72rem;font-weight:800;cursor:pointer}
-      .shell-chip{background:var(--bg3);color:var(--text)}
-      .shell-btn{background:linear-gradient(135deg,#2647c8,#6a5cff);color:#fff}
-      .shell-btn.soft{background:var(--bg3);color:var(--text)}
-      .shell-command{width:100%;min-height:120px;border-radius:16px;border:1px solid var(--border);background:#0b1220;color:#d1fae5;padding:14px;font-family:var(--mono);font-size:.78rem;resize:vertical}
-      .shell-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
-      .shell-output{min-height:140px;background:#0b1220;color:#d1fae5;border-radius:16px;padding:14px;white-space:pre-wrap;word-break:break-word;border:1px solid var(--border);margin-top:10px}
-      .shell-status{font-size:.68rem;font-weight:800;color:var(--text2);font-family:var(--mono)}
-      .shell-side{background:var(--bg3);border-radius:16px;padding:12px}
-      .shell-history-item{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.55);border:1px solid var(--border);margin-bottom:8px}
-      .shell-history-item strong{display:block;font-size:.78rem}
-      .shell-history-item span{display:block;font-size:.68rem;color:var(--text2);margin-top:4px}
-      @media (max-width:760px){.shell-grid{grid-template-columns:1fr}}
-
 </style>
 </head>
 <body>
@@ -76,36 +36,6 @@ body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b
 <div id="buildProjectsHost"></div>
 </div>
 </section>
-
-  <div class="section-title"><h2>Live Shell</h2><span>backend connected</span></div>
-  <article class="card shell-runner" data-shell-track="general">
-    <div class="shell-grid">
-      <div class="shell-main">
-        <div class="shell-row">
-          <label class="shell-label">Backend URL</label>
-          <input class="shell-url" placeholder="http://127.0.0.1:8000" type="text"/>
-          <button class="shell-btn soft" data-shell-action="save-url" type="button">Save</button>
-          <button class="shell-btn soft" data-shell-action="test-url" type="button">Test</button>
-          <span class="shell-status">Checking...</span>
-        </div>
-        <div class="shell-chip-row">
-          <button class="shell-chip" data-cmd="pwd" type="button">pwd</button><button class="shell-chip" data-cmd="ls" type="button">ls</button><button class="shell-chip" data-cmd="python --version" type="button">python --version</button><button class="shell-chip" data-cmd="echo hello" type="button">echo hello</button>
-        </div>
-        <textarea class="shell-command" placeholder="Type one allowed command, then click Run or press Ctrl+Enter"></textarea>
-        <div class="shell-actions">
-          <button class="shell-btn" data-shell-action="run" type="button">Run</button>
-          <button class="shell-btn soft" data-shell-action="clear-output" type="button">Clear Output</button>
-        </div>
-        <pre class="shell-output"></pre>
-        <p class="note">Allowed commands are intentionally restricted for safety. This shell runs through the local/deployed backend, not through GitHub Pages itself.</p>
-      </div>
-      <div class="shell-side">
-        <div class="focus-kicker">Recent shell history</div>
-        <div class="shell-history-list"></div>
-      </div>
-    </div>
-  </article>
-
 </div>
 <nav class="bnav"><div class="bnav-inner">
 <a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a>
@@ -244,8 +174,4 @@ applyTheme(); renderMonths();
   document.addEventListener('DOMContentLoaded', renderProjects);
 })();
 </script>
-
-<script src="assets/js/resource-intelligence.js"></script>
-<script src="assets/js/shell-terminal.js"></script>
-
-</body></html>
+<script src="assets/js/resource-intelligence.js"></script></body></html>
