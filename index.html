@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0f172a">
-<link rel="manifest" href="manifest.json">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#0f172a" name="theme-color"/>
+<link href="manifest.json" rel="manifest"/>
 <title>Jideatom Learning Path</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <style>
 :root{--bg:#f0f2f7;--bg2:#ffffff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,.08);--border2:rgba(15,23,42,.14);--shadow:0 10px 30px rgba(15,23,42,.08);--radius:18px;--accent:#4f46e5;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif}
 body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.10)}
@@ -53,9 +54,9 @@ body.dark header{background:rgba(8,12,20,.82)}
 <body>
 <header><div><div class="logo-kicker">Jideatom Learning Path</div><div class="logo-title">Focused learning system</div><div class="logo-sub">AI · Linux · Python · Cloud · Claude</div></div><div class="hdr-right"><button class="hdr-btn" id="searchBtn" title="Search">🔍</button><button class="hdr-btn" id="themeBtn" title="Theme">🌙</button></div></header>
 <div class="wrap">
-<a href="playbook.html" class="goal-banner" id="goalBanner"><div class="gb-ico">🎯</div><div class="gb-body"><div class="gb-month" id="gbMonth">This Month</div><div class="gb-title" id="gbTitle">No goals set yet</div><div class="gb-sub" id="gbSub">Tap to set your monthly milestones →</div><div class="gb-bar-wrap"><div class="gb-bar-fill" id="gbFill"></div></div></div><div class="gb-pct" id="gbPct">-</div></a>
+<a class="goal-banner" href="playbook.html" id="goalBanner"><div class="gb-ico">🎯</div><div class="gb-body"><div class="gb-month" id="gbMonth">This Month</div><div class="gb-title" id="gbTitle">No goals set yet</div><div class="gb-sub" id="gbSub">Tap to set your monthly milestones →</div><div class="gb-bar-wrap"><div class="gb-bar-fill" id="gbFill"></div></div></div><div class="gb-pct" id="gbPct">-</div></a>
 <div class="streak-bar"><div class="sk-card"><div class="sk-num" id="skCurrent">0</div><div class="sk-lbl">Day Streak</div></div><div class="sk-card"><div class="sk-num" id="skBest">0</div><div class="sk-lbl">Best</div></div><div class="sk-card"><div class="sk-num" id="skHours">0m</div><div class="sk-lbl">Study Time</div></div></div>
-<div class="focus-wrap" id="todaySessionCard"><div class="focus-tag" id="focusPhase">Today's Session</div><div class="focus-title" id="focusTitle">Loading today's task…</div><div class="focus-sub" id="focusSub">Tap Start to begin</div><div class="focus-row"><button class="focus-btn" id="focusStartBtn" type="button">▶ Start Session</button><button class="focus-btn" id="resetStudyBtn" type="button" style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.18)">↺ Reset Study Data</button><span class="focus-studied" id="focusStudied">✓ Studied today</span></div></div>
+<div class="focus-wrap" id="todaySessionCard"><div class="focus-tag" id="focusPhase">Today's Session</div><div class="focus-title" id="focusTitle">Loading today's task…</div><div class="focus-sub" id="focusSub">Tap Start to begin</div><div class="focus-row"><button class="focus-btn" id="focusStartBtn" type="button">▶ Start Session</button><button class="focus-btn" id="resetStudyBtn" style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.18)" type="button">↺ Reset Study Data</button><span class="focus-studied" id="focusStudied">✓ Studied today</span></div></div>
 <div class="section-title"><h2>Live Progress</h2><span id="overallPct">0% overall</span></div>
 <div class="prog-overview">
 <div class="pov-row"><div class="pov-dot" style="background:#f97316"></div><span class="pov-name">Claude Sprint</span><div class="pov-bar-bg"><div class="pov-bar-fill" id="pb-claude" style="background:#f97316;width:0%"></div></div><span class="pov-pct" id="pp-claude" style="color:#f97316">0%</span></div>
@@ -75,23 +76,21 @@ body.dark header{background:rgba(8,12,20,.82)}
 </div>
 <div class="section-title"><h2>Study Activity</h2><span>tap today to mark activity</span></div>
 <div class="heatmap-wrap"><div class="hm-hdr"><span class="hm-title">Consistency heatmap</span><div class="hm-legend"><span>Less</span><div class="hm-demo" style="background:var(--bg3)"></div><div class="hm-demo" style="background:rgba(79,70,229,.22)"></div><div class="hm-demo" style="background:rgba(79,70,229,.55)"></div><div class="hm-demo" style="background:#4f46e5"></div><span>More</span></div></div><div class="hm-grid" id="hmGrid"></div></div>
-
-  <div class="section-title"><h2>Build Mode</h2><span>project momentum</span></div>
-  <div class="card" id="buildSummaryCard"></div>
-
-  <div class="section-title"><h2>Achievements</h2><span>now tied to real study state</span></div><section id="achievementsCard"></section>
+<div class="section-title"><h2>Build Mode</h2><span>project momentum</span></div>
+<div class="card" id="buildSummaryCard"></div>
+<div class="section-title"><h2>Achievements</h2><span>now tied to real study state</span></div><section id="achievementsCard"></section>
 <div class="section-title"><h2>Recommended Next Actions</h2><span>based on your actual state</span></div><div class="card" id="nextActionsCard"></div>
 </div>
-<div class="search-overlay" id="searchOverlay"><div class="search-card"><div class="search-head"><input id="searchInput" type="search" placeholder="Search topics, pages, courses..." autocomplete="off"><button class="hdr-btn" id="searchCloseBtn">✕</button></div><div class="search-results" id="searchResults"></div></div></div>
+<div class="search-overlay" id="searchOverlay"><div class="search-card"><div class="search-head"><input autocomplete="off" id="searchInput" placeholder="Search topics, pages, courses..." type="search"/><button class="hdr-btn" id="searchCloseBtn">✕</button></div><div class="search-results" id="searchResults"></div></div></div>
 <nav class="bnav"><div class="bnav-inner">
-  <a href="index.html" class="ni active"><span>🏠</span><span class="ni-lbl">Home</span></a>
-  <a href="linux.html" class="ni "><span>🐧</span><span class="ni-lbl">Linux</span></a>
-  <a href="python.html" class="ni "><span>🐍</span><span class="ni-lbl">Python</span></a>
-  <a href="ai.html" class="ni "><span>🧠</span><span class="ni-lbl">AI</span></a>
-  <a href="claude.html" class="ni "><span>🟠</span><span class="ni-lbl">Claude</span></a>
-  <a href="cloud.html" class="ni "><span>☁️</span><span class="ni-lbl">Cloud</span></a>
-  <a href="courses.html" class="ni "><span>📚</span><span class="ni-lbl">Courses</span></a>
-  <a href="playbook.html" class="ni "><span>📘</span><span class="ni-lbl">Playbook</span></a>
+<a class="ni active" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a>
+<a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a>
+<a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a>
+<a class="ni" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a>
+<a class="ni" href="claude.html"><span>🟠</span><span class="ni-lbl">Claude</span></a>
+<a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a>
+<a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a>
+<a class="ni" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a>
 </div></nav>
 <script src="assets/js/app-core.js"></script>
 <script>
@@ -105,4 +104,4 @@ $('themeBtn').onclick=toggleTheme;$('searchBtn').onclick=function(){$('searchOve
 applyTheme();renderSearch('');
 })();
 </script>
-</body></html>
+<script src="assets/js/resource-intelligence.js"></script></body></html>

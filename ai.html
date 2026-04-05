@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0f172a">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#0f172a" name="theme-color"/>
 <title>AI Path · Jideatom LP</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <style>
 :root{--bg:#f0f2f7;--bg2:#fff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,.08);--border2:rgba(15,23,42,.14);--shadow:0 10px 30px rgba(15,23,42,.08);--radius:18px;--accent:#4f46e5;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif}
 body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.10)}
@@ -44,7 +45,6 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
 @media (max-width:760px){.grid,.mini-grid{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
 </style>
-
 <style>
 .module-track{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
 .module-prog{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
@@ -57,174 +57,161 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 .ck span{font-size:.78rem;color:var(--text2);font-weight:700;line-height:1.45}
 .ck.done span{text-decoration:line-through;color:var(--text3)}
 </style>
-
 </head>
 <body>
 <header>
-  <button class="back" onclick="history.back()">←</button>
-  <div class="htxt"><h1>🧠 AI Path</h1><p>Minimal elite path · no clutter</p></div>
-  <button class="theme-btn" id="themeBtn">🌙</button>
+<button class="back" onclick="history.back()">←</button>
+<div class="htxt"><h1>🧠 AI Path</h1><p>Minimal elite path · no clutter</p></div>
+<button class="theme-btn" id="themeBtn">🌙</button>
 </header>
-
 <div class="wrap">
-  <section class="hero">
-    <div class="hero-k">Elite execution path</div>
-    <h2>Fewer courses. More depth. Real AI engineering.</h2>
-    <p>This path removes overlap and forces completion. You are not building a course museum. You are building AI engineering capability through a small set of high-leverage materials.</p>
-    <div class="hero-row">
-      <div class="hero-chip">Core bootcamp</div>
-      <div class="hero-chip">One prompting track</div>
-      <div class="hero-chip">One MCP track</div>
-      <div class="hero-chip">One agent build</div>
-    </div>
-  </section>
-
-  <div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
-  <div class="grid">
-    <article class="card track-card">
-      <div class="kicker">Keep</div>
-      <div class="track-head"><h3>Minimal elite path</h3><div class="track-tag">Execution first</div></div>
-      <p>Keep the strongest materials only. Every item on this page must either deepen systems thinking or create implementation skill.</p>
-      <div class="bullets">
-        <div class="bullet"><div class="check">✓</div><div>Main backbone = Maven AI Engineering Bootcamp</div></div>
-        <div class="bullet"><div class="check">✓</div><div>Hands-On LLMs for practical intuition</div></div>
-        <div class="bullet"><div class="check">✓</div><div>One prompting course, one MCP course, one agent course</div></div>
-        <div class="bullet"><div class="check">✓</div><div>Chip Huyen + Designing ML Systems as companion thinking layer</div></div>
-      </div>
-    </article>
-    <article class="card track-card">
-      <div class="kicker">Drop</div>
-      <div class="track-head"><h3>Noise and duplicates</h3><div class="track-tag">Clarity wins</div></div>
-      <p>Remove duplicate beginner courses, repeated Claude productivity tracks, and anything that does not clearly improve your implementation quality.</p>
-      <div class="bullets">
-        <div class="bullet"><div class="check">•</div><div>Multiple overlapping Claude cowork courses</div></div>
-        <div class="bullet"><div class="check">•</div><div>Repeated MCP intros once one solid intro is chosen</div></div>
-        <div class="bullet"><div class="check">•</div><div>Google AI cert if your priority is execution speed</div></div>
-        <div class="bullet"><div class="check">•</div><div>Challenge-style filler courses with low engineering depth</div></div>
-      </div>
-    </article>
-  </div>
-
-  <div class="section-title"><h2>Elite Path Modules</h2><span>M0 → M4</span></div>
-  <div class="path-list">
-    <article class="path-step">
-      <div class="step-no">M0</div>
-      <div>
-        <div class="step-top"><h3>Claude workflow base</h3><div class="badge">Applied tooling</div></div>
-        <p class="step-sub">Use exactly one serious Claude engineering course so Claude becomes a build tool, not a side hobby.</p>
-        <div class="course-box">
-          <div class="course"><strong>Primary: AiHero — Claude Code for Real Engineers</strong><span>Use this as your Claude engineering anchor. Stronger signal than generic cowork or productivity courses.</span></div>
-          <div class="course"><strong>Optional backup: CodeWithMosh — Claude Code for Professional Developers</strong><span>Keep only as secondary reference. Do not run both in parallel.</span></div>
-        </div>
-      </div>
-    </article>
-
-    <article class="path-step">
-      <div class="step-no">M1</div>
-      <div>
-        <div class="step-top"><h3>Prompting + LLM intuition</h3><div class="badge">Foundation</div></div>
-        <p class="step-sub">Build strong prompting discipline and a practical feel for how LLM systems actually behave.</p>
-        <div class="course-box">
-          <div class="course"><strong>FM — Practical Prompt Engineering for Developers</strong><span>Your single prompting course. Use it to sharpen structure, examples, context control, and evaluation mindset.</span></div>
-          <div class="course"><strong>Hands-On Large Language Models</strong><span>Your practical intuition book for embeddings, retrieval, and applied LLM workflows.</span></div>
-        </div>
-      </div>
-    </article>
-
-    <article class="path-step">
-      <div class="step-no">M2</div>
-      <div>
-        <div class="step-top"><h3>AI engineering core</h3><div class="badge">Main backbone</div></div>
-        <p class="step-sub">This is your central execution layer. Most of your AI build momentum should come from here.</p>
-        <div class="course-box">
-          <div class="course"><strong>MAVEN — The AI Engineering Bootcamp</strong><span>Main course backbone. This is the structured external path you should actually finish.</span></div>
-          <div class="course"><strong>AI Engineering — Chip Huyen</strong><span>Read alongside the bootcamp so your implementation grows with system-level judgment.</span></div>
-        </div>
-      </div>
-    </article>
-
-    <article class="path-step">
-      <div class="step-no">M3</div>
-      <div>
-        <div class="step-top"><h3>RAG + production thinking</h3><div class="badge">System design</div></div>
-        <p class="step-sub">This is where toy prompting becomes real systems work: retrieval, evaluation, architecture, and production discipline.</p>
-        <div class="course-box">
-          <div class="course"><strong>Designing Machine Learning Systems</strong><span>Your production-thinking companion: architecture, tradeoffs, evaluation discipline, and deployment judgment.</span></div>
-          <div class="course"><strong>Hands-On LLMs + Maven overlap</strong><span>Use both here for chunking, retrieval, evaluation, and grounded assistant design.</span></div>
-        </div>
-      </div>
-    </article>
-
-    <article class="path-step">
-      <div class="step-no">M4</div>
-      <div>
-        <div class="step-top"><h3>Agents + MCP</h3><div class="badge">Implementation</div></div>
-        <p class="step-sub">One course for agents, one course for MCP. Enough to build real workflows without drowning in overlap.</p>
-        <div class="course-box">
-          <div class="course"><strong>FM — Build an AI Agent from Scratch, v2</strong><span>Your single agent build course. Use it to ship a real workflow, not just watch demos.</span></div>
-          <div class="course"><strong>FM — Complete Intro to MCP</strong><span>Your single MCP primary. Keep the other MCP intros only as supporting reference if needed.</span></div>
-        </div>
-      </div>
-    </article>
-  </div>
-
-  <div class="section-title"><h2>Companion Books</h2><span>thinking layer</span></div>
-  <div class="books-grid">
-    <article class="book">
-      <div class="book-icon">📘</div>
-      <div><strong>AI Engineering — Chip Huyen</strong><div class="note">Read beside the bootcamp so course progress translates into real systems thinking.</div></div>
-    </article>
-    <article class="book">
-      <div class="book-icon">📗</div>
-      <div><strong>Hands-On Large Language Models</strong><div class="note">Use this whenever you want deeper intuition for embeddings, retrieval, and applied LLM implementation choices.</div></div>
-    </article>
-    <article class="book">
-      <div class="book-icon">📙</div>
-      <div><strong>Designing Machine Learning Systems</strong><div class="note">This is your production mindset layer: architecture, evaluation discipline, deployment tradeoffs, and technical judgment.</div></div>
-    </article>
-  </div>
-
-  <div class="section-title"><h2>Execution Rules</h2><span>protect momentum</span></div>
-  <div class="mini-grid">
-    <article class="card">
-      <div class="kicker">Rule 1</div>
-      <h3>Never run duplicates in parallel</h3>
-      <p>One prompting course, one MCP course, one agent course, one Claude course. Everything else becomes archive or reference.</p>
-    </article>
-    <article class="card">
-      <div class="kicker">Rule 2</div>
-      <h3>Finish before you expand</h3>
-      <p>Do not add new AI courses until you have finished a module checkpoint and built a concrete artifact from it.</p>
-    </article>
-    <article class="card">
-      <div class="kicker">Rule 3</div>
-      <h3>Build every month</h3>
-      <p>Each phase should end with something you can demo: prompt set, RAG prototype, MCP workflow, or agentic assistant.</p>
-    </article>
-    <article class="card">
-      <div class="kicker">Rule 4</div>
-      <h3>Read alongside implementation</h3>
-      <p>Books are not a separate lane. Use them to sharpen your judgment while the courses give you execution reps.</p>
-    </article>
-  </div>
-
-  <div class="section-title"><h2>What I recommend you remove from the live page</h2><span>declutter</span></div>
-  <article class="card">
-    <p>Remove duplicated Claude beginner tracks, repeated MCP intros, and low-signal challenge content. Keep them in your file archive if you want, but do not keep them in the active roadmap. The active roadmap should feel smaller, cleaner, and more dangerous.</p>
-  </article>
+<section class="hero">
+<div class="hero-k">Elite execution path</div>
+<h2>Fewer courses. More depth. Real AI engineering.</h2>
+<p>This path removes overlap and forces completion. You are not building a course museum. You are building AI engineering capability through a small set of high-leverage materials.</p>
+<div class="hero-row">
+<div class="hero-chip">Core bootcamp</div>
+<div class="hero-chip">One prompting track</div>
+<div class="hero-chip">One MCP track</div>
+<div class="hero-chip">One agent build</div>
 </div>
-
+</section>
+<div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
+<div class="grid">
+<article class="card track-card">
+<div class="kicker">Keep</div>
+<div class="track-head"><h3>Minimal elite path</h3><div class="track-tag">Execution first</div></div>
+<p>Keep the strongest materials only. Every item on this page must either deepen systems thinking or create implementation skill.</p>
+<div class="bullets">
+<div class="bullet"><div class="check">✓</div><div>Main backbone = Maven AI Engineering Bootcamp</div></div>
+<div class="bullet"><div class="check">✓</div><div>Hands-On LLMs for practical intuition</div></div>
+<div class="bullet"><div class="check">✓</div><div>One prompting course, one MCP course, one agent course</div></div>
+<div class="bullet"><div class="check">✓</div><div>Chip Huyen + Designing ML Systems as companion thinking layer</div></div>
+</div>
+</article>
+<article class="card track-card">
+<div class="kicker">Drop</div>
+<div class="track-head"><h3>Noise and duplicates</h3><div class="track-tag">Clarity wins</div></div>
+<p>Remove duplicate beginner courses, repeated Claude productivity tracks, and anything that does not clearly improve your implementation quality.</p>
+<div class="bullets">
+<div class="bullet"><div class="check">•</div><div>Multiple overlapping Claude cowork courses</div></div>
+<div class="bullet"><div class="check">•</div><div>Repeated MCP intros once one solid intro is chosen</div></div>
+<div class="bullet"><div class="check">•</div><div>Google AI cert if your priority is execution speed</div></div>
+<div class="bullet"><div class="check">•</div><div>Challenge-style filler courses with low engineering depth</div></div>
+</div>
+</article>
+</div>
+<div class="section-title"><h2>Elite Path Modules</h2><span>M0 → M4</span></div>
+<div class="path-list">
+<article class="path-step">
+<div class="step-no">M0</div>
+<div>
+<div class="step-top"><h3>Claude workflow base</h3><div class="badge">Applied tooling</div></div>
+<p class="step-sub">Use exactly one serious Claude engineering course so Claude becomes a build tool, not a side hobby.</p>
+<div class="course-box">
+<div class="course"><strong>Primary: AiHero — Claude Code for Real Engineers</strong><span>Use this as your Claude engineering anchor. Stronger signal than generic cowork or productivity courses.</span></div>
+<div class="course"><strong>Optional backup: CodeWithMosh — Claude Code for Professional Developers</strong><span>Keep only as secondary reference. Do not run both in parallel.</span></div>
+</div>
+</div>
+</article>
+<article class="path-step">
+<div class="step-no">M1</div>
+<div>
+<div class="step-top"><h3>Prompting + LLM intuition</h3><div class="badge">Foundation</div></div>
+<p class="step-sub">Build strong prompting discipline and a practical feel for how LLM systems actually behave.</p>
+<div class="course-box">
+<div class="course"><strong>FM — Practical Prompt Engineering for Developers</strong><span>Your single prompting course. Use it to sharpen structure, examples, context control, and evaluation mindset.</span></div>
+<div class="course"><strong>Hands-On Large Language Models</strong><span>Your practical intuition book for embeddings, retrieval, and applied LLM workflows.</span></div>
+</div>
+</div>
+</article>
+<article class="path-step">
+<div class="step-no">M2</div>
+<div>
+<div class="step-top"><h3>AI engineering core</h3><div class="badge">Main backbone</div></div>
+<p class="step-sub">This is your central execution layer. Most of your AI build momentum should come from here.</p>
+<div class="course-box">
+<div class="course"><strong>MAVEN — The AI Engineering Bootcamp</strong><span>Main course backbone. This is the structured external path you should actually finish.</span></div>
+<div class="course"><strong>AI Engineering — Chip Huyen</strong><span>Read alongside the bootcamp so your implementation grows with system-level judgment.</span></div>
+</div>
+</div>
+</article>
+<article class="path-step">
+<div class="step-no">M3</div>
+<div>
+<div class="step-top"><h3>RAG + production thinking</h3><div class="badge">System design</div></div>
+<p class="step-sub">This is where toy prompting becomes real systems work: retrieval, evaluation, architecture, and production discipline.</p>
+<div class="course-box">
+<div class="course"><strong>Designing Machine Learning Systems</strong><span>Your production-thinking companion: architecture, tradeoffs, evaluation discipline, and deployment judgment.</span></div>
+<div class="course"><strong>Hands-On LLMs + Maven overlap</strong><span>Use both here for chunking, retrieval, evaluation, and grounded assistant design.</span></div>
+</div>
+</div>
+</article>
+<article class="path-step">
+<div class="step-no">M4</div>
+<div>
+<div class="step-top"><h3>Agents + MCP</h3><div class="badge">Implementation</div></div>
+<p class="step-sub">One course for agents, one course for MCP. Enough to build real workflows without drowning in overlap.</p>
+<div class="course-box">
+<div class="course"><strong>FM — Build an AI Agent from Scratch, v2</strong><span>Your single agent build course. Use it to ship a real workflow, not just watch demos.</span></div>
+<div class="course"><strong>FM — Complete Intro to MCP</strong><span>Your single MCP primary. Keep the other MCP intros only as supporting reference if needed.</span></div>
+</div>
+</div>
+</article>
+</div>
+<div class="section-title"><h2>Companion Books</h2><span>thinking layer</span></div>
+<div class="books-grid">
+<article class="book">
+<div class="book-icon">📘</div>
+<div><strong>AI Engineering — Chip Huyen</strong><div class="note">Read beside the bootcamp so course progress translates into real systems thinking.</div></div>
+</article>
+<article class="book">
+<div class="book-icon">📗</div>
+<div><strong>Hands-On Large Language Models</strong><div class="note">Use this whenever you want deeper intuition for embeddings, retrieval, and applied LLM implementation choices.</div></div>
+</article>
+<article class="book">
+<div class="book-icon">📙</div>
+<div><strong>Designing Machine Learning Systems</strong><div class="note">This is your production mindset layer: architecture, evaluation discipline, deployment tradeoffs, and technical judgment.</div></div>
+</article>
+</div>
+<div class="section-title"><h2>Execution Rules</h2><span>protect momentum</span></div>
+<div class="mini-grid">
+<article class="card">
+<div class="kicker">Rule 1</div>
+<h3>Never run duplicates in parallel</h3>
+<p>One prompting course, one MCP course, one agent course, one Claude course. Everything else becomes archive or reference.</p>
+</article>
+<article class="card">
+<div class="kicker">Rule 2</div>
+<h3>Finish before you expand</h3>
+<p>Do not add new AI courses until you have finished a module checkpoint and built a concrete artifact from it.</p>
+</article>
+<article class="card">
+<div class="kicker">Rule 3</div>
+<h3>Build every month</h3>
+<p>Each phase should end with something you can demo: prompt set, RAG prototype, MCP workflow, or agentic assistant.</p>
+</article>
+<article class="card">
+<div class="kicker">Rule 4</div>
+<h3>Read alongside implementation</h3>
+<p>Books are not a separate lane. Use them to sharpen your judgment while the courses give you execution reps.</p>
+</article>
+</div>
+<div class="section-title"><h2>What I recommend you remove from the live page</h2><span>declutter</span></div>
+<article class="card">
+<p>Remove duplicated Claude beginner tracks, repeated MCP intros, and low-signal challenge content. Keep them in your file archive if you want, but do not keep them in the active roadmap. The active roadmap should feel smaller, cleaner, and more dangerous.</p>
+</article>
+</div>
 <nav class="bnav"><div class="bnav-inner">
-  <a href="index.html" class="ni "><span>🏠</span><span class="ni-lbl">Home</span></a>
-  <a href="linux.html" class="ni "><span>🐧</span><span class="ni-lbl">Linux</span></a>
-  <a href="python.html" class="ni "><span>🐍</span><span class="ni-lbl">Python</span></a>
-  <a href="ai.html" class="ni active"><span>🧠</span><span class="ni-lbl">AI</span></a>
-  <a href="claude.html" class="ni "><span>🟠</span><span class="ni-lbl">Claude</span></a>
-  <a href="cloud.html" class="ni "><span>☁️</span><span class="ni-lbl">Cloud</span></a>
-  <a href="courses.html" class="ni "><span>📚</span><span class="ni-lbl">Courses</span></a>
-  <a href="playbook.html" class="ni "><span>📘</span><span class="ni-lbl">Playbook</span></a>
+<a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a>
+<a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a>
+<a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a>
+<a class="ni active" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a>
+<a class="ni" href="claude.html"><span>🟠</span><span class="ni-lbl">Claude</span></a>
+<a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a>
+<a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a>
+<a class="ni" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a>
 </div></nav>
-
 <script>
 (function(){
   const btn=document.getElementById('themeBtn');
@@ -241,7 +228,6 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
   applyTheme();
 })();
 </script>
-
 <script>
 (function(){
   const MODULES = {
@@ -364,6 +350,5 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
   document.addEventListener('DOMContentLoaded', renderAll);
 })();
 </script>
-
-</body>
+<script src="assets/js/resource-intelligence.js"></script></body>
 </html>
