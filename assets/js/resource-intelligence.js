@@ -90,8 +90,8 @@
     const label = thumb.querySelector('.resource-thumb-label');
     if(label){
       if(src) label.textContent = 'Cover added';
-      else if(thumb.classList.contains('awaiting-paste')) label.textContent = 'Paste now or double-click to upload';
-      else label.textContent = 'Click, paste, or double-click to upload';
+      else if(thumb.classList.contains('awaiting-paste')) label.textContent = 'Double-click to upload cover';
+      else label.textContent = 'Double-click to upload cover';
     }
   }
 
@@ -101,7 +101,7 @@
       thumb = document.createElement('div');
       thumb.className = 'resource-thumb';
       thumb.tabIndex = 0;
-      thumb.innerHTML = '<span class="resource-thumb-label">Click, paste, or double-click to upload</span><button type="button" class="thumb-clear" title="Clear image">×</button>';
+      thumb.innerHTML = '<span class="resource-thumb-label">Double-click to upload cover</span><button type="button" class="thumb-clear" title="Clear image">×</button>';
       card.insertBefore(thumb, card.firstChild);
     }
     thumb.dataset.resourceKey = card.dataset.resourceKey;

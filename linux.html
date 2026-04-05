@@ -42,6 +42,20 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 .note{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
 @media (max-width:760px){.grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
+
+      .shell-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+      .shell-tab,.shell-chip,.shell-action{border:0;border-radius:12px;padding:8px 12px;font-size:.72rem;font-weight:800;cursor:pointer}
+      .shell-tab{background:var(--bg3);color:var(--text2)}
+      .shell-tab.active{background:linear-gradient(135deg,#2647c8,#6a5cff);color:#fff}
+      .shell-panel{display:none}
+      .shell-panel.active{display:block}
+      .shell-chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+      .shell-chip{background:var(--bg3);color:var(--text)}
+      .shell-chip:hover{opacity:.92}
+      .shell-pad{width:100%;min-height:150px;border-radius:16px;border:1px solid var(--border);background:#0b1220;color:#d1fae5;padding:14px;font-family:var(--mono);font-size:.78rem;resize:vertical}
+      .shell-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+      .shell-action{background:var(--bg3);color:var(--text)}
+
 </style>
 </head>
 <body>
@@ -196,5 +210,47 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
   applyTheme(); render();
 })();
 </script>
-<script src="assets/js/resource-intelligence.js"></script></body>
+<script src="assets/js/resource-intelligence.js"></script>
+<script>
+(function(){
+  document.querySelectorAll('.shell-tabs').forEach(function(tabWrap){
+    const card = tabWrap.closest('.card');
+    if(!card) return;
+    const tabs = tabWrap.querySelectorAll('.shell-tab');
+    const panels = card.querySelectorAll('.shell-panel');
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        tabs.forEach(t=>t.classList.remove('active'));
+        panels.forEach(p=>p.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.shellTab;
+        const panel = card.querySelector('[data-shell-panel="'+target+'"]');
+        if(panel) panel.classList.add('active');
+      });
+    });
+    const pad = card.querySelector('.shell-pad');
+    card.querySelectorAll('.shell-chip').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(pad){
+          const cmd = btn.dataset.cmd || '';
+          pad.value = pad.value ? (pad.value + "\n" + cmd) : cmd;
+          pad.focus();
+        }
+      });
+    });
+    card.querySelectorAll('.shell-action').forEach(function(btn){
+      btn.addEventListener('click', async function(){
+        if(!pad) return;
+        const action = btn.dataset.shellAction;
+        if(action === 'clear') pad.value = '';
+        if(action === 'copy'){
+          try{ await navigator.clipboard.writeText(pad.value || ''); }catch(e){}
+        }
+      });
+    });
+  });
+})();
+</script>
+
+</body>
 </html>
