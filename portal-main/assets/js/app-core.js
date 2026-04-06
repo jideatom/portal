@@ -52,16 +52,66 @@ function ensureTimer(){
   const overlay=document.createElement('div'); overlay.className='core-timer-overlay'; overlay.id='coreTimerOverlay';
   overlay.innerHTML='<div class="core-timer-card"><div class="core-timer-k">Focus Session</div><div class="core-timer-topic" id="coreTimerTopic">Study Session</div><div class="core-timer-time" id="coreTimerTime">25:00</div><div class="core-timer-row"><button class="core-timer-btn primary" id="coreTimerStart">Start</button><button class="core-timer-btn secondary" id="coreTimerReset">Reset</button><button class="core-timer-btn secondary" id="coreTimerClose">Close</button></div><div class="core-timer-note" id="coreTimerNote">Timer completion is what adds real study time.</div></div>';
   document.body.appendChild(fab); document.body.appendChild(overlay);
-  const T={mins:25,left:1500,id:null,running:false,task:'Study Session'};
+  const TIMER_STATE_KEY='coreTimerState';
+  const T={mins:25,left:1500,id:null,running:false,task:'Study Session',endTs:null};
+  function saveTimerState(){setJSON(TIMER_STATE_KEY,{mins:T.mins,left:T.left,running:T.running,task:T.task,endTs:T.endTs});}
+  function clearTimerState(){localStorage.removeItem(TIMER_STATE_KEY);}
+  function recalcLeftFromClock(){if(!T.running||!T.endTs) return; T.left=Math.max(0,Math.ceil((T.endTs-Date.now())/1000));}
   function draw(){const m=Math.floor(T.left/60),s=T.left%60; document.getElementById('coreTimerTime').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); document.getElementById('coreTimerTopic').textContent=T.task;}
-  function stop(){if(T.id) clearInterval(T.id); T.id=null; T.running=false; document.getElementById('coreTimerStart').textContent='Start';}
-  function startPause(){if(T.running) return stop(); T.running=true; document.getElementById('coreTimerStart').textContent='Pause'; T.id=setInterval(function(){T.left-=1; draw(); if(T.left<=0){stop(); window.logStudyMinutes(T.mins,T.task); document.getElementById('coreTimerNote').textContent='✓ Timer completed and real study time logged'; T.left=T.mins*60; draw(); setTimeout(function(){document.getElementById('coreTimerNote').textContent='Timer completion is what adds real study time.';},1800);}},1000);}
-  window.openTimer=function(task,mins){T.task=task||'Study Session'; T.mins=mins||25; T.left=T.mins*60; draw(); overlay.classList.add('open');};
+  function completeSession(){stop(); window.logStudyMinutes(T.mins,T.task); document.getElementById('coreTimerNote').textContent='✓ Timer completed and real study time logged'; T.left=T.mins*60; draw(); clearTimerState(); setTimeout(function(){document.getElementById('coreTimerNote').textContent='Timer completion is what adds real study time.';},1800);}
+  function stop(){if(T.id) clearInterval(T.id); recalcLeftFromClock(); T.id=null; T.running=false; T.endTs=null; document.getElementById('coreTimerStart').textContent='Start'; saveTimerState();}
+  function startPause(){
+    if(T.running) return stop();
+    T.running=true;
+    T.endTs=Date.now()+(T.left*1000);
+    document.getElementById('coreTimerStart').textContent='Pause';
+    saveTimerState();
+    T.id=setInterval(function(){recalcLeftFromClock(); draw(); if(T.left<=0) completeSession(); else saveTimerState();},1000);
+  }
+  function hydrateTimerState(){
+    const saved=getJSON(TIMER_STATE_KEY,null);
+    if(!saved) return;
+    T.mins=Math.max(1,Number(saved.mins||25));
+    T.left=Math.max(0,Number(saved.left||T.mins*60));
+    T.task=saved.task||'Study Session';
+    T.running=!!saved.running;
+    T.endTs=saved.endTs||null;
+    if(T.running&&T.endTs&&T.endTs<=Date.now()){T.left=0; completeSession(); return;}
+    if(T.running&&T.endTs){
+      recalcLeftFromClock();
+      if(T.left<=0){completeSession(); return;}
+      document.getElementById('coreTimerStart').textContent='Pause';
+      T.id=setInterval(function(){recalcLeftFromClock(); draw(); if(T.left<=0) completeSession(); else saveTimerState();},1000);
+    }
+    draw();
+  }
+  window.openTimer=function(task,mins){
+    const requestedMins=Number(mins||0);
+    const sameTask=!task || task===T.task;
+    const hasInProgressTime=T.left>0 && T.left<(T.mins*60);
+    if(requestedMins>0){
+      const nextMins=Math.max(1,requestedMins);
+      const shouldResetDuration=(!T.running) && (!hasInProgressTime || !sameTask || nextMins!==T.mins);
+      T.mins=nextMins;
+      if(shouldResetDuration) T.left=T.mins*60;
+    }
+    if(task && (!T.running || !hasInProgressTime || !sameTask)) T.task=task;
+    draw();
+    saveTimerState();
+    overlay.classList.add('open');
+  };
   fab.onclick=function(){window.openTimer(document.body.getAttribute('data-today-topic')||'Study Session',25);};
   document.getElementById('coreTimerStart').onclick=startPause;
-  document.getElementById('coreTimerReset').onclick=function(){stop(); T.left=T.mins*60; draw();};
-  document.getElementById('coreTimerClose').onclick=function(){stop(); overlay.classList.remove('open');};
-  overlay.addEventListener('click',function(e){if(e.target===overlay){stop(); overlay.classList.remove('open');}});
+  document.getElementById('coreTimerReset').onclick=function(){stop(); T.left=T.mins*60; draw(); saveTimerState();};
+  function closeOverlay(){
+    overlay.classList.remove('open');
+    if(T.running) document.getElementById('coreTimerNote').textContent='Timer is still running in the background.';
+    else document.getElementById('coreTimerNote').textContent='Timer completion is what adds real study time.';
+  }
+  document.getElementById('coreTimerClose').onclick=closeOverlay;
+  overlay.addEventListener('click',function(e){if(e.target===overlay) closeOverlay();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape' && overlay.classList.contains('open')) closeOverlay();});
+  hydrateTimerState();
 }
 
 function trackPct(key,keys){const s=getJSON(key,{}); return keys.length?Math.round(keys.filter(k=>s[k]).length/keys.length*100):0;}
@@ -96,6 +146,69 @@ function pickSmartSession(goal,s,progress){const candidates=[]; if(goal.upcoming
     if(buildChoices.length) candidates.push({score:90,phase:buildChoices[0].phase,title:buildChoices[0].title,sub:buildChoices[0].sub,href:buildChoices[0].href});
   }
   if((s.current||0)<3) candidates.push({score:88,phase:'Streak Protection',title:'Quick win to protect your streak',sub:'Take a shorter, easier session today so momentum stays alive.',href:tracks[0]?tracks[0].href:'index.html'}); return candidates.sort((a,b)=>b.score-a.score)[0]||{phase:'Focus Session',title:'Study Session',sub:'Pick one meaningful block and move it forward.',href:'index.html'};}
+function enhanceBottomNav(){
+  const wrap=document.querySelector('.bnav .bnav-inner');
+  if(!wrap) return;
+  const links=Array.from(wrap.querySelectorAll('a.ni[href]'));
+  if(!links.length) return;
+  const progress=computeProgress();
+  const goals=getJSON('goals_snapshot',{});
+  const streak=getSD();
+  const navSignals={
+    'linux.html':progress.linux+'%',
+    'python.html':progress.python+'%',
+    'ai.html':progress.ai+'%',
+    'cloud.html':progress.cloud+'%',
+    'playbook.html':(goals.pct||0)+'%',
+    'index.html':(streak.current||0)+'d'
+  };
+  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  let activeLink=null;
+  links.forEach((link,idx)=>{
+    const href=((link.getAttribute('href')||'').split('/').pop()||'').toLowerCase();
+    const isActive=href===current || (current===''&&href==='index.html');
+    link.classList.toggle('active',isActive);
+    if(isActive){activeLink=link; link.setAttribute('aria-current','page'); link.tabIndex=0;}
+    else{link.removeAttribute('aria-current'); link.tabIndex=-1;}
+    const lbl=link.querySelector('.ni-lbl');
+    if(lbl) link.setAttribute('aria-label',lbl.textContent.trim()+' tab');
+    const signal=navSignals[href];
+    let chip=link.querySelector('.ni-signal');
+    if(signal){
+      if(!chip){chip=document.createElement('span'); chip.className='ni-signal'; link.appendChild(chip);}
+      chip.textContent=signal;
+      chip.setAttribute('aria-hidden','true');
+    }else if(chip){chip.remove();}
+    link.dataset.navIndex=String(idx);
+  });
+  if(!activeLink) activeLink=links[0];
+  function moveFocus(nextIdx){
+    const i=(nextIdx+links.length)%links.length;
+    links.forEach(l=>l.tabIndex=-1);
+    links[i].tabIndex=0;
+    links[i].focus();
+    links[i].scrollIntoView({block:'nearest',inline:'center'});
+  }
+  wrap.addEventListener('keydown',function(e){
+    const t=e.target;
+    if(!t || !t.classList || !t.classList.contains('ni')) return;
+    const idx=Number(t.dataset.navIndex||0);
+    if(e.key==='ArrowRight'){e.preventDefault(); moveFocus(idx+1);}
+    else if(e.key==='ArrowLeft'){e.preventDefault(); moveFocus(idx-1);}
+    else if(e.key==='Home'){e.preventDefault(); moveFocus(0);}
+    else if(e.key==='End'){e.preventDefault(); moveFocus(links.length-1);}
+  });
+  if(activeLink){
+    activeLink.scrollIntoView({block:'nearest',inline:'center'});
+    setTimeout(function(){activeLink.scrollIntoView({block:'nearest',inline:'center'});},120);
+  }
+  if(!document.getElementById('coreNavEnhanceStyle')){
+    const style=document.createElement('style');
+    style.id='coreNavEnhanceStyle';
+    style.textContent='.bnav{box-shadow:0 -10px 30px rgba(15,23,42,.12)}.ni{position:relative}.ni-signal{margin-top:1px;font-size:.5rem;font-weight:800;font-family:var(--mono,monospace);color:var(--text2,#475569);line-height:1}.ni.active .ni-signal{color:var(--accent,#4f46e5)}.ni:focus-visible{outline:2px solid var(--accent,#4f46e5);outline-offset:3px;border-radius:10px}.ni.active>span:first-child{background:rgba(79,70,229,.2);transform:translateY(-1px)}.ni.active::after{content:\"\";position:absolute;top:1px;left:50%;transform:translateX(-50%);width:20px;height:3px;border-radius:99px;background:var(--accent,#4f46e5)}';
+    document.head.appendChild(style);
+  }
+}
 window.refreshHomeWidgets=function(){
   const s=getSD(); const goal=getJSON('goals_snapshot',{}); const today=localDateStr(); const progress=computeProgress();
   const gb=document.getElementById('goalBanner'); if(gb){gb.style.display='flex'; document.getElementById('gbMonth').textContent=goal.month||'This Month'; document.getElementById('gbTitle').textContent=goal.total?(goal.done+' of '+goal.total+' milestones complete'):'No goals set yet'; document.getElementById('gbSub').textContent=goal.upcoming&&goal.upcoming[0]?('Next: '+goal.upcoming[0]):'Tap to set your monthly milestones →'; document.getElementById('gbPct').textContent=goal.total?(goal.pct+'%'):'-'; document.getElementById('gbFill').style.width=(goal.pct||0)+'%';}
@@ -115,5 +228,5 @@ window.refreshHomeWidgets=function(){
     }
     if((s.current||0)<3) actions.push({title:'Protect your streak',sub:'A short focused session today keeps momentum alive.',href:'index.html'}); if(progress.cloud<15) actions.push({title:'Open Cloud and finish foundations',sub:'Start with cloud foundations and networking alignment.',href:'cloud.html'}); next.innerHTML='<div class="next-actions-list">'+(actions.slice(0,4).map((a,i)=>'<a class="next-act" href="'+a.href+'"><div class="next-num">'+(i+1)+'</div><div><strong>'+a.title+'</strong><span>'+a.sub+'</span></div></a>').join('')||'<div class="next-act"><div class="next-num">1</div><div><strong>Set your first milestone</strong><span>Use Playbook to define this month’s target.</span></div></div>')+'</div>';}
 };
-document.addEventListener('DOMContentLoaded',function(){ensureTimer(); if(window.refreshHomeWidgets) window.refreshHomeWidgets();});
+document.addEventListener('DOMContentLoaded',function(){ensureTimer(); enhanceBottomNav(); if(window.refreshHomeWidgets) window.refreshHomeWidgets();});
 })();
