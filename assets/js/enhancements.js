@@ -188,8 +188,8 @@
     const style = document.createElement('style');
     style.id = 'resourceStageEnhanceStyles';
     style.textContent = `
-      .resource-link-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-      .resource-link-btn{border:0;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:700;text-decoration:none;background:var(--bg3,#e8ecf4);color:var(--accent,#4f46e5);cursor:pointer}
+      .resource-link-tools{display:flex;flex-direction:row;align-items:center;gap:8px;flex-wrap:nowrap;margin-top:8px;overflow-x:auto;white-space:nowrap}.resource-link-tools > *{flex:0 0 auto}
+      .resource-link-btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:700;text-decoration:none;background:var(--bg3,#e8ecf4);color:var(--accent,#4f46e5);cursor:pointer;white-space:nowrap;line-height:1}
       .resource-link-btn.ghost{background:transparent;border:1px solid var(--border2,rgba(15,23,42,.14));color:var(--text2,#475569)}
       .resource-title-link{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(79,70,229,.35)}
       .resource-title-link:hover{color:var(--accent,#4f46e5)}
@@ -199,6 +199,31 @@
       .stage-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#38bdf8,#4f46e5)}
       .locked-step{opacity:.62}
       .locked-step::after{content:'Complete the previous stage to unlock this one';display:block;margin-top:10px;font-size:12px;font-weight:700;color:#ef4444}
+
+      .book-card-compact .resource-link-tools,.course-card-compact .resource-link-tools{display:none !important}
+      .book-card-compact .resource-body,.course-card-compact .resource-body{display:flex;flex-direction:column;justify-content:center}
+      .book-card-compact .book-rc-hint,.course-card-compact .book-rc-hint{margin-top:8px;font-size:.65rem;font-weight:700;color:var(--text3,#64748b)}
+      .book-card-compact .resource-thumb,.course-card-compact .resource-thumb{margin-right:2px}
+      .book-context-menu{position:fixed;z-index:9999;display:none;min-width:160px;background:#0f172a;color:#e2e8f0;border:1px solid rgba(255,255,255,.12);border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.22);padding:6px}
+      .book-context-menu.open{display:block}
+      .book-context-menu button{display:block;width:100%;text-align:left;background:transparent;border:0;color:inherit;padding:10px 12px;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer}
+      .book-context-menu button:hover{background:rgba(255,255,255,.08)}
+      .book-card-compact .resource-link-tools,
+      .course-card-compact .resource-link-tools{
+        display:flex !important;
+        flex-direction:row !important;
+        align-items:center !important;
+        gap:8px !important;
+        flex-wrap:nowrap !important;
+        overflow-x:auto !important;
+        white-space:nowrap !important;
+      }
+      .book-card-compact .resource-link-tools .resource-link-btn,
+      .course-card-compact .resource-link-tools .resource-link-btn{
+        display:inline-flex !important;
+        white-space:nowrap !important;
+      }
+
     `;
     document.head.appendChild(style);
   }
@@ -207,6 +232,164 @@
     enhanceResources();
     enhanceStages();
   }
+
+
+  function ensureBookContextMenu(){
+    let menu = document.getElementById('bookContextMenu');
+    if(menu) return menu;
+    menu = document.createElement('div');
+    menu.id = 'bookContextMenu';
+    menu.className = 'book-context-menu';
+    menu.innerHTML = '<button type="button" data-action="set">Set link</button><button type="button" data-action="edit">Edit link</button><button type="button" data-action="clear">Clear link</button>';
+    document.body.appendChild(menu);
+
+    let currentCard = null;
+    function closeMenu(){
+      menu.classList.remove('open');
+      currentCard = null;
+    }
+    document.addEventListener('click', function(e){
+      if(!menu.contains(e.target)) closeMenu();
+    });
+    document.addEventListener('scroll', closeMenu, true);
+    window.addEventListener('resize', closeMenu);
+
+    menu.addEventListener('click', function(e){
+      const btn = e.target.closest('button[data-action]');
+      if(!btn || !currentCard) return;
+      const action = btn.dataset.action;
+      const key = resourceKey(currentCard);
+      const title = resourceTitle(currentCard);
+      const links = getLinks();
+      const existing = links[key] || '';
+      if(action === 'clear'){
+        delete links[key];
+        saveLinks(links);
+      } else {
+        const val = prompt((action === 'set' ? 'Paste the external link for:\n' : 'Edit external link for:\n') + title, existing || 'https://');
+        if(!val) return closeMenu();
+        links[key] = val.trim();
+        saveLinks(links);
+      }
+      decorateBookCard(currentCard, true);
+      closeMenu();
+    });
+
+    menu.openFor = function(card, x, y){
+      currentCard = card;
+      const links = getLinks();
+      const hasLink = !!links[resourceKey(card)];
+      menu.querySelector('[data-action="set"]').style.display = hasLink ? 'none' : 'block';
+      menu.querySelector('[data-action="edit"]').style.display = hasLink ? 'block' : 'none';
+      menu.querySelector('[data-action="clear"]').style.display = hasLink ? 'block' : 'none';
+      menu.style.left = x + 'px';
+      menu.style.top = y + 'px';
+      menu.classList.add('open');
+    };
+    return menu;
+  }
+
+  function decorateBookCard(card, rerender){
+    if(card.dataset.bookCompact === '1' && !rerender) return;
+    card.dataset.bookCompact = '1';
+    card.classList.add('book-card-compact');
+    const title = resourceTitle(card);
+    const link = currentLink(card, 'book');
+
+    // remove link toolbar for books
+    const toolbar = card.querySelector('.resource-link-tools');
+    if(toolbar) toolbar.remove();
+
+    // make whole book card clickable
+    card.style.cursor = link ? 'pointer' : 'default';
+    card.onclick = function(e){
+      if(e.target.closest('.resource-thumb')) return;
+      const href = currentLink(card, 'book');
+      if(href) window.open(href, '_blank', 'noopener');
+    };
+
+    // right click context menu
+    card.oncontextmenu = function(e){
+      e.preventDefault();
+      ensureBookContextMenu().openFor(card, e.clientX, e.clientY);
+    };
+
+    // title anchor should go direct
+    const a = card.querySelector('.resource-title-link');
+    if(a){
+      if(link){
+        a.href = link;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      } else {
+        a.removeAttribute('href');
+      }
+    }
+
+    // compact helper text
+    let hint = card.querySelector('.book-rc-hint');
+    if(!hint){
+      hint = document.createElement('div');
+      hint.className = 'book-rc-hint';
+      hint.textContent = 'Right-click for link options';
+      const body = card.querySelector('.resource-body') || card;
+      body.appendChild(hint);
+    }
+  }
+
+
+  function decorateCourseCard(card, rerender){
+    if(card.dataset.courseCompact === '1' && !rerender) return;
+    card.dataset.courseCompact = '1';
+    card.classList.add('course-card-compact');
+    const link = currentLink(card, 'course');
+
+    const toolbar = card.querySelector('.resource-link-tools');
+    if(toolbar) toolbar.remove();
+
+    card.style.cursor = link ? 'pointer' : 'default';
+    card.onclick = function(e){
+      if(e.target.closest('.resource-thumb')) return;
+      const href = currentLink(card, 'course');
+      if(href) window.open(href, '_blank', 'noopener');
+    };
+
+    card.oncontextmenu = function(e){
+      e.preventDefault();
+      ensureBookContextMenu().openFor(card, e.clientX, e.clientY);
+    };
+
+    const a = card.querySelector('.resource-title-link');
+    if(a){
+      if(link){
+        a.href = link;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      } else {
+        a.removeAttribute('href');
+      }
+    }
+
+    let hint = card.querySelector('.book-rc-hint');
+    if(!hint){
+      hint = document.createElement('div');
+      hint.className = 'book-rc-hint';
+      hint.textContent = 'Right-click for link options';
+      const body = card.querySelector('.resource-body') || card;
+      body.appendChild(hint);
+    }
+  }
+
+  const _decorateResourceCard = decorateResourceCard;
+  decorateResourceCard = function(card, kind){
+    _decorateResourceCard(card, kind);
+    if(kind === 'book'){
+      decorateBookCard(card);
+    }
+    if(kind === 'course'){
+      decorateCourseCard(card);
+    }
+  };
 
   document.addEventListener('DOMContentLoaded', function(){
     addStyles();
