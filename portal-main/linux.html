@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#0f172a" name="theme-color"/>
+<title>Linux Path · Jideatom LP</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#f0f2f7;--bg2:#fff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,.08);--border2:rgba(15,23,42,.14);--shadow:0 10px 30px rgba(15,23,42,.08);--accent:#10b981;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif}
+body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.10)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans)}a{text-decoration:none;color:inherit}button,input{font-family:var(--sans)}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:10px}body.dark header{background:rgba(8,12,20,.82)}
+.back{color:var(--accent);font-size:1.25rem;font-weight:800;background:none;border:none}.htxt{flex:1}.htxt h1{margin:0;font-size:.98rem;font-weight:800}.htxt p{margin:2px 0 0;font-size:.64rem;color:var(--text2);font-family:var(--mono);font-weight:700}
+.theme-btn{min-width:40px;min-height:40px;border-radius:12px;border:1px solid var(--border2);background:var(--bg2);color:var(--text)}
+.wrap{max-width:920px;margin:0 auto;padding:16px 16px 92px}
+.hero{background:linear-gradient(135deg,#064e3b,#047857 55%, #34d399);border-radius:24px;padding:20px;color:#fff;box-shadow:var(--shadow);margin-bottom:16px}
+.hero-k{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.14);font-size:.62rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;font-family:var(--mono)}
+.hero h2{margin:12px 0 6px;font-size:1.4rem;font-weight:800}.hero p{margin:0;color:rgba(255,255,255,.86);line-height:1.55;max-width:65ch;font-weight:600}
+.hero-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.hero-chip{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.12);font-size:.75rem;font-weight:800}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}.section-title h2{margin:0;font-size:1rem;font-weight:800}.section-title span{font-size:.68rem;color:var(--text2);font-family:var(--mono)}
+.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.sum-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:14px;text-align:center;box-shadow:var(--shadow)}.sum-num{font-size:1.35rem;font-weight:800;font-family:var(--mono);color:var(--accent)}.sum-lbl{font-size:.56rem;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:.8px;font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+.kicker{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-family:var(--mono);margin-bottom:8px}
+.card h3{margin:0 0 6px;font-size:1rem;font-weight:800}.card p{margin:0;color:var(--text2);line-height:1.55;font-size:.78rem;font-weight:600}
+.track-card{padding:18px}.track-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}.track-tag{padding:6px 10px;border-radius:999px;background:var(--bg3);font-size:.62rem;font-weight:800;font-family:var(--mono)}
+.bullets{display:grid;gap:8px;margin-top:12px}.bullet{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--bg3);font-size:.76rem;font-weight:700;color:var(--text2)}.check{width:18px;height:18px;border-radius:999px;display:grid;place-items:center;background:#dbeafe;color:var(--accent);font-size:.7rem;flex-shrink:0;margin-top:1px}
+.path-list{display:grid;gap:12px}
+.path-step{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:flex-start;padding:14px;border-radius:18px;background:var(--bg2);border:1px solid var(--border);box-shadow:var(--shadow)}
+.step-no{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#047857,#34d399);color:#fff;font-size:1rem;font-weight:800}
+.step-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.step-top h3{margin:0;font-size:1rem;font-weight:800}.step-sub{margin:4px 0 10px;color:var(--text2);font-size:.78rem;font-weight:600;line-height:1.5}
+.badge{padding:6px 10px;border-radius:999px;background:var(--bg3);font-size:.6rem;font-weight:800;font-family:var(--mono)}
+.module-prog-row{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px 0}.module-kicker{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-family:var(--mono)}.module-pct{font-size:.64rem;font-weight:800;color:var(--accent);font-family:var(--mono)}
+.progbar{height:8px;background:var(--bg3);border-radius:999px;overflow:hidden;margin-bottom:10px}.progfill{height:100%;background:linear-gradient(135deg,#047857,#34d399);border-radius:999px;transition:width .3s ease}
+.ck-list{display:grid;gap:8px}.ck{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid transparent;cursor:pointer}.ck input{margin-top:2px}.ck span{font-size:.76rem;color:var(--text2);font-weight:700;line-height:1.45}.ck.done{background:rgba(79,70,229,.10);border-color:rgba(79,70,229,.16)}.ck.done span{text-decoration:line-through;color:var(--text3)}
+.course-box{display:grid;gap:8px}.course{padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid var(--border)}.course strong{display:block;font-size:.82rem;font-weight:800}.course span{display:block;font-size:.72rem;color:var(--text2);margin-top:3px;font-weight:600;line-height:1.45}
+.books-grid{display:grid;gap:10px}.book{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:flex-start;padding:12px;border-radius:16px;background:var(--bg3)}.book-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#e0e7ff}
+.note{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
+@media (max-width:760px){.grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
+.resource-static-link{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(79,70,229,.35)}.resource-static-link:hover{color:#4f46e5}.resource-open{display:inline-flex;margin-top:8px;font-size:.7rem;font-weight:800;color:#4f46e5;text-decoration:none}</style>
+</head>
+<body>
+<header><button class="back" onclick="history.back()">←</button><div class="htxt"><h1>🐧 Linux</h1><p>execution path · shell, ops, and networking</p></div><button class="theme-btn" id="themeBtn">🌙</button></header>
+<div class="wrap">
+<section class="hero"><div class="hero-k">Elite execution path</div><h2>Linux for shell confidence, ops discipline, and networking support.</h2><p>Use this lane to turn Linux into your command-line base for troubleshooting, automation, systems confidence, and network-adjacent work.</p><div class="hero-row"><div class="hero-chip">Primary path</div><div class="hero-chip">Companion resources</div><div class="hero-chip">Live progress</div></div></section>
+<div class="section-title"><h2>Track Snapshot</h2><span>real progress</span></div>
+<div class="summary-grid">
+<div class="sum-card"><div class="sum-num" id="overallPct">0%</div><div class="sum-lbl">Overall</div></div>
+<div class="sum-card"><div class="sum-num" id="doneCount">0</div><div class="sum-lbl">Checkpoints done</div></div>
+<div class="sum-card"><div class="sum-num" id="nextPriority">-</div><div class="sum-lbl">Next priority</div></div>
+</div>
+<div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
+<div class="grid">
+<article class="card track-card">
+<div class="kicker">Keep</div>
+<div class="track-head"><h3>High-leverage path</h3><div class="track-tag">Execution first</div></div>
+<p>Keep only what directly improves your ability to execute in this lane. This page should feel like a working system, not a topic warehouse.</p>
+<div class="bullets"><div class="bullet"><div class="check">✓</div><div>Shell confidence</div></div><div class="bullet"><div class="check">✓</div><div>Ops discipline</div></div><div class="bullet"><div class="check">✓</div><div>Networking tools</div></div><div class="bullet"><div class="check">✓</div><div>Automation base</div></div></div>
+</article>
+<article class="card track-card">
+<div class="kicker">Drop</div>
+<div class="track-head"><h3>Noise and duplication</h3><div class="track-tag">Clarity wins</div></div>
+<p>Drop duplicated beginner content, weak filler material, and anything that slows action without improving output.</p>
+<div class="bullets">
+<div class="bullet"><div class="check">•</div><div>Multiple overlapping beginner resources</div></div>
+<div class="bullet"><div class="check">•</div><div>Passive browsing without finishing checkpoints</div></div>
+<div class="bullet"><div class="check">•</div><div>Reference hoarding without output</div></div>
+<div class="bullet"><div class="check">•</div><div>Studying disconnected from projects</div></div>
+</div>
+</article>
+</div>
+<div class="section-title"><h2>Primary Path</h2><span>do this in order</span></div>
+<div class="path-list">
+<article class="path-step" data-code="L0">
+<div class="step-no">L0</div>
+<div>
+<div class="step-top"><h3>Shell Foundations</h3><div class="badge">foundation</div></div>
+<p class="step-sub">Lock in terminal confidence: navigation, files, permissions, and command literacy.</p>
+<div class="module-prog-row">
+<span class="module-kicker">Trackable checkpoints</span>
+<span class="module-pct" id="pct-L0">0% complete</span>
+</div>
+<div class="progbar"><div class="progfill" id="bar-L0" style="width:0%"></div></div>
+<div class="ck-list"><label class="ck"><input data-id="l1a" type="checkbox"/><span>Navigate directories comfortably</span></label><label class="ck"><input data-id="l1b" type="checkbox"/><span>Manipulate files and folders from shell</span></label><label class="ck"><input data-id="l1c" type="checkbox"/><span>Understand permissions and ownership</span></label></div>
+<div class="course-box" style="margin-top:10px"><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Primary%3A+Linux+foundations+%2F+command+line" rel="noopener noreferrer" target="_blank">Primary: Linux foundations / command line</a></strong><span>Use one serious beginner-friendly Linux path.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Primary%3A+Linux+foundations+%2F+command+line" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Checkpoint</a></strong><span>Be comfortable enough in the terminal to stop hesitating.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Open link ↗</a></div></div>
+</div>
+</article>
+<article class="path-step" data-code="L1">
+<div class="step-no">L1</div>
+<div>
+<div class="step-top"><h3>System Operations</h3><div class="badge">ops</div></div>
+<p class="step-sub">Learn the commands and patterns that matter in real Linux administration.</p>
+<div class="module-prog-row">
+<span class="module-kicker">Trackable checkpoints</span>
+<span class="module-pct" id="pct-L1">0% complete</span>
+</div>
+<div class="progbar"><div class="progfill" id="bar-L1" style="width:0%"></div></div>
+<div class="ck-list"><label class="ck"><input data-id="l2a" type="checkbox"/><span>Inspect processes and services</span></label><label class="ck"><input data-id="l2b" type="checkbox"/><span>Use grep, pipes, and redirection effectively</span></label><label class="ck"><input data-id="l2c" type="checkbox"/><span>Read logs and service output</span></label></div>
+<div class="course-box" style="margin-top:10px"><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Primary+focus%3A+ops+muscle" rel="noopener noreferrer" target="_blank">Primary focus: ops muscle</a></strong><span>This is where Linux becomes operational instead of academic.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Primary+focus%3A+ops+muscle" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Checkpoint</a></strong><span>Troubleshoot one local service or log problem.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Open link ↗</a></div></div>
+</div>
+</article>
+<article class="path-step" data-code="L2">
+<div class="step-no">L2</div>
+<div>
+<div class="step-top"><h3>Networking &amp; Troubleshooting</h3><div class="badge">networking</div></div>
+<p class="step-sub">Use Linux as a serious network engineer’s toolbox for visibility and troubleshooting.</p>
+<div class="module-prog-row">
+<span class="module-kicker">Trackable checkpoints</span>
+<span class="module-pct" id="pct-L2">0% complete</span>
+</div>
+<div class="progbar"><div class="progfill" id="bar-L2" style="width:0%"></div></div>
+<div class="ck-list"><label class="ck"><input data-id="l3a" type="checkbox"/><span>Use ping, traceroute, ss, and ip tools</span></label><label class="ck"><input data-id="l3b" type="checkbox"/><span>Inspect interfaces, routes, and DNS resolution</span></label><label class="ck"><input data-id="l3c" type="checkbox"/><span>Troubleshoot connectivity from the terminal</span></label></div>
+<div class="course-box" style="margin-top:10px"><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Primary+focus%3A+networking+leverage" rel="noopener noreferrer" target="_blank">Primary focus: networking leverage</a></strong><span>This is where your CCNP background becomes an advantage.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Primary+focus%3A+networking+leverage" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Checkpoint</a></strong><span>Work through one network troubleshooting flow entirely from Linux.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Open link ↗</a></div></div>
+</div>
+</article>
+<article class="path-step" data-code="L3">
+<div class="step-no">L3</div>
+<div>
+<div class="step-top"><h3>Automation Readiness</h3><div class="badge">automation</div></div>
+<p class="step-sub">Make Linux a dependable base for scripts, tooling, and infrastructure workflows.</p>
+<div class="module-prog-row">
+<span class="module-kicker">Trackable checkpoints</span>
+<span class="module-pct" id="pct-L3">0% complete</span>
+</div>
+<div class="progbar"><div class="progfill" id="bar-L3" style="width:0%"></div></div>
+<div class="ck-list"><label class="ck"><input data-id="l4a" type="checkbox"/><span>Use Bash variables, loops, and simple scripts</span></label><label class="ck"><input data-id="l4b" type="checkbox"/><span>Schedule or automate a routine task</span></label><label class="ck"><input data-id="l4c" type="checkbox"/><span>Use Linux comfortably as a dev / automation environment</span></label></div>
+<div class="course-box" style="margin-top:10px"><div class="course"><strong><a class="resource-static-link" href="https://www.redhat.com/en/services/training-and-certification" rel="noopener noreferrer" target="_blank">Optional: RHCSA-style reinforcement</a></strong><span>Add deeper admin work if you want stronger systems grounding.</span><a class="resource-open" href="https://www.redhat.com/en/services/training-and-certification" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Checkpoint</a></strong><span>Automate one useful shell task you would repeat.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Open link ↗</a></div></div>
+</div>
+</article>
+</div>
+<div class="section-title"><h2>Companion Courses</h2><span>1 primary + 1 optional</span></div>
+<article class="card"><div class="course-box"><div class="course"><strong><a class="resource-static-link" href="https://www.cbtnuggets.com/" rel="noopener noreferrer" target="_blank">Primary: CBTNuggets — RHCSA (EX200)</a></strong><span>Main Linux foundation.</span><a class="resource-open" href="https://www.cbtnuggets.com/" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.pearsonitcertification.com/" rel="noopener noreferrer" target="_blank">Networking edge: PEARSONS — Linux Networking: Basics and Beyond</a></strong><span>Main Linux + networking bridge.</span><a class="resource-open" href="https://www.pearsonitcertification.com/" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://pikuma.com/" rel="noopener noreferrer" target="_blank">Bash support: PIKUMA — Master the Linux Command-Line &amp; Bash Scripting</a></strong><span>Keep one Bash course only.</span><a class="resource-open" href="https://pikuma.com/" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.cbtnuggets.com/" rel="noopener noreferrer" target="_blank">Engineering layer: CBTNuggets — RHCE (EX294)</a></strong><span>Moves you from admin to engineer.</span><a class="resource-open" href="https://www.cbtnuggets.com/" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.redhat.com/en/services/training-and-certification" rel="noopener noreferrer" target="_blank">Automation: Red Hat — RHEL Automation with Ansible (RH294)</a></strong><span>Main Linux automation path.</span><a class="resource-open" href="https://www.redhat.com/en/services/training-and-certification" rel="noopener noreferrer" target="_blank">Open link ↗</a></div></div></article>
+<div class="section-title"><h2>Companion Books</h2><span>tight reference layer</span></div>
+<div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong><a class="resource-static-link" href="https://www.amazon.com/s?k=Linux+Command+Line+%E2%80%94+A+Complete+Introduction" rel="noopener noreferrer" target="_blank">Linux Command Line — A Complete Introduction</a></strong><div class="note">Main command-line book.</div></div><a class="resource-open" href="https://www.amazon.com/s?k=Linux+Command+Line+%E2%80%94+A+Complete+Introduction" rel="noopener noreferrer" target="_blank">Open link ↗</a></article><article class="book"><div class="book-icon">📘</div><div><strong><a class="resource-static-link" href="https://www.amazon.com/s?k=Linux+for+Networking+Professionals" rel="noopener noreferrer" target="_blank">Linux for Networking Professionals</a></strong><div class="note">Directly aligned with your networking edge.</div></div><a class="resource-open" href="https://www.amazon.com/s?k=Linux+for+Networking+Professionals" rel="noopener noreferrer" target="_blank">Open link ↗</a></article><article class="book"><div class="book-icon">📘</div><div><strong><a class="resource-static-link" href="https://www.redhat.com/en/services/training-and-certification" rel="noopener noreferrer" target="_blank">Red Hat RHCSA 10 Cert Guide</a></strong><div class="note">Main RHCSA companion reference.</div></div><a class="resource-open" href="https://www.redhat.com/en/services/training-and-certification" rel="noopener noreferrer" target="_blank">Open link ↗</a></article><article class="book"><div class="book-icon">📘</div><div><strong><a class="resource-static-link" href="https://www.amazon.com/s?k=Linux+Bible" rel="noopener noreferrer" target="_blank">Linux Bible</a></strong><div class="note">Reference only, not a linear study path.</div></div><a class="resource-open" href="https://www.amazon.com/s?k=Linux+Bible" rel="noopener noreferrer" target="_blank">Open link ↗</a></article></div>
+<div class="section-title"><h2>Execution Rules</h2><span>protect depth</span></div>
+<div class="grid"><article class="card"><div class="kicker">Rule 1</div><h3>Use Linux daily</h3><p>Linux confidence comes from repetition, not from reading alone.</p></article><article class="card"><div class="kicker">Rule 2</div><h3>Troubleshoot from the shell</h3><p>Use the terminal as a real operations interface, not just a learning exercise.</p></article><article class="card"><div class="kicker">Rule 3</div><h3>Leverage your CCNP edge</h3><p>Your networking background should make the Linux networking layer easier to absorb.</p></article><article class="card"><div class="kicker">Rule 4</div><h3>Automate the repetitive</h3><p>Any shell task you repeat should eventually become a script or repeatable flow.</p></article></div>
+</div>
+<nav class="bnav"><div class="bnav-inner">
+<a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a>
+<a class="ni active" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a>
+<a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a>
+<a class="ni" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a>
+<a class="ni" href="claude.html"><span>🟠</span><span class="ni-lbl">Claude</span></a>
+<a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a>
+<a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a>
+<a class="ni" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a>
+</div></nav>
+<script>
+(function(){
+  const btn=document.getElementById('themeBtn');
+  const STORE_KEY="rhcsaProgress";
+  const MODULES=[{"code": "L0", "title": "Shell Foundations", "badge": "foundation", "sub": "Lock in terminal confidence: navigation, files, permissions, and command literacy.", "checks": [{"id": "l1a", "label": "Navigate directories comfortably"}, {"id": "l1b", "label": "Manipulate files and folders from shell"}, {"id": "l1c", "label": "Understand permissions and ownership"}], "mapped": [{"title": "Primary: Linux foundations / command line", "desc": "Use one serious beginner-friendly Linux path."}, {"title": "Checkpoint", "desc": "Be comfortable enough in the terminal to stop hesitating."}]}, {"code": "L1", "title": "System Operations", "badge": "ops", "sub": "Learn the commands and patterns that matter in real Linux administration.", "checks": [{"id": "l2a", "label": "Inspect processes and services"}, {"id": "l2b", "label": "Use grep, pipes, and redirection effectively"}, {"id": "l2c", "label": "Read logs and service output"}], "mapped": [{"title": "Primary focus: ops muscle", "desc": "This is where Linux becomes operational instead of academic."}, {"title": "Checkpoint", "desc": "Troubleshoot one local service or log problem."}]}, {"code": "L2", "title": "Networking & Troubleshooting", "badge": "networking", "sub": "Use Linux as a serious network engineer\u2019s toolbox for visibility and troubleshooting.", "checks": [{"id": "l3a", "label": "Use ping, traceroute, ss, and ip tools"}, {"id": "l3b", "label": "Inspect interfaces, routes, and DNS resolution"}, {"id": "l3c", "label": "Troubleshoot connectivity from the terminal"}], "mapped": [{"title": "Primary focus: networking leverage", "desc": "This is where your CCNP background becomes an advantage."}, {"title": "Checkpoint", "desc": "Work through one network troubleshooting flow entirely from Linux."}]}, {"code": "L3", "title": "Automation Readiness", "badge": "automation", "sub": "Make Linux a dependable base for scripts, tooling, and infrastructure workflows.", "checks": [{"id": "l4a", "label": "Use Bash variables, loops, and simple scripts"}, {"id": "l4b", "label": "Schedule or automate a routine task"}, {"id": "l4c", "label": "Use Linux comfortably as a dev / automation environment"}], "mapped": [{"title": "Optional: RHCSA-style reinforcement", "desc": "Add deeper admin work if you want stronger systems grounding."}, {"title": "Checkpoint", "desc": "Automate one useful shell task you would repeat."}]}];
+  function getState(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')||{};}catch(e){return {};}}
+  function setState(s){localStorage.setItem(STORE_KEY, JSON.stringify(s));}
+  function applyTheme(){const t=localStorage.getItem('theme')||'light';document.body.classList.toggle('dark',t==='dark');btn.textContent=t==='dark'?'☀️':'🌙';}
+  btn.onclick=function(){const next=document.body.classList.contains('dark')?'light':'dark';localStorage.setItem('theme',next);applyTheme();};
+  function modPct(mod,s){const done=mod.checks.filter(x=>s[x.id]).length; return mod.checks.length?Math.round(done/mod.checks.length*100):0;}
+  function render(){
+    const s=getState();
+    MODULES.forEach(mod=>{
+      const pct=modPct(mod,s);
+      const pctEl=document.getElementById('pct-'+mod.code);
+      const barEl=document.getElementById('bar-'+mod.code);
+      if(pctEl) pctEl.textContent=pct+'% complete';
+      if(barEl) barEl.style.width=pct+'%';
+      mod.checks.forEach(item=>{
+        const input=document.querySelector('input[data-id="'+item.id+'"]');
+        if(!input) return;
+        input.checked=!!s[item.id];
+        const wrap=input.closest('.ck');
+        if(wrap) wrap.classList.toggle('done',!!s[item.id]);
+      });
+    });
+    const allItems=MODULES.flatMap(m=>m.checks);
+    const done=allItems.filter(x=>s[x.id]).length;
+    const overall=allItems.length?Math.round(done/allItems.length*100):0;
+    document.getElementById('overallPct').textContent=overall+'%';
+    document.getElementById('doneCount').textContent=String(done);
+    const weakest=MODULES.map(m=>({code:m.code,pct:modPct(m,s)})).sort((a,b)=>a.pct-b.pct)[0];
+    document.getElementById('nextPriority').textContent=weakest?weakest.code:'-';
+  }
+  document.addEventListener('change',function(e){
+    const t=e.target;
+    if(!(t instanceof HTMLInputElement)) return;
+    if(!t.matches('input[type="checkbox"][data-id]')) return;
+    const s=getState();
+    s[t.dataset.id]=t.checked;
+    setState(s);
+    render();
+  });
+  applyTheme(); render();
+})();
+</script>
+<script src="assets/js/resource-intelligence.js"></script><script src="assets/js/progression.js"></script></body>
+</html>
