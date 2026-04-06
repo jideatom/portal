@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<meta content="#0f172a" name="theme-color"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
 <title>Claude Path · Jideatom LP</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f0f2f7;--bg2:#fff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,.08);--border2:rgba(15,23,42,.14);--shadow:0 10px 30px rgba(15,23,42,.08);--accent:#f97316;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif}
 body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.10)}
@@ -42,114 +41,125 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 .note{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
 @media (max-width:760px){.grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
-.resource-static-link{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(79,70,229,.35)}.resource-static-link:hover{color:#4f46e5}.resource-open{display:inline-flex;margin-top:8px;font-size:.7rem;font-weight:800;color:#4f46e5;text-decoration:none}</style>
+</style>
 </head>
 <body>
 <header><button class="back" onclick="history.back()">←</button><div class="htxt"><h1>🟠 Claude</h1><p>execution path · workflow and reasoning systems</p></div><button class="theme-btn" id="themeBtn">🌙</button></header>
 <div class="wrap">
 <section class="hero"><div class="hero-k">Elite execution path</div><h2>Claude for prompting, workflows, MCP, and applied reasoning.</h2><p>Use this lane to turn Claude into a real build tool: prompt systems, workflow design, structured outputs, and MCP-enabled capability.</p><div class="hero-row"><div class="hero-chip">Primary path</div><div class="hero-chip">Companion resources</div><div class="hero-chip">Live progress</div></div></section>
+
 <div class="section-title"><h2>Track Snapshot</h2><span>real progress</span></div>
 <div class="summary-grid">
-<div class="sum-card"><div class="sum-num" id="overallPct">0%</div><div class="sum-lbl">Overall</div></div>
-<div class="sum-card"><div class="sum-num" id="doneCount">0</div><div class="sum-lbl">Checkpoints done</div></div>
-<div class="sum-card"><div class="sum-num" id="nextPriority">-</div><div class="sum-lbl">Next priority</div></div>
+  <div class="sum-card"><div class="sum-num" id="overallPct">0%</div><div class="sum-lbl">Overall</div></div>
+  <div class="sum-card"><div class="sum-num" id="doneCount">0</div><div class="sum-lbl">Checkpoints done</div></div>
+  <div class="sum-card"><div class="sum-num" id="nextPriority">-</div><div class="sum-lbl">Next priority</div></div>
 </div>
+
 <div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
 <div class="grid">
-<article class="card track-card">
-<div class="kicker">Keep</div>
-<div class="track-head"><h3>High-leverage path</h3><div class="track-tag">Execution first</div></div>
-<p>Keep only what directly improves your ability to execute in this lane. This page should feel like a working system, not a topic warehouse.</p>
-<div class="bullets"><div class="bullet"><div class="check">✓</div><div>Prompt systems</div></div><div class="bullet"><div class="check">✓</div><div>Workflow design</div></div><div class="bullet"><div class="check">✓</div><div>Engineering use</div></div><div class="bullet"><div class="check">✓</div><div>MCP awareness</div></div></div>
-</article>
-<article class="card track-card">
-<div class="kicker">Drop</div>
-<div class="track-head"><h3>Noise and duplication</h3><div class="track-tag">Clarity wins</div></div>
-<p>Drop duplicated beginner content, weak filler material, and anything that slows action without improving output.</p>
-<div class="bullets">
-<div class="bullet"><div class="check">•</div><div>Multiple overlapping beginner resources</div></div>
-<div class="bullet"><div class="check">•</div><div>Passive browsing without finishing checkpoints</div></div>
-<div class="bullet"><div class="check">•</div><div>Reference hoarding without output</div></div>
-<div class="bullet"><div class="check">•</div><div>Studying disconnected from projects</div></div>
+  <article class="card track-card">
+    <div class="kicker">Keep</div>
+    <div class="track-head"><h3>High-leverage path</h3><div class="track-tag">Execution first</div></div>
+    <p>Keep only what directly improves your ability to execute in this lane. This page should feel like a working system, not a topic warehouse.</p>
+    <div class="bullets"><div class="bullet"><div class="check">✓</div><div>Prompt systems</div></div><div class="bullet"><div class="check">✓</div><div>Workflow design</div></div><div class="bullet"><div class="check">✓</div><div>Engineering use</div></div><div class="bullet"><div class="check">✓</div><div>MCP awareness</div></div></div>
+  </article>
+  <article class="card track-card">
+    <div class="kicker">Drop</div>
+    <div class="track-head"><h3>Noise and duplication</h3><div class="track-tag">Clarity wins</div></div>
+    <p>Drop duplicated beginner content, weak filler material, and anything that slows action without improving output.</p>
+    <div class="bullets">
+      <div class="bullet"><div class="check">•</div><div>Multiple overlapping beginner resources</div></div>
+      <div class="bullet"><div class="check">•</div><div>Passive browsing without finishing checkpoints</div></div>
+      <div class="bullet"><div class="check">•</div><div>Reference hoarding without output</div></div>
+      <div class="bullet"><div class="check">•</div><div>Studying disconnected from projects</div></div>
+    </div>
+  </article>
 </div>
-</article>
-</div>
+
 <div class="section-title"><h2>Primary Path</h2><span>do this in order</span></div>
 <div class="path-list">
-<article class="path-step" data-code="CL0">
-<div class="step-no">CL0</div>
-<div>
-<div class="step-top"><h3>Prompt Foundations</h3><div class="badge">foundation</div></div>
-<p class="step-sub">Build reliable prompt structure: role, context, examples, constraints, and output formatting.</p>
-<div class="module-prog-row">
-<span class="module-kicker">Trackable checkpoints</span>
-<span class="module-pct" id="pct-CL0">0% complete</span>
-</div>
-<div class="progbar"><div class="progfill" id="bar-CL0" style="width:0%"></div></div>
-<div class="ck-list"><label class="ck"><input data-id="c1" type="checkbox"/><span>Write clear role + task prompts</span></label><label class="ck"><input data-id="c2" type="checkbox"/><span>Use examples to shape output quality</span></label><label class="ck"><input data-id="c3" type="checkbox"/><span>Request structured outputs consistently</span></label></div>
-<div class="course-box" style="margin-top:10px"><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Primary%3A+one+prompt+engineering+path" rel="noopener noreferrer" target="_blank">Primary: one prompt engineering path</a></strong><span>Use one serious prompting course only, not multiple overlapping intros.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Primary%3A+one+prompt+engineering+path" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Checkpoint</a></strong><span>Create one reusable prompt template you trust.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Open link ↗</a></div></div>
-</div>
-</article>
-<article class="path-step" data-code="CL1">
-<div class="step-no">CL1</div>
-<div>
-<div class="step-top"><h3>Workflow Thinking</h3><div class="badge">workflow</div></div>
-<p class="step-sub">Move from one-off prompting to repeatable workflows that save real effort.</p>
-<div class="module-prog-row">
-<span class="module-kicker">Trackable checkpoints</span>
-<span class="module-pct" id="pct-CL1">0% complete</span>
-</div>
-<div class="progbar"><div class="progfill" id="bar-CL1" style="width:0%"></div></div>
-<div class="ck-list"><label class="ck"><input data-id="c4" type="checkbox"/><span>Design one repeatable Claude workflow</span></label><label class="ck"><input data-id="c5" type="checkbox"/><span>Break a task into reusable Claude steps</span></label><label class="ck"><input data-id="c6" type="checkbox"/><span>Document one high-value personal workflow</span></label></div>
-<div class="course-box" style="margin-top:10px"><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Primary+focus%3A+repeatability" rel="noopener noreferrer" target="_blank">Primary focus: repeatability</a></strong><span>Claude becomes useful when your best workflows are reusable.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Primary+focus%3A+repeatability" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Checkpoint</a></strong><span>Document one workflow you will reuse weekly.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Open link ↗</a></div></div>
-</div>
-</article>
-<article class="path-step" data-code="CL2">
-<div class="step-no">CL2</div>
-<div>
-<div class="step-top"><h3>Claude for Engineering</h3><div class="badge">engineering</div></div>
-<p class="step-sub">Use Claude as a build partner for planning, debugging, and technical reasoning.</p>
-<div class="module-prog-row">
-<span class="module-kicker">Trackable checkpoints</span>
-<span class="module-pct" id="pct-CL2">0% complete</span>
-</div>
-<div class="progbar"><div class="progfill" id="bar-CL2" style="width:0%"></div></div>
-<div class="ck-list"><label class="ck"><input data-id="c7" type="checkbox"/><span>Use Claude to plan code changes</span></label><label class="ck"><input data-id="c8" type="checkbox"/><span>Use Claude to debug with structured reasoning</span></label><label class="ck"><input data-id="c9" type="checkbox"/><span>Use Claude to improve technical documentation</span></label></div>
-<div class="course-box" style="margin-top:10px"><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Primary%3A+Claude+engineering+course" rel="noopener noreferrer" target="_blank">Primary: Claude engineering course</a></strong><span>Keep one main Claude course, not several similar ones.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Primary%3A+Claude+engineering+course" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Checkpoint</a></strong><span>Use Claude to improve a real technical task.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Open link ↗</a></div></div>
-</div>
-</article>
-<article class="path-step" data-code="CL3">
-<div class="step-no">CL3</div>
-<div>
-<div class="step-top"><h3>MCP &amp; Tool Use</h3><div class="badge">tools</div></div>
-<p class="step-sub">Turn Claude into a more capable system by understanding tools, MCP, and external context.</p>
-<div class="module-prog-row">
-<span class="module-kicker">Trackable checkpoints</span>
-<span class="module-pct" id="pct-CL3">0% complete</span>
-</div>
-<div class="progbar"><div class="progfill" id="bar-CL3" style="width:0%"></div></div>
-<div class="ck-list"><label class="ck"><input data-id="c10" type="checkbox"/><span>Understand what MCP adds conceptually</span></label><label class="ck"><input data-id="c11" type="checkbox"/><span>Map one MCP use case to a real workflow</span></label><label class="ck"><input data-id="c12" type="checkbox"/><span>Design one tool-augmented Claude workflow</span></label></div>
-<div class="course-box" style="margin-top:10px"><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Primary%3A+one+MCP+intro" rel="noopener noreferrer" target="_blank">Primary: one MCP intro</a></strong><span>Take one MCP path and stop stacking duplicates.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Primary%3A+one+MCP+intro" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Checkpoint</a></strong><span>Design one tool-enabled workflow you can build later.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Checkpoint" rel="noopener noreferrer" target="_blank">Open link ↗</a></div></div>
-</div>
-</article>
-</div>
+        <article class="path-step" data-code="CL0">
+          <div class="step-no">CL0</div>
+          <div>
+            <div class="step-top"><h3>Prompt Foundations</h3><div class="badge">foundation</div></div>
+            <p class="step-sub">Build reliable prompt structure: role, context, examples, constraints, and output formatting.</p>
+            <div class="module-prog-row">
+              <span class="module-kicker">Trackable checkpoints</span>
+              <span class="module-pct" id="pct-CL0">0% complete</span>
+            </div>
+            <div class="progbar"><div class="progfill" id="bar-CL0" style="width:0%"></div></div>
+            <div class="ck-list"><label class="ck"><input type="checkbox" data-id="c1"><span>Write clear role + task prompts</span></label><label class="ck"><input type="checkbox" data-id="c2"><span>Use examples to shape output quality</span></label><label class="ck"><input type="checkbox" data-id="c3"><span>Request structured outputs consistently</span></label></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary: one prompt engineering path</strong><span>Use one serious prompting course only, not multiple overlapping intros.</span></div><div class="course"><strong>Checkpoint</strong><span>Create one reusable prompt template you trust.</span></div></div>
+          </div>
+        </article>
+        
+        <article class="path-step" data-code="CL1">
+          <div class="step-no">CL1</div>
+          <div>
+            <div class="step-top"><h3>Workflow Thinking</h3><div class="badge">workflow</div></div>
+            <p class="step-sub">Move from one-off prompting to repeatable workflows that save real effort.</p>
+            <div class="module-prog-row">
+              <span class="module-kicker">Trackable checkpoints</span>
+              <span class="module-pct" id="pct-CL1">0% complete</span>
+            </div>
+            <div class="progbar"><div class="progfill" id="bar-CL1" style="width:0%"></div></div>
+            <div class="ck-list"><label class="ck"><input type="checkbox" data-id="c4"><span>Design one repeatable Claude workflow</span></label><label class="ck"><input type="checkbox" data-id="c5"><span>Break a task into reusable Claude steps</span></label><label class="ck"><input type="checkbox" data-id="c6"><span>Document one high-value personal workflow</span></label></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary focus: repeatability</strong><span>Claude becomes useful when your best workflows are reusable.</span></div><div class="course"><strong>Checkpoint</strong><span>Document one workflow you will reuse weekly.</span></div></div>
+          </div>
+        </article>
+        
+        <article class="path-step" data-code="CL2">
+          <div class="step-no">CL2</div>
+          <div>
+            <div class="step-top"><h3>Claude for Engineering</h3><div class="badge">engineering</div></div>
+            <p class="step-sub">Use Claude as a build partner for planning, debugging, and technical reasoning.</p>
+            <div class="module-prog-row">
+              <span class="module-kicker">Trackable checkpoints</span>
+              <span class="module-pct" id="pct-CL2">0% complete</span>
+            </div>
+            <div class="progbar"><div class="progfill" id="bar-CL2" style="width:0%"></div></div>
+            <div class="ck-list"><label class="ck"><input type="checkbox" data-id="c7"><span>Use Claude to plan code changes</span></label><label class="ck"><input type="checkbox" data-id="c8"><span>Use Claude to debug with structured reasoning</span></label><label class="ck"><input type="checkbox" data-id="c9"><span>Use Claude to improve technical documentation</span></label></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary: Claude engineering course</strong><span>Keep one main Claude course, not several similar ones.</span></div><div class="course"><strong>Checkpoint</strong><span>Use Claude to improve a real technical task.</span></div></div>
+          </div>
+        </article>
+        
+        <article class="path-step" data-code="CL3">
+          <div class="step-no">CL3</div>
+          <div>
+            <div class="step-top"><h3>MCP & Tool Use</h3><div class="badge">tools</div></div>
+            <p class="step-sub">Turn Claude into a more capable system by understanding tools, MCP, and external context.</p>
+            <div class="module-prog-row">
+              <span class="module-kicker">Trackable checkpoints</span>
+              <span class="module-pct" id="pct-CL3">0% complete</span>
+            </div>
+            <div class="progbar"><div class="progfill" id="bar-CL3" style="width:0%"></div></div>
+            <div class="ck-list"><label class="ck"><input type="checkbox" data-id="c10"><span>Understand what MCP adds conceptually</span></label><label class="ck"><input type="checkbox" data-id="c11"><span>Map one MCP use case to a real workflow</span></label><label class="ck"><input type="checkbox" data-id="c12"><span>Design one tool-augmented Claude workflow</span></label></div>
+            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary: one MCP intro</strong><span>Take one MCP path and stop stacking duplicates.</span></div><div class="course"><strong>Checkpoint</strong><span>Design one tool-enabled workflow you can build later.</span></div></div>
+          </div>
+        </article>
+        </div>
+
 <div class="section-title"><h2>Companion Courses</h2><span>1 primary + 1 optional</span></div>
-<article class="card"><div class="course-box"><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Primary%3A+UD+%E2%80%94+Mastering+Claude+AI%3A+Build+AI+Apps%2C+Agents+%26+MCP+Systems" rel="noopener noreferrer" target="_blank">Primary: UD — Mastering Claude AI: Build AI Apps, Agents &amp; MCP Systems</a></strong><span>Main Claude specialization path.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Primary%3A+UD+%E2%80%94+Mastering+Claude+AI%3A+Build+AI+Apps%2C+Agents+%26+MCP+Systems" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.udemy.com/courses/search/?q=Support%3A+FASTER+%E2%80%94+Claude+Code+from+Scratch" rel="noopener noreferrer" target="_blank">Support: FASTER — Claude Code from Scratch</a></strong><span>Fast practical grounding.</span><a class="resource-open" href="https://www.udemy.com/courses/search/?q=Support%3A+FASTER+%E2%80%94+Claude+Code+from+Scratch" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.pluralsight.com/browse" rel="noopener noreferrer" target="_blank">Support: PLS — Advanced Claude Code</a></strong><span>Secondary Claude depth.</span><a class="resource-open" href="https://www.pluralsight.com/browse" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://frontendmasters.com/courses/" rel="noopener noreferrer" target="_blank">Prompt support: FM — Practical Prompt Engineering for Developers</a></strong><span>Single prompting support path.</span><a class="resource-open" href="https://frontendmasters.com/courses/" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://dometrain.com/" rel="noopener noreferrer" target="_blank">MCP primary: Dometrain — Getting Started Model Context Protocol (MCP)</a></strong><span>Main MCP foundation.</span><a class="resource-open" href="https://dometrain.com/" rel="noopener noreferrer" target="_blank">Open link ↗</a></div><div class="course"><strong><a class="resource-static-link" href="https://www.epic-ai.app/" rel="noopener noreferrer" target="_blank">MCP support: Epic AI — Master the Model Context Protocol (MCP)</a></strong><span>Secondary MCP depth only.</span><a class="resource-open" href="https://www.epic-ai.app/" rel="noopener noreferrer" target="_blank">Open link ↗</a></div></div></article>
+<article class="card"><div class="course-box"><div class="course"><strong>Primary: One Claude engineering course</strong><span>Use your strongest Claude course as the only active structured path.</span></div><div class="course"><strong>Optional: One MCP intro</strong><span>Use a single MCP introduction as supporting material, not a second main path.</span></div></div></article>
+
 <div class="section-title"><h2>Companion Books</h2><span>tight reference layer</span></div>
-<div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong><a class="resource-static-link" href="https://www.amazon.com/s?k=AI+Engineering+in+Practice" rel="noopener noreferrer" target="_blank">AI Engineering in Practice</a></strong><div class="note">Main engineering reference.</div></div><a class="resource-open" href="https://www.amazon.com/s?k=AI+Engineering+in+Practice" rel="noopener noreferrer" target="_blank">Open link ↗</a></article><article class="book"><div class="book-icon">📘</div><div><strong><a class="resource-static-link" href="https://www.amazon.com/s?k=Build+an+AI+Agent+%28From+Scratch%29" rel="noopener noreferrer" target="_blank">Build an AI Agent (From Scratch)</a></strong><div class="note">Practical companion for agent systems.</div></div><a class="resource-open" href="https://www.amazon.com/s?k=Build+an+AI+Agent+%28From+Scratch%29" rel="noopener noreferrer" target="_blank">Open link ↗</a></article><article class="book"><div class="book-icon">📘</div><div><strong><a class="resource-static-link" href="https://www.amazon.com/s?k=Building+Agentic+AI" rel="noopener noreferrer" target="_blank">Building Agentic AI</a></strong><div class="note">Workflow, optimization, and deployment thinking.</div></div><a class="resource-open" href="https://www.amazon.com/s?k=Building+Agentic+AI" rel="noopener noreferrer" target="_blank">Open link ↗</a></article><article class="book"><div class="book-icon">📘</div><div><strong><a class="resource-static-link" href="https://www.amazon.com/s?k=Model+Context+Protocol+for+LLMs" rel="noopener noreferrer" target="_blank">Model Context Protocol for LLMs</a></strong><div class="note">Main MCP reading reference.</div></div><a class="resource-open" href="https://www.amazon.com/s?k=Model+Context+Protocol+for+LLMs" rel="noopener noreferrer" target="_blank">Open link ↗</a></article></div>
+<div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong>Anthropic docs</strong><div class="note">Use the docs for model behavior, prompting guidance, and feature reference.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Your workflow library</strong><div class="note">Document your best prompts and workflows like a private playbook.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Prompt reference notes</strong><div class="note">Keep examples of good prompts, constraints, and structured-output patterns.</div></div></article></div>
+
 <div class="section-title"><h2>Execution Rules</h2><span>protect depth</span></div>
 <div class="grid"><article class="card"><div class="kicker">Rule 1</div><h3>One main Claude path</h3><p>Pick one serious Claude course and one MCP supporting path. Do not run many in parallel.</p></article><article class="card"><div class="kicker">Rule 2</div><h3>Save your best workflows</h3><p>Document your strongest prompts and workflows so Claude becomes reusable, not disposable.</p></article><article class="card"><div class="kicker">Rule 3</div><h3>Prefer structure over magic</h3><p>Good outputs come from role, examples, constraints, and format control.</p></article><article class="card"><div class="kicker">Rule 4</div><h3>Tie Claude to real tasks</h3><p>Use Claude to support coding, planning, summaries, and workflows you already need.</p></article></div>
 </div>
+
 <nav class="bnav"><div class="bnav-inner">
-<a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a>
-<a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a>
-<a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a>
-<a class="ni" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a>
-<a class="ni active" href="claude.html"><span>🟠</span><span class="ni-lbl">Claude</span></a>
-<a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a>
-<a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a>
-<a class="ni" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a>
-</div></nav>
+    <a href="index.html" class="ni"><span>🏠</span><span class="ni-lbl">Home</span></a>
+    <a href="linux.html" class="ni "><span>🐧</span><span class="ni-lbl">Linux</span></a>
+    <a href="python.html" class="ni "><span>🐍</span><span class="ni-lbl">Python</span></a>
+    <a href="ai.html" class="ni"><span>🧠</span><span class="ni-lbl">AI</span></a>
+    <a href="claude.html" class="ni active"><span>🟠</span><span class="ni-lbl">Claude</span></a>
+    <a href="cloud.html" class="ni "><span>☁️</span><span class="ni-lbl">Cloud</span></a>
+    <a href="courses.html" class="ni"><span>📚</span><span class="ni-lbl">Courses</span></a>
+    <a href="playbook.html" class="ni"><span>📘</span><span class="ni-lbl">Playbook</span></a>
+    </div></nav>
+
 <script>
 (function(){
   const btn=document.getElementById('themeBtn');
@@ -196,5 +206,6 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
   applyTheme(); render();
 })();
 </script>
-<script src="assets/js/resource-intelligence.js"></script><script src="assets/js/progression.js"></script></body>
+<script src="assets/js/enhancements.js"></script>
+</body>
 </html>
