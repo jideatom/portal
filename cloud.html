@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0f172a">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#0f172a" name="theme-color"/>
 <title>Cloud Path · Jideatom LP</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <style>
 :root{--bg:#f0f2f7;--bg2:#fff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,.08);--border2:rgba(15,23,42,.14);--shadow:0 10px 30px rgba(15,23,42,.08);--accent:#0ea5e9;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif}
 body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.10)}
@@ -47,119 +48,108 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 <header><button class="back" onclick="history.back()">←</button><div class="htxt"><h1>☁️ Cloud</h1><p>execution path · deploy and production thinking</p></div><button class="theme-btn" id="themeBtn">🌙</button></header>
 <div class="wrap">
 <section class="hero"><div class="hero-k">Elite execution path</div><h2>Cloud architecture, deployment, and infrastructure thinking.</h2><p>Use this lane to make your systems real: hosting, APIs, storage, networking alignment, logging, and production readiness for your builds.</p><div class="hero-row"><div class="hero-chip">Primary path</div><div class="hero-chip">Companion resources</div><div class="hero-chip">Live progress</div></div></section>
-
 <div class="section-title"><h2>Track Snapshot</h2><span>real progress</span></div>
 <div class="summary-grid">
-  <div class="sum-card"><div class="sum-num" id="overallPct">0%</div><div class="sum-lbl">Overall</div></div>
-  <div class="sum-card"><div class="sum-num" id="doneCount">0</div><div class="sum-lbl">Checkpoints done</div></div>
-  <div class="sum-card"><div class="sum-num" id="nextPriority">-</div><div class="sum-lbl">Next priority</div></div>
+<div class="sum-card"><div class="sum-num" id="overallPct">0%</div><div class="sum-lbl">Overall</div></div>
+<div class="sum-card"><div class="sum-num" id="doneCount">0</div><div class="sum-lbl">Checkpoints done</div></div>
+<div class="sum-card"><div class="sum-num" id="nextPriority">-</div><div class="sum-lbl">Next priority</div></div>
 </div>
-
 <div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
 <div class="grid">
-  <article class="card track-card">
-    <div class="kicker">Keep</div>
-    <div class="track-head"><h3>High-leverage path</h3><div class="track-tag">Execution first</div></div>
-    <p>Keep only what directly improves your ability to execute in this lane. This page should feel like a working system, not a topic warehouse.</p>
-    <div class="bullets"><div class="bullet"><div class="check">✓</div><div>AWS path</div></div><div class="bullet"><div class="check">✓</div><div>Azure path</div></div><div class="bullet"><div class="check">✓</div><div>Deployment thinking</div></div><div class="bullet"><div class="check">✓</div><div>Networking alignment</div></div></div>
-  </article>
-  <article class="card track-card">
-    <div class="kicker">Drop</div>
-    <div class="track-head"><h3>Noise and duplication</h3><div class="track-tag">Clarity wins</div></div>
-    <p>Drop duplicated beginner content, weak filler material, and anything that slows action without improving output.</p>
-    <div class="bullets">
-      <div class="bullet"><div class="check">•</div><div>Multiple overlapping beginner resources</div></div>
-      <div class="bullet"><div class="check">•</div><div>Passive browsing without finishing checkpoints</div></div>
-      <div class="bullet"><div class="check">•</div><div>Reference hoarding without output</div></div>
-      <div class="bullet"><div class="check">•</div><div>Studying disconnected from projects</div></div>
-    </div>
-  </article>
+<article class="card track-card">
+<div class="kicker">Keep</div>
+<div class="track-head"><h3>High-leverage path</h3><div class="track-tag">Execution first</div></div>
+<p>Keep only what directly improves your ability to execute in this lane. This page should feel like a working system, not a topic warehouse.</p>
+<div class="bullets"><div class="bullet"><div class="check">✓</div><div>AWS path</div></div><div class="bullet"><div class="check">✓</div><div>Azure path</div></div><div class="bullet"><div class="check">✓</div><div>Deployment thinking</div></div><div class="bullet"><div class="check">✓</div><div>Networking alignment</div></div></div>
+</article>
+<article class="card track-card">
+<div class="kicker">Drop</div>
+<div class="track-head"><h3>Noise and duplication</h3><div class="track-tag">Clarity wins</div></div>
+<p>Drop duplicated beginner content, weak filler material, and anything that slows action without improving output.</p>
+<div class="bullets">
+<div class="bullet"><div class="check">•</div><div>Multiple overlapping beginner resources</div></div>
+<div class="bullet"><div class="check">•</div><div>Passive browsing without finishing checkpoints</div></div>
+<div class="bullet"><div class="check">•</div><div>Reference hoarding without output</div></div>
+<div class="bullet"><div class="check">•</div><div>Studying disconnected from projects</div></div>
 </div>
-
+</article>
+</div>
 <div class="section-title"><h2>Primary Path</h2><span>do this in order</span></div>
 <div class="path-list">
-        <article class="path-step" data-code="C0">
-          <div class="step-no">C0</div>
-          <div>
-            <div class="step-top"><h3>Foundation</h3><div class="badge">foundation</div></div>
-            <p class="step-sub">Build the basic cloud language: IAM, CLI use, regions, and service awareness.</p>
-            <div class="module-prog-row">
-              <span class="module-kicker">Trackable checkpoints</span>
-              <span class="module-pct" id="pct-C0">0% complete</span>
-            </div>
-            <div class="progbar"><div class="progfill" id="bar-C0" style="width:0%"></div></div>
-            <div class="ck-list"><label class="ck"><input type="checkbox" data-id="a-clf1"><span>Understand IAM basics and least privilege</span></label><label class="ck"><input type="checkbox" data-id="a-clf2"><span>Use the cloud CLI for simple actions</span></label><label class="ck"><input type="checkbox" data-id="a-clf3"><span>Understand regions, zones, and service scope</span></label></div>
-            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary: cloud fundamentals course</strong><span>Use one strong fundamentals path to anchor the basics.</span></div><div class="course"><strong>Checkpoint</strong><span>Explain IAM, regions, and core services clearly in your own words.</span></div></div>
-          </div>
-        </article>
-        
-        <article class="path-step" data-code="C1">
-          <div class="step-no">C1</div>
-          <div>
-            <div class="step-top"><h3>Core Infrastructure</h3><div class="badge">core infra</div></div>
-            <p class="step-sub">Learn the building blocks: compute, storage, and networking in a cloud environment.</p>
-            <div class="module-prog-row">
-              <span class="module-kicker">Trackable checkpoints</span>
-              <span class="module-pct" id="pct-C1">0% complete</span>
-            </div>
-            <div class="progbar"><div class="progfill" id="bar-C1" style="width:0%"></div></div>
-            <div class="ck-list"><label class="ck"><input type="checkbox" data-id="a-clf4"><span>Launch a VM / compute instance</span></label><label class="ck"><input type="checkbox" data-id="a-clf5"><span>Work with object storage</span></label><label class="ck"><input type="checkbox" data-id="a-clf6"><span>Understand cloud networking basics</span></label></div>
-            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary focus: infra basics</strong><span>Tie compute, storage, and networking together conceptually.</span></div><div class="course"><strong>Checkpoint</strong><span>Run one small hosted workload and understand where it lives.</span></div></div>
-          </div>
-        </article>
-        
-        <article class="path-step" data-code="C2">
-          <div class="step-no">C2</div>
-          <div>
-            <div class="step-top"><h3>Deployment</h3><div class="badge">deployment</div></div>
-            <p class="step-sub">Move from lab thinking to delivery thinking: app hosting, DNS, and security basics.</p>
-            <div class="module-prog-row">
-              <span class="module-kicker">Trackable checkpoints</span>
-              <span class="module-pct" id="pct-C2">0% complete</span>
-            </div>
-            <div class="progbar"><div class="progfill" id="bar-C2" style="width:0%"></div></div>
-            <div class="ck-list"><label class="ck"><input type="checkbox" data-id="a-saa1"><span>Deploy a simple app to a cloud service</span></label><label class="ck"><input type="checkbox" data-id="a-saa2"><span>Understand domain / DNS basics</span></label><label class="ck"><input type="checkbox" data-id="a-saa3"><span>Apply basic cloud security hygiene</span></label></div>
-            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary focus: hosting something real</strong><span>Cloud becomes real when one of your tools is actually deployed.</span></div><div class="course"><strong>Checkpoint</strong><span>Deploy one simple app or API endpoint.</span></div></div>
-          </div>
-        </article>
-        
-        <article class="path-step" data-code="C3">
-          <div class="step-no">C3</div>
-          <div>
-            <div class="step-top"><h3>Production Thinking</h3><div class="badge">production</div></div>
-            <p class="step-sub">Use cloud to support real tools with logging, monitoring, and deployment discipline.</p>
-            <div class="module-prog-row">
-              <span class="module-kicker">Trackable checkpoints</span>
-              <span class="module-pct" id="pct-C3">0% complete</span>
-            </div>
-            <div class="progbar"><div class="progfill" id="bar-C3" style="width:0%"></div></div>
-            <div class="ck-list"><label class="ck"><input type="checkbox" data-id="a-saa4"><span>Deploy one AI or automation tool</span></label><label class="ck"><input type="checkbox" data-id="a-saa5"><span>Add basic logging / observability</span></label><label class="ck"><input type="checkbox" data-id="a-saa6"><span>Understand monitoring and failure visibility</span></label></div>
-            <div class="course-box" style="margin-top:10px"><div class="course"><strong>Optional: deeper cloud path</strong><span>Only go deeper after one real deployment exists.</span></div><div class="course"><strong>Checkpoint</strong><span>Make one side project feel production-aware.</span></div></div>
-          </div>
-        </article>
-        </div>
-
+<article class="path-step" data-code="C0">
+<div class="step-no">C0</div>
+<div>
+<div class="step-top"><h3>Foundation</h3><div class="badge">foundation</div></div>
+<p class="step-sub">Build the basic cloud language: IAM, CLI use, regions, and service awareness.</p>
+<div class="module-prog-row">
+<span class="module-kicker">Trackable checkpoints</span>
+<span class="module-pct" id="pct-C0">0% complete</span>
+</div>
+<div class="progbar"><div class="progfill" id="bar-C0" style="width:0%"></div></div>
+<div class="ck-list"><label class="ck"><input data-id="a-clf1" type="checkbox"/><span>Understand IAM basics and least privilege</span></label><label class="ck"><input data-id="a-clf2" type="checkbox"/><span>Use the cloud CLI for simple actions</span></label><label class="ck"><input data-id="a-clf3" type="checkbox"/><span>Understand regions, zones, and service scope</span></label></div>
+<div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary: Adrian Cantrill — AWS Solutions Architect Associate</strong><span>Use this as your single cloud foundation path.</span></div><div class="course"><strong>Checkpoint</strong><span>Explain IAM, regions, VPC, EC2, and storage clearly in your own words.</span></div></div>
+</div>
+</article>
+<article class="path-step" data-code="C1">
+<div class="step-no">C1</div>
+<div>
+<div class="step-top"><h3>Core Infrastructure</h3><div class="badge">core infra</div></div>
+<p class="step-sub">Learn the building blocks: compute, storage, and networking in a cloud environment.</p>
+<div class="module-prog-row">
+<span class="module-kicker">Trackable checkpoints</span>
+<span class="module-pct" id="pct-C1">0% complete</span>
+</div>
+<div class="progbar"><div class="progfill" id="bar-C1" style="width:0%"></div></div>
+<div class="ck-list"><label class="ck"><input data-id="a-clf4" type="checkbox"/><span>Launch a VM / compute instance</span></label><label class="ck"><input data-id="a-clf5" type="checkbox"/><span>Work with object storage</span></label><label class="ck"><input data-id="a-clf6" type="checkbox"/><span>Understand cloud networking basics</span></label></div>
+<div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary focus: AWS networking depth</strong><span>This is where your CCNP background becomes real cloud leverage.</span></div><div class="course"><strong>Checkpoint</strong><span>Design one VPC confidently with subnets, routing, and security boundaries.</span></div></div>
+</div>
+</article>
+<article class="path-step" data-code="C2">
+<div class="step-no">C2</div>
+<div>
+<div class="step-top"><h3>Deployment</h3><div class="badge">deployment</div></div>
+<p class="step-sub">Move from lab thinking to delivery thinking: app hosting, DNS, and security basics.</p>
+<div class="module-prog-row">
+<span class="module-kicker">Trackable checkpoints</span>
+<span class="module-pct" id="pct-C2">0% complete</span>
+</div>
+<div class="progbar"><div class="progfill" id="bar-C2" style="width:0%"></div></div>
+<div class="ck-list"><label class="ck"><input data-id="a-saa1" type="checkbox"/><span>Deploy a simple app to a cloud service</span></label><label class="ck"><input data-id="a-saa2" type="checkbox"/><span>Understand domain / DNS basics</span></label><label class="ck"><input data-id="a-saa3" type="checkbox"/><span>Apply basic cloud security hygiene</span></label></div>
+<div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary focus: deployment</strong><span>Cloud only matters when one of your tools is actually hosted.</span></div><div class="course"><strong>Checkpoint</strong><span>Deploy one simple app or API and understand where it lives.</span></div></div>
+</div>
+</article>
+<article class="path-step" data-code="C3">
+<div class="step-no">C3</div>
+<div>
+<div class="step-top"><h3>Production Thinking</h3><div class="badge">production</div></div>
+<p class="step-sub">Use cloud to support real tools with logging, monitoring, and deployment discipline.</p>
+<div class="module-prog-row">
+<span class="module-kicker">Trackable checkpoints</span>
+<span class="module-pct" id="pct-C3">0% complete</span>
+</div>
+<div class="progbar"><div class="progfill" id="bar-C3" style="width:0%"></div></div>
+<div class="ck-list"><label class="ck"><input data-id="a-saa4" type="checkbox"/><span>Deploy one AI or automation tool</span></label><label class="ck"><input data-id="a-saa5" type="checkbox"/><span>Add basic logging / observability</span></label><label class="ck"><input data-id="a-saa6" type="checkbox"/><span>Understand monitoring and failure visibility</span></label></div>
+<div class="course-box" style="margin-top:10px"><div class="course"><strong>Primary: PLS — AWS Well-Architected Framework Deep Dive</strong><span>Use this to build architecture judgment after deployment basics.</span></div><div class="course"><strong>Checkpoint</strong><span>Explain one reliability / security / cost tradeoff in your own words.</span></div></div>
+</div>
+</article>
+</div>
 <div class="section-title"><h2>Companion Courses</h2><span>1 primary + 1 optional</span></div>
-<article class="card"><div class="course-box"><div class="course"><strong>Primary: One cloud fundamentals course</strong><span>Use one AWS/Azure foundations path only.</span></div><div class="course"><strong>Optional: One deployment-focused path</strong><span>Add a deeper cloud course only after you deploy something real.</span></div></div></article>
-
+<article class="card"><div class="course-box"><div class="course"><strong>Primary: UD — AWS Hands-On Guide Build and Deploy Full Cloud Architecture</strong><span>Use this as your practical deployment course.</span></div><div class="course"><strong>Optional: AWS Networking Deep Dive</strong><span>Keep networking as the supporting specialist layer, not a distraction.</span></div></div></article>
 <div class="section-title"><h2>Companion Books</h2><span>tight reference layer</span></div>
-<div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong>AWS / Azure official docs</strong><div class="note">Use the docs for targeted lookup, not for random wandering.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Your deployment notes</strong><div class="note">Document how you hosted, configured, and secured your first real app.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Cloud architecture references</strong><div class="note">Keep lightweight notes on IAM, networking, and deployment patterns.</div></div></article></div>
-
+<div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong>AWS Solutions Architect — Associate Certification Guide</strong><div class="note">Use the docs for targeted lookup, not for random wandering.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>Self-Taught Cloud Computing Engineer</strong><div class="note">Document how you hosted, configured, and secured your first real app.</div></div></article><article class="book"><div class="book-icon">📘</div><div><strong>DevOps Explained With Ease</strong><div class="note">Keep lightweight notes on IAM, networking, and deployment patterns.</div></div></article></div>
 <div class="section-title"><h2>Execution Rules</h2><span>protect depth</span></div>
 <div class="grid"><article class="card"><div class="kicker">Rule 1</div><h3>Deploy something real</h3><p>Cloud only becomes meaningful when you host an actual tool or service.</p></article><article class="card"><div class="kicker">Rule 2</div><h3>Keep fundamentals tight</h3><p>IAM, compute, storage, DNS, and logging are the core. Master these first.</p></article><article class="card"><div class="kicker">Rule 3</div><h3>Use networking as your edge</h3><p>Your networking background should make cloud infrastructure easier, not harder.</p></article><article class="card"><div class="kicker">Rule 4</div><h3>Production starts small</h3><p>Logging, security hygiene, and visibility matter even for small deployments.</p></article></div>
 </div>
-
 <nav class="bnav"><div class="bnav-inner">
-  <a href="index.html" class="ni "><span>🏠</span><span class="ni-lbl">Home</span></a>
-  <a href="linux.html" class="ni "><span>🐧</span><span class="ni-lbl">Linux</span></a>
-  <a href="python.html" class="ni "><span>🐍</span><span class="ni-lbl">Python</span></a>
-  <a href="ai.html" class="ni "><span>🧠</span><span class="ni-lbl">AI</span></a>
-  <a href="devops.html" class="ni "><span>🛠️</span><span class="ni-lbl">DevOps</span></a>
-  <a href="cloud.html" class="ni active"><span>☁️</span><span class="ni-lbl">Cloud</span></a>
-  <a href="courses.html" class="ni "><span>📚</span><span class="ni-lbl">Courses</span></a>
-  <a href="playbook.html" class="ni "><span>📘</span><span class="ni-lbl">Playbook</span></a>
+<a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a>
+<a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a>
+<a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a>
+<a class="ni" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a>
+<a class="ni" href="claude.html"><span>🟠</span><span class="ni-lbl">Claude</span></a>
+<a class="ni active" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a>
+<a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a>
+<a class="ni" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a>
 </div></nav>
-
 <script>
 (function(){
   const btn=document.getElementById('themeBtn');
@@ -207,6 +197,5 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 })();
 </script>
 <script src="assets/js/enhancements.js"></script>
-<script src="assets/js/elite-system.js"></script>
 </body>
 </html>

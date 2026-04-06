@@ -28,13 +28,13 @@ body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b
 <div class="goal-card" id="gcCard"><div class="gc-lbl" id="gcLbl">Current Month</div><div class="gc-title" id="gcTitle">Monthly focus</div><div class="gc-sub" id="gcSub">Your milestones and written plan live together here.</div></div>
 <div class="play-tabs"><button class="play-tab active" data-target="goalsPanel">Goals</button><button class="play-tab" data-target="planPanel">Plan</button><button class="play-tab" data-target="buildPanel">Build</button></div>
 <section class="play-panel active" id="goalsPanel"><div class="sec-lbl">Monthly Milestones</div><div id="monthsHost"></div></section>
-<section class="play-panel" id="planPanel"><div class="card"><div class="sec-lbl">Execution Plan</div><p class="plan-help">Use this for your monthly focus, weekly commitments, exam targets, and notes. This is full width on purpose so it feels like a real planning page, not a cramped widget.</p><textarea id="playbookPlan" placeholder="Write your execution plan here..."></textarea></div><div class="card"><div class="sec-lbl">Weekly Planning Engine</div><p class="plan-help">Set one main task per day so your week stays operational rather than aspirational.</p><div id="weeklyEngineHost"></div></div></section>
+<section class="play-panel" id="planPanel"><div class="card"><div class="sec-lbl">Execution Plan</div><p class="plan-help">Use this for your monthly focus, weekly commitments, exam targets, and notes. This is full width on purpose so it feels like a real planning page, not a cramped widget.</p><textarea id="playbookPlan" placeholder="Write your execution plan here..."></textarea></div></section>
 
 <section class="play-panel" id="buildPanel">
   <div class="card">
     <div class="sec-lbl">Build Mode</div>
     <p class="plan-help">These are your output projects. They are designed to turn your networking background into AI leverage: retrieval, automation, and troubleshooting systems.</p>
-    <div id="projectIntelHost"></div><div id="buildProjectsHost"></div>
+    <div id="buildProjectsHost"></div>
   </div>
 </section>
 
@@ -44,7 +44,7 @@ body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b
   <a href="linux.html" class="ni "><span>🐧</span><span class="ni-lbl">Linux</span></a>
   <a href="python.html" class="ni "><span>🐍</span><span class="ni-lbl">Python</span></a>
   <a href="ai.html" class="ni "><span>🧠</span><span class="ni-lbl">AI</span></a>
-  <a href="devops.html" class="ni "><span>🛠️</span><span class="ni-lbl">DevOps</span></a>
+  <a href="devops.html" class="ni "><span>⚙️</span><span class="ni-lbl">DevOps</span></a>
   <a href="cloud.html" class="ni "><span>☁️</span><span class="ni-lbl">Cloud</span></a>
   <a href="courses.html" class="ni "><span>📚</span><span class="ni-lbl">Courses</span></a>
   <a href="playbook.html" class="ni active"><span>📘</span><span class="ni-lbl">Playbook</span></a>
@@ -82,16 +82,54 @@ applyTheme(); renderMonths();
 (function(){
   const PROJECT_KEY='build_mode_projects_v1';
   const PROJECTS = [
-    {id:'p1',title:'Logistics + Car Sales Copilot',tag:'Dallas → Lagos',sub:'Prove you can build an operations workflow that tracks vehicles, documents, statuses, and customer communication cleanly.',phases:[{title:'Phase 1 — Workflow model',items:[{id:'p1_1',label:'Define lifecycle: purchased → shipped → arrived → delivered'},{id:'p1_2',label:'Create sample vehicle records with VIN, customer, and status'},{id:'p1_3',label:'Map document requirements: invoice, title, shipping papers'}]},{title:'Phase 2 — Data intake',items:[{id:'p1_4',label:'Add document upload/intake flow'},{id:'p1_5',label:'Extract key fields from uploaded documents'},{id:'p1_6',label:'Store status changes and document state in one view'}]},{title:'Phase 3 — Visibility & messaging',items:[{id:'p1_7',label:'Build delayed / missing-document dashboard'},{id:'p1_8',label:'Generate customer status-update messages'},{id:'p1_9',label:'Create management summary for open shipments'}]}]},
-    {id:'p2',title:'SoftTouch Repair + Parts Intelligence',tag:'Industrial boards',sub:'Build a grounded search and support system for manuals, repair notes, obsolete parts, and quote-support work.',phases:[{title:'Phase 1 — Knowledge capture',items:[{id:'p2_1',label:'Collect manuals, datasheets, and repair notes'},{id:'p2_2',label:'Normalize file naming and intake structure'},{id:'p2_3',label:'Define common support questions and lookup targets'}]},{title:'Phase 2 — Retrieval system',items:[{id:'p2_4',label:'Build upload + text extraction pipeline'},{id:'p2_5',label:'Store chunks and enable grounded search'},{id:'p2_6',label:'Answer part / board questions from uploaded material'}]},{title:'Phase 3 — Operational support',items:[{id:'p2_7',label:'Add repair-vs-source recommendation support'},{id:'p2_8',label:'Generate quote-support or intake summaries'},{id:'p2_9',label:'Prepare a simple operator handoff workflow'}]}]},
-    {id:'p3',title:'Malaria Consortium Ops Intelligence',tag:'Professional track',sub:'Prepare a credible non-clinical operations intelligence concept after the first two proof projects are stable.',phases:[{title:'Phase 1 — Scope and inputs',items:[{id:'p3_1',label:'Define safe non-clinical scope'},{id:'p3_2',label:'List sample report and spreadsheet inputs needed'},{id:'p3_3',label:'Identify summary and exception-monitoring needs'}]},{title:'Phase 2 — Workflow design',items:[{id:'p3_4',label:'Design summary and anomaly-detection workflow'},{id:'p3_5',label:'Draft management brief output format'},{id:'p3_6',label:'Define review and escalation path'}]},{title:'Phase 3 — Proposal readiness',items:[{id:'p3_7',label:'Prepare professional proposal brief'},{id:'p3_8',label:'Map implementation phases and expected outputs'},{id:'p3_9',label:'Prepare demo narrative using proof-project lessons'}]}]}
+    {
+      id:'p1',
+      title:'Logistics + Car Sales Copilot',
+      tag:'Dallas → Lagos',
+      sub:'Track vehicles, shipment documents, status changes, and customer updates for the Dallas-to-Lagos workflow.',
+      items:[
+        {id:'p1_1',label:'Define vehicle lifecycle: purchased → shipped → arrived → delivered'},
+        {id:'p1_2',label:'Create sample records with VIN, customer, and status'},
+        {id:'p1_3',label:'Add document intake for invoice, title, and shipping papers'},
+        {id:'p1_4',label:'Extract key fields from uploaded documents'},
+        {id:'p1_5',label:'Build delayed / missing-document dashboard'},
+        {id:'p1_6',label:'Generate customer status-update messages'}
+      ]
+    },
+    {
+      id:'p2',
+      title:'SoftTouch Repair + Parts Intelligence',
+      tag:'Industrial boards',
+      sub:'Build a document-grounded assistant for obsolete boards, repair notes, manuals, and quote-support work.',
+      items:[
+        {id:'p2_1',label:'Collect manuals, datasheets, and repair notes'},
+        {id:'p2_2',label:'Build upload + text extraction pipeline'},
+        {id:'p2_3',label:'Store chunks and enable grounded search'},
+        {id:'p2_4',label:'Answer part / board questions from uploaded material'},
+        {id:'p2_5',label:'Add repair-vs-source recommendation support'},
+        {id:'p2_6',label:'Generate quote-support or intake summaries'}
+      ]
+    },
+    {
+      id:'p3',
+      title:'Malaria Consortium Ops Intelligence',
+      tag:'Professional track',
+      sub:'Prepare an operations intelligence concept for report summaries, data-quality checks, and management briefs after the first two proof projects.',
+      items:[
+        {id:'p3_1',label:'Define safe non-clinical scope'},
+        {id:'p3_2',label:'List sample report and spreadsheet inputs needed'},
+        {id:'p3_3',label:'Design summary and anomaly-detection workflow'},
+        {id:'p3_4',label:'Draft management brief output format'},
+        {id:'p3_5',label:'Prepare professional proposal brief'}
+      ]
+    }
   ];
   function getState(){ try { return JSON.parse(localStorage.getItem(PROJECT_KEY)||'{}')||{}; } catch(e){ return {}; } }
   function setState(s){ localStorage.setItem(PROJECT_KEY, JSON.stringify(s)); }
   function projPct(project){
     const s=getState();
-    const all=(project.phases||[]).flatMap(p=>p.items||[]); const done=all.filter(x=>s[x.id]).length;
-    return all.length ? Math.round(done/all.length*100) : 0;
+    const done=project.items.filter(x=>s[x.id]).length;
+    return project.items.length ? Math.round(done/project.items.length*100) : 0;
   }
   function renderProjects(){
     const host=document.getElementById('buildProjectsHost');
@@ -109,19 +147,14 @@ applyTheme(); renderMonths();
         </div>
         <div class="proj-prog"><div class="sec-lbl" style="margin:0">Project progress</div><div class="proj-pct">${pct}%</div></div>
         <div class="proj-bar"><div class="proj-fill" style="width:${pct}%"></div></div>
-        <div class="proj-list">${(project.phases||[]).map(phase => `
-            <div class="proj-phase">
-              <div class="proj-phase-title">${phase.title}</div>
-              <div class="proj-phase-items">
-                ${phase.items.map(item => `
-                  <label class="proj-item ${s[item.id] ? 'done' : ''}">
-                    <input type="checkbox" data-project-item="${item.id}" ${s[item.id] ? 'checked' : ''}>
-                    <span>${item.label}</span>
-                  </label>
-                `).join('')}
-              </div>
-            </div>
-          `).join('')}</div>
+        <div class="proj-list">
+          ${project.items.map(item => `
+            <label class="proj-item ${s[item.id] ? 'done' : ''}">
+              <input type="checkbox" data-project-item="${item.id}" ${s[item.id] ? 'checked' : ''}>
+              <span>${item.label}</span>
+            </label>
+          `).join('')}
+        </div>
       </article>`;
     }).join('');
     syncBuildSnapshot();
@@ -145,5 +178,4 @@ applyTheme(); renderMonths();
 })();
 </script>
 
-<script src="assets/js/elite-system.js"></script>
 </body></html>
