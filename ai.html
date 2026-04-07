@@ -1,380 +1,268 @@
 <!DOCTYPE html>
-
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<meta content="#0f172a" name="theme-color"/>
-<title>AI Path · Jideatom LP</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<style>
-:root{--bg:#f0f2f7;--bg2:#fff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,.08);--border2:rgba(15,23,42,.14);--shadow:0 10px 30px rgba(15,23,42,.08);--radius:18px;--accent:#4f46e5;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif}
-body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.10)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans)}a{text-decoration:none;color:inherit}button{font-family:var(--sans)}
-header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:10px}body.dark header{background:rgba(8,12,20,.82)}
-.back{color:var(--accent);font-size:1.25rem;font-weight:800;background:none;border:none}.htxt{flex:1}.htxt h1{margin:0;font-size:.98rem;font-weight:800}.htxt p{margin:2px 0 0;font-size:.64rem;color:var(--text2);font-family:var(--mono);font-weight:700}
-.theme-btn{min-width:40px;min-height:40px;border-radius:12px;border:1px solid var(--border2);background:var(--bg2);color:var(--text)}
-.wrap{max-width:920px;margin:0 auto;padding:16px 16px 92px}
-.hero{background:linear-gradient(135deg,#1d4ed8,#4f46e5 55%, #7c3aed);border-radius:24px;padding:20px;color:#fff;box-shadow:var(--shadow);margin-bottom:16px}
-.hero-k{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.14);font-size:.62rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;font-family:var(--mono)}
-.hero h2{margin:12px 0 6px;font-size:1.4rem;font-weight:800}.hero p{margin:0;color:rgba(255,255,255,.86);line-height:1.55;max-width:65ch;font-weight:600}
-.hero-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.hero-chip{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.12);font-size:.75rem;font-weight:800}
-.section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}.section-title h2{margin:0;font-size:1rem;font-weight:800}.section-title span{font-size:.68rem;color:var(--text2);font-family:var(--mono)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
-.kicker{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-family:var(--mono);margin-bottom:8px}
-.card h3{margin:0 0 6px;font-size:1rem;font-weight:800}.card p{margin:0;color:var(--text2);line-height:1.55;font-size:.78rem;font-weight:600}
-.track-card{padding:18px}.track-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}.track-tag{padding:6px 10px;border-radius:999px;background:var(--bg3);font-size:.62rem;font-weight:800;font-family:var(--mono)}
-.bullets{display:grid;gap:8px;margin-top:12px}.bullet{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--bg3);font-size:.76rem;font-weight:700;color:var(--text2)}
-.check{width:18px;height:18px;border-radius:999px;display:grid;place-items:center;background:#dbeafe;color:#1d4ed8;font-size:.7rem;flex-shrink:0;margin-top:1px}
-.path-list{display:grid;gap:12px}
-.path-step{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:flex-start;padding:14px;border-radius:18px;background:var(--bg2);border:1px solid var(--border);box-shadow:var(--shadow)}
-.step-no{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-size:1rem;font-weight:800}
-.step-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.step-top h3{margin:0;font-size:1rem;font-weight:800}.step-sub{margin:4px 0 10px;color:var(--text2);font-size:.78rem;font-weight:600;line-height:1.5}
-.badge{padding:6px 10px;border-radius:999px;background:var(--bg3);font-size:.6rem;font-weight:800;font-family:var(--mono)}
-.course-box{display:grid;gap:8px}
-.course{padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid var(--border)}
-.course strong{display:block;font-size:.82rem;font-weight:800}.course span{display:block;font-size:.72rem;color:var(--text2);margin-top:3px;font-weight:600;line-height:1.45}
-.books-grid{display:grid;gap:10px}
-.book{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:flex-start;padding:12px;border-radius:16px;background:var(--bg3)}
-.book-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#e0e7ff}
-.mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.note{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
-.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
-@media (max-width:760px){.grid,.mini-grid{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
-
-.ai-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}
-.ai-tab{padding:10px 14px;border-radius:999px;background:var(--bg3);font-size:.72rem;font-weight:800}
-.ai-link-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:16px}
-.ai-link-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.ai-mini{background:var(--bg3);border-radius:14px;padding:12px}
-.ai-mini strong{display:block;font-size:.76rem;margin-bottom:4px}
-.ai-mini span{display:block;font-size:.72rem;color:var(--text2);line-height:1.45}
-@media (max-width:760px){.ai-link-grid{grid-template-columns:1fr}}
-</style>
-<style>
-.module-track{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
-.module-prog{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.module-prog .pct{font-size:.72rem;font-family:var(--mono);font-weight:800;color:var(--accent)}
-.progbar{height:8px;background:var(--bg3);border-radius:999px;overflow:hidden;margin-bottom:10px}
-.progfill{height:100%;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:999px;transition:width .3s ease}
-.ck-list{display:grid;gap:8px}
-.ck{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--bg3);cursor:pointer}
-.ck input{margin-top:2px}
-.ck span{font-size:.78rem;color:var(--text2);font-weight:700;line-height:1.45}
-.ck.done span{text-decoration:line-through;color:var(--text3)}
-</style>
-</head>
-<body>
-<header>
-<button class="back" onclick="history.back()">←</button>
-<div class="htxt"><h1>🧠 AI Path</h1><p>Minimal elite path · no clutter</p></div>
-<button class="theme-btn" id="themeBtn">🌙</button>
-</header>
-<div class="wrap">
-<section class="hero">
-<div class="hero-k">Elite execution path</div>
-<h2>Fewer courses. More depth. Real AI engineering.</h2>
-<p>This path removes overlap and forces completion. You are not building a course museum. You are building AI engineering capability through a small set of high-leverage materials.</p>
-<div class="hero-row">
-<div class="hero-chip">Core bootcamp</div>
-<div class="hero-chip">One prompting track</div>
-<div class="hero-chip">One MCP track</div>
-<div class="hero-chip">One agent build</div>
-</div>
-</section>
-<section class="ai-link-card">
-<div class="section-title" style="margin:0 0 12px"><h2>AI Tabs</h2><span>AI + Claude unified</span></div>
-<div class="ai-tabs">
-<a class="ai-tab" href="#ai-core">AI Core</a>
-<a class="ai-tab" href="#claude-workflows">Claude Workflows</a>
-<a class="ai-tab" href="#course-library">Course Library</a>
-</div>
-<div class="ai-link-grid">
-<div class="ai-mini" id="ai-core"><strong>AI Core</strong><span>Foundations, agents, RAG, and AI engineering progression live here.</span></div>
-<div class="ai-mini" id="claude-workflows"><strong>Claude Workflows</strong><span>Claude is now part of AI. Use it for prompting, code workflows, and MCP progression inside this page.</span></div>
-<div class="ai-mini" id="course-library"><strong>Course Library</strong><span>Use the companion courses and books below as the AI + Claude stack.</span></div>
-</div>
-</section>
-
-<div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
-<div class="grid">
-<article class="card track-card">
-<div class="kicker">Keep</div>
-<div class="track-head"><h3>Minimal elite path</h3><div class="track-tag">Execution first</div></div>
-<p>Keep the strongest materials only. Every item on this page must either deepen systems thinking or create implementation skill.</p>
-<div class="bullets">
-<div class="bullet"><div class="check">✓</div><div>Main backbone = Maven AI Engineering Bootcamp</div></div>
-<div class="bullet"><div class="check">✓</div><div>Hands-On LLMs for practical intuition</div></div>
-<div class="bullet"><div class="check">✓</div><div>One prompting course, one MCP course, one agent course</div></div>
-<div class="bullet"><div class="check">✓</div><div>Chip Huyen + Designing ML Systems as companion thinking layer</div></div>
-</div>
-</article>
-<article class="card track-card">
-<div class="kicker">Drop</div>
-<div class="track-head"><h3>Noise and duplicates</h3><div class="track-tag">Clarity wins</div></div>
-<p>Remove duplicate beginner courses, repeated Claude productivity tracks, and anything that does not clearly improve your implementation quality.</p>
-<div class="bullets">
-<div class="bullet"><div class="check">•</div><div>Multiple overlapping Claude cowork courses</div></div>
-<div class="bullet"><div class="check">•</div><div>Repeated MCP intros once one solid intro is chosen</div></div>
-<div class="bullet"><div class="check">•</div><div>Google AI cert if your priority is execution speed</div></div>
-<div class="bullet"><div class="check">•</div><div>Challenge-style filler courses with low engineering depth</div></div>
-</div>
-</article>
-</div>
-<div class="section-title"><h2>Elite Path Modules</h2><span>M0 → M4</span></div>
-<div class="path-list">
-<article class="path-step">
-<div class="step-no">M0</div>
-<div>
-<div class="step-top"><h3>Claude workflow base</h3><div class="badge">Applied tooling</div></div>
-<p class="step-sub">Use exactly one serious Claude engineering course so Claude becomes a build tool, not a side hobby.</p>
-<div class="course-box">
-<div class="course"><strong>Primary: AiHero — Claude Code for Real Engineers</strong><span>Use this as your Claude engineering anchor. Stronger signal than generic cowork or productivity courses.</span></div>
-<div class="course"><strong>Optional backup: CodeWithMosh — Claude Code for Professional Developers</strong><span>Keep only as secondary reference. Do not run both in parallel.</span></div>
-</div>
-</div>
-</article>
-<article class="path-step">
-<div class="step-no">M1</div>
-<div>
-<div class="step-top"><h3>Prompting + LLM intuition</h3><div class="badge">Foundation</div></div>
-<p class="step-sub">Build strong prompting discipline and a practical feel for how LLM systems actually behave.</p>
-<div class="course-box">
-<div class="course"><strong>FM — Practical Prompt Engineering for Developers</strong><span>Your single prompting course. Use it to sharpen structure, examples, context control, and evaluation mindset.</span></div>
-<div class="course"><strong>Hands-On Large Language Models</strong><span>Your practical intuition book for embeddings, retrieval, and applied LLM workflows.</span></div>
-</div>
-</div>
-</article>
-<article class="path-step">
-<div class="step-no">M2</div>
-<div>
-<div class="step-top"><h3>AI engineering core</h3><div class="badge">Main backbone</div></div>
-<p class="step-sub">This is your central execution layer. Most of your AI build momentum should come from here.</p>
-<div class="course-box">
-<div class="course"><strong>MAVEN — The AI Engineering Bootcamp</strong><span>Main course backbone. This is the structured external path you should actually finish.</span></div>
-<div class="course"><strong>AI Engineering — Chip Huyen</strong><span>Read alongside the bootcamp so your implementation grows with system-level judgment.</span></div>
-</div>
-</div>
-</article>
-<article class="path-step">
-<div class="step-no">M3</div>
-<div>
-<div class="step-top"><h3>RAG + production thinking</h3><div class="badge">System design</div></div>
-<p class="step-sub">This is where toy prompting becomes real systems work: retrieval, evaluation, architecture, and production discipline.</p>
-<div class="course-box">
-<div class="course"><strong>Designing Machine Learning Systems</strong><span>Your production-thinking companion: architecture, tradeoffs, evaluation discipline, and deployment judgment.</span></div>
-<div class="course"><strong>Hands-On LLMs + Maven overlap</strong><span>Use both here for chunking, retrieval, evaluation, and grounded assistant design.</span></div>
-</div>
-</div>
-</article>
-<article class="path-step">
-<div class="step-no">M4</div>
-<div>
-<div class="step-top"><h3>Agents + MCP</h3><div class="badge">Implementation</div></div>
-<p class="step-sub">One course for agents, one course for MCP. Enough to build real workflows without drowning in overlap.</p>
-<div class="course-box">
-<div class="course"><strong>FM — Build an AI Agent from Scratch, v2</strong><span>Your single agent build course. Use it to ship a real workflow, not just watch demos.</span></div>
-<div class="course"><strong>FM — Complete Intro to MCP</strong><span>Your single MCP primary. Keep the other MCP intros only as supporting reference if needed.</span></div>
-</div>
-</div>
-</article>
-</div>
-
-<div class="section-title"><h2>Claude Workflows</h2><span>inside AI now</span></div>
-<article class="card">
-<div class="course-box">
-<div class="course"><strong>Stage 1 — LINKd: Claude Code 101</strong><span>Get comfortable with prompt-to-product Claude usage before deeper agent work.</span></div>
-<div class="course"><strong>Stage 2 — LINKd: Claude Code in Action</strong><span>Move from simple prompts to practical workflows and real use cases.</span></div>
-<div class="course"><strong>Stage 3 — CodeWithMosh: Claude Code for Professional Developers</strong><span>Use Claude inside developer workflows after the basics are stable.</span></div>
-<div class="course"><strong>Stage 4 — FM: Cursor &amp; Claude Code Professional AI Setup</strong><span>Integrate Claude into your build environment and coding routine.</span></div>
-<div class="course"><strong>Stage 5 — FM / Dometrain / Anthropic MCP intros</strong><span>Only after core Claude usage is stable, move into MCP and deeper tool workflows.</span></div>
-</div>
-</article>
-<div class="section-title"><h2>Companion Books</h2><span>thinking layer</span></div>
-<div class="books-grid">
-<article class="book">
-<div class="book-icon">📘</div>
-<div><strong>AI Engineering — Chip Huyen</strong><div class="note">Read beside the bootcamp so course progress translates into real systems thinking.</div></div>
-</article>
-<article class="book">
-<div class="book-icon">📗</div>
-<div><strong>Hands-On Large Language Models</strong><div class="note">Use this whenever you want deeper intuition for embeddings, retrieval, and applied LLM implementation choices.</div></div>
-</article>
-<article class="book">
-<div class="book-icon">📙</div>
-<div><strong>Designing Machine Learning Systems</strong><div class="note">This is your production mindset layer: architecture, evaluation discipline, deployment tradeoffs, and technical judgment.</div></div>
-</article>
-</div>
-<div class="section-title"><h2>Execution Rules</h2><span>protect momentum</span></div>
-<div class="mini-grid">
-<article class="card">
-<div class="kicker">Rule 1</div>
-<h3>Never run duplicates in parallel</h3>
-<p>One prompting course, one MCP course, one agent course, one Claude course. Everything else becomes archive or reference.</p>
-</article>
-<article class="card">
-<div class="kicker">Rule 2</div>
-<h3>Finish before you expand</h3>
-<p>Do not add new AI courses until you have finished a module checkpoint and built a concrete artifact from it.</p>
-</article>
-<article class="card">
-<div class="kicker">Rule 3</div>
-<h3>Build every month</h3>
-<p>Each phase should end with something you can demo: prompt set, RAG prototype, MCP workflow, or agentic assistant.</p>
-</article>
-<article class="card">
-<div class="kicker">Rule 4</div>
-<h3>Read alongside implementation</h3>
-<p>Books are not a separate lane. Use them to sharpen your judgment while the courses give you execution reps.</p>
-</article>
-</div>
-<div class="section-title"><h2>What I recommend you remove from the live page</h2><span>declutter</span></div>
-<article class="card">
-<p>Remove duplicated Claude beginner tracks, repeated MCP intros, and low-signal challenge content. Keep them in your file archive if you want, but do not keep them in the active roadmap. The active roadmap should feel smaller, cleaner, and more dangerous.</p>
-</article>
-</div>
-<nav class="bnav"><div class="bnav-inner"><a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a><a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a><a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a><a class="ni active" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a><a class="ni" href="devops.html"><span>⚙️</span><span class="ni-lbl">DevOps</span></a><a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a><a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a><a class="ni" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a></div></nav>
-<script>
-(function(){
-  const btn=document.getElementById('themeBtn');
-  function applyTheme(){
-    const t=localStorage.getItem('theme')||'light';
-    document.body.classList.toggle('dark',t==='dark');
-    btn.textContent=t==='dark'?'☀️':'🌙';
-  }
-  btn.onclick=function(){
-    const next=document.body.classList.contains('dark')?'light':'dark';
-    localStorage.setItem('theme',next);
-    applyTheme();
-  };
-  applyTheme();
-})();
-</script>
-<script>
-(function(){
-  const MODULES = {
-    m0:{
-      title:'M0 Claude workflow base',
-      items:[
-        {id:'m0_1', label:'Finish primary Claude engineering course setup'},
-        {id:'m0_2', label:'Complete first Claude workflow build'},
-        {id:'m0_3', label:'Document one Claude prompt workflow you will reuse'}
-      ]
-    },
-    m1:{
-      title:'M1 Prompting + LLM intuition',
-      items:[
-        {id:'m1_1', label:'Finish prompt engineering core lessons'},
-        {id:'m1_2', label:'Take notes on system prompts, examples, and context control'},
-        {id:'m1_3', label:'Read Hands-On LLMs sections for embeddings/retrieval intuition'}
-      ]
-    },
-    m2:{
-      title:'M2 AI engineering core',
-      items:[
-        {id:'m2_1', label:'Finish Maven bootcamp foundation module'},
-        {id:'m2_2', label:'Set up your working AI engineering environment'},
-        {id:'m2_3', label:'Build first mini project from the bootcamp'},
-        {id:'m2_4', label:'Read Chip Huyen companion chapters for this stage'}
-      ]
-    },
-    m3:{
-      title:'M3 RAG + production thinking',
-      items:[
-        {id:'m3_1', label:'Build first RAG prototype'},
-        {id:'m3_2', label:'Add chunking + retrieval evaluation notes'},
-        {id:'m3_3', label:'Read Designing ML Systems chapters for architecture judgment'}
-      ]
-    },
-    m4:{
-      title:'M4 Agents + MCP',
-      items:[
-        {id:'m4_1', label:'Finish one agent build course milestone'},
-        {id:'m4_2', label:'Complete MCP intro and document one real use case'},
-        {id:'m4_3', label:'Ship one tool-using workflow or assistant'}
-      ]
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>AI</title><style>
+    :root{
+      --bg:#f3f5fa;--card:#ffffff;--soft:#e9edf6;--text:#0f172a;--muted:#64748b;
+      --line:#d9deea;--accent:#8b5cf6;--accent2:#7c3aed;--shadow:0 10px 30px rgba(15,23,42,.08);--radius:18px;
     }
-  };
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    .wrap{width:min(1100px, calc(100% - 32px));margin:20px auto 100px}
+    .hero{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:22px;padding:22px 24px;box-shadow:var(--shadow);margin-bottom:18px}
+    .eyebrow{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;background:rgba(255,255,255,.18);border-radius:999px;margin-bottom:10px}
+    .hero h1{margin:0 0 8px;font-size:32px;line-height:1.1}
+    .hero p{margin:0;max-width:860px;color:rgba(255,255,255,.92);line-height:1.5;font-weight:500}
+    .section-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:20px 2px 10px}
+    .section-title h2{margin:0;font-size:22px}
+    .section-title span{font-size:12px;color:var(--muted);text-transform:lowercase;letter-spacing:.06em}
+    .grid-3,.grid-2,.grid-5{display:grid;gap:14px;margin-bottom:16px}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+    .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--accent2);margin-bottom:8px}
+    .card h3{margin:0 0 6px;font-size:18px;line-height:1.2} .card p{margin:0;color:var(--muted);line-height:1.5;font-weight:500}
+    .path-grid,.stack-grid{display:grid;gap:14px;margin-bottom:16px}
+    .path-step{display:grid;grid-template-columns:56px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow)}
+    .step-badge{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+    .step-body h3{margin:0 0 4px;font-size:20px} .step-sub{margin:0 0 12px;color:var(--muted);font-weight:500}
+    .course,.book,.resource{position:relative;cursor:pointer}
+    .course{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+    .books-grid,.resource-list{display:grid;gap:12px;margin-bottom:16px}
+    .book,.resource{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+    .thumb{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#dbeafe,#c7d2fe);font-size:22px;overflow:hidden;background-size:cover;background-position:center;border:1px solid rgba(124,58,237,.14)}
+    .thumb.has-image{color:transparent}
+    .resource-body strong{display:block;font-size:15px;line-height:1.3;margin-bottom:4px}
+    .resource-body span{display:block;color:var(--muted);font-size:14px;line-height:1.45;font-weight:500}
+    .resource-body .mini-hint{display:block;margin-top:6px;font-size:11px;color:#94a3b8}
+    .tab-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .tab-pill{padding:10px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--text)}
+    .stack-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+    .stack-card h3{margin:0 0 10px;font-size:20px}
+    .stack-card .stack-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .stack-item{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:12px}
+    .stack-item strong{display:block;font-size:14px;margin-bottom:4px}
+    .stack-item span{display:block;font-size:13px;color:var(--muted);line-height:1.45}
+    .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:min(860px, calc(100% - 24px));background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:10px;display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+    .bottom-nav a{text-decoration:none;color:var(--muted);font-size:12px;font-weight:800;text-align:center;padding:10px 6px;border-radius:14px}
+    .bottom-nav a.active{background:linear-gradient(135deg,var(--accent),#60a5fa);color:#fff}
+    .ctx-menu{position:fixed;z-index:9999;min-width:180px;background:#0f172a;color:#fff;border:1px solid rgba(255,255,255,.1);border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,.25);padding:6px;display:none}
+    .ctx-menu.open{display:block}
+    .ctx-menu button{display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer}
+    .ctx-menu button:hover{background:rgba(255,255,255,.08)}
+    .badge-link{position:absolute;top:10px;right:10px;font-size:10px;font-weight:800;color:var(--accent2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 8px}
+    @media (max-width: 900px){
+      .grid-3,.grid-2,.grid-5{grid-template-columns:1fr}
+      .hero h1{font-size:26px}
+      .bottom-nav{grid-template-columns:repeat(4,1fr);row-gap:8px}
+      .stack-card .stack-row{grid-template-columns:1fr}
+    }
+</style></head>
+<body><div class="wrap">
+<section class="hero"><div class="eyebrow">elite execution path</div><h1>AI for engineering, Claude workflows, and real system building.</h1><p>This is a controlled AI lane: foundations first, Claude inside the AI flow, then agents, RAG, and context engineering only when the earlier layers are real.</p></section>
+<div class="section-title"><h2>AI Tabs</h2><span>claude moved inside ai</span></div>
+<div class="tab-row"><div class="tab-pill">AI Core</div><div class="tab-pill">Claude Workflows</div><div class="tab-pill">Agents + RAG</div><div class="tab-pill">Course Library</div></div>
+<div class="section-title"><h2>Track Snapshot</h2><span>engineering first</span></div>
+<div class="grid-3">
+  <article class="card"><div class="kicker">why it matters</div><h3>Build real AI systems</h3><p>This lane should support apps, workflows, agents, and infrastructure—not random AI content consumption.</p></article>
+  <article class="card"><div class="kicker">claude position</div><h3>Claude is part of AI now</h3><p>Claude is a specialization inside this page, not a separate track fighting for menu space.</p></article>
+  <article class="card"><div class="kicker">rule</div><h3>Do not jump ahead</h3><p>Agents, RAG, and MCP come after foundations and Claude workflow fluency.</p></article>
+</div>
+<div class="section-title"><h2>Primary Path</h2><span>stage progression</span></div>
+<div class="path-grid">
+  <article class="path-step"><div class="step-badge">A0</div><div class="step-body"><h3>AI Foundations</h3><p class="step-sub">Start with the engineering mental model, not hype.</p>
+      <article class="course" data-title="MAVEN – The AI Engineering Bootcamp">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>MAVEN – The AI Engineering Bootcamp</strong>
+          <span>Main AI engineering backbone.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
+</div></article>
+  <article class="path-step"><div class="step-badge">A1</div><div class="step-body"><h3>Claude Workflows</h3><p class="step-sub">Claude now lives inside AI, not as a separate lane.</p>
+      <article class="course" data-title="UD – Mastering Claude AI: Build AI Apps, Agents & MCP Systems">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>UD – Mastering Claude AI: Build AI Apps, Agents & MCP Systems</strong>
+          <span>Main Claude specialization path inside the AI track.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
+</div></article>
+  <article class="path-step"><div class="step-badge">A2</div><div class="step-body"><h3>Agents</h3><p class="step-sub">Build before chasing multi-agent complexity.</p>
+      <article class="course" data-title="FM – Build an AI Agent from Scratch">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>FM – Build an AI Agent from Scratch</strong>
+          <span>Practical agent system building layer.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
+</div></article>
+  <article class="path-step"><div class="step-badge">A3</div><div class="step-body"><h3>RAG + Systems</h3><p class="step-sub">Now tie retrieval, workflows, and architecture together.</p>
+      <article class="course" data-title="UD – AI Engineer Core Track: LLM Engineering, RAG, QLoRA, Agents">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>UD – AI Engineer Core Track: LLM Engineering, RAG, QLoRA, Agents</strong>
+          <span>Deep systems layer after Claude and basic agents.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
+</div></article>
+  <article class="path-step"><div class="step-badge">A4</div><div class="step-body"><h3>MCP + Context Engineering</h3><p class="step-sub">Advanced layer only after the basics are stable.</p>
+      <article class="course" data-title="Context Engineering for Multi-Agent Systems">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>Context Engineering for Multi-Agent Systems</strong>
+          <span>Advanced context and orchestration layer.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
+</div></article>
+</div>
+<div class="section-title"><h2>Claude Workflows</h2><span>inside ai flow</span></div>
+<div class="resource-list">
+  
+      <article class="resource" data-title="Mastering Claude AI">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>Mastering Claude AI</strong>
+          <span>Primary Claude specialization.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
 
-  const KEY = 'ai_module_tracking_v1';
+  
+      <article class="resource" data-title="Claude Code from Scratch">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>Claude Code from Scratch</strong>
+          <span>Fast practical grounding for Claude workflows.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
 
-  function getState(){
-    try { return JSON.parse(localStorage.getItem(KEY) || '{}') || {}; }
-    catch(e){ return {}; }
-  }
-  function setState(s){
-    localStorage.setItem(KEY, JSON.stringify(s));
-  }
-  function modulePct(modKey){
-    const s = getState();
-    const mod = MODULES[modKey];
-    const done = mod.items.filter(x => s[x.id]).length;
-    return mod.items.length ? Math.round(done / mod.items.length * 100) : 0;
-  }
-  function renderModuleCard(card, modKey){
-    const mod = MODULES[modKey];
-    if(!card || !mod) return;
-    const s = getState();
-    const pct = modulePct(modKey);
-    const track = document.createElement('div');
-    track.className = 'module-track';
-    track.innerHTML = `
-      <div class="module-prog">
-        <div class="kicker" style="margin:0">Trackable checkpoints</div>
-        <div class="pct">${pct}% complete</div>
-      </div>
-      <div class="progbar"><div class="progfill" style="width:${pct}%"></div></div>
-      <div class="ck-list">
-        ${mod.items.map(item => `
-          <label class="ck ${s[item.id] ? 'done' : ''}">
-            <input type="checkbox" data-mod="${modKey}" data-id="${item.id}" ${s[item.id] ? 'checked' : ''}>
-            <span>${item.label}</span>
-          </label>
-        `).join('')}
-      </div>
-    `;
-    card.appendChild(track);
-  }
+  
+      <article class="resource" data-title="Advanced Claude Code">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>Advanced Claude Code</strong>
+          <span>Secondary Claude depth after the main course.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
 
-  function renderAll(){
-    const cards = Array.from(document.querySelectorAll('.path-step'));
-    const map = ['m0','m1','m2','m3','m4'];
-    cards.forEach((card, idx) => {
-      const existing = card.querySelector('.module-track');
-      if(existing) existing.remove();
-      renderModuleCard(card, map[idx]);
+  
+      <article class="resource" data-title="Practical Prompt Engineering for Developers">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>Practical Prompt Engineering for Developers</strong>
+          <span>Prompt support path inside AI.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
+
+</div>
+<div class="section-title"><h2>Companion Books</h2><span>reference layer</span></div>
+<div class="books-grid">
+  
+      <article class="book" data-title="AI Engineering in Practice">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>AI Engineering in Practice</strong>
+          <span>Main AI engineering reference.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
+
+  
+      <article class="book" data-title="Building Agentic AI">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>Building Agentic AI</strong>
+          <span>Workflow, optimization, and deployment thinking.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
+
+  
+      <article class="book" data-title="Model Context Protocol for LLMs">
+        <div class="thumb">📘</div>
+        <div class="resource-body">
+          <strong>Model Context Protocol for LLMs</strong>
+          <span>Main MCP reading reference.</span>
+          <small class="mini-hint">Right-click for link and thumbnail options.</small>
+        </div>
+      </article>
+
+</div>
+<div class="section-title"><h2>Execution Rules</h2><span>protect depth</span></div>
+<div class="grid-2">
+  <article class="card"><div class="kicker">rule 1</div><h3>Foundations first</h3><p>Do not jump to advanced agents before Claude and core AI engineering feel stable.</p></article>
+  <article class="card"><div class="kicker">rule 2</div><h3>Use Claude for real work</h3><p>Claude should serve apps, engineering workflows, and project execution—not just demos.</p></article>
+  <article class="card"><div class="kicker">rule 3</div><h3>Build one agent</h3><p>Before more theory, make one usable agent workflow end-to-end.</p></article>
+  <article class="card"><div class="kicker">rule 4</div><h3>Delay MCP depth</h3><p>MCP and context engineering matter after your core AI flow is already working.</p></article>
+</div></div>
+<nav class="bottom-nav"><a href="index.html">Home</a><a href="linux.html">Linux</a><a href="python.html">Python</a><a href="ai.html" class="active">AI</a><a href="devops.html">DevOps</a><a href="cloud.html">Cloud</a><a href="courses.html">Courses</a><a href="playbook.html">Playbook</a></nav>
+
+  <input id="thumbPicker" type="file" accept="image/*" style="display:none">
+  <div id="ctxMenu" class="ctx-menu">
+    <button data-action="open">Open link</button>
+    <button data-action="edit">Edit link</button>
+    <button data-action="thumb">Set thumbnail</button>
+    <button data-action="clear-thumb">Clear thumbnail</button>
+  </div>
+  <script>
+    const LINK_KEY = "ai_links_v1";
+    const THUMB_KEY = "ai_thumbs_v1";
+    const menu = document.getElementById('ctxMenu');
+    const picker = document.getElementById('thumbPicker');
+    let currentResource = null;
+    function slug(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,90)}
+    function keyFor(el){return slug(el.dataset.title || el.innerText.trim())}
+    function getMap(name){try{return JSON.parse(localStorage.getItem(name)||'{}')}catch(e){return {}}}
+    function setMap(name, value){localStorage.setItem(name, JSON.stringify(value))}
+    function getLink(el){return getMap(LINK_KEY)[keyFor(el)] || ''}
+    function setLink(el, url){const m=getMap(LINK_KEY);m[keyFor(el)]=url;setMap(LINK_KEY,m);renderResource(el)}
+    function getThumb(el){return getMap(THUMB_KEY)[keyFor(el)] || ''}
+    function setThumb(el, dataUrl){const m=getMap(THUMB_KEY);m[keyFor(el)]=dataUrl;setMap(THUMB_KEY,m);renderResource(el)}
+    function clearThumb(el){const m=getMap(THUMB_KEY);delete m[keyFor(el)];setMap(THUMB_KEY,m);renderResource(el)}
+    function renderResource(el){
+      const thumb = el.querySelector('.thumb');
+      if(!thumb) return;
+      const href = getLink(el);
+      const img = getThumb(el);
+      thumb.classList.toggle('has-image', !!img);
+      thumb.style.backgroundImage = img ? `url("${img}")` : '';
+      thumb.textContent = img ? '' : '📘';
+      let badge = el.querySelector('.badge-link');
+      if(href){ if(!badge){badge=document.createElement('div');badge.className='badge-link';badge.textContent='linked';el.appendChild(badge);} }
+      else if(badge){ badge.remove(); }
+    }
+    function openMenu(x,y,el){currentResource=el;menu.style.left=x+'px';menu.style.top=y+'px';menu.classList.add('open')}
+    function closeMenu(){menu.classList.remove('open');currentResource=null}
+    document.querySelectorAll('.resource,.course,.book,.stack-item').forEach(el=>{
+      renderResource(el);
+      el.addEventListener('click',()=>{const href=getLink(el); if(href) window.open(href,'_blank','noopener,noreferrer');});
+      el.addEventListener('contextmenu',(e)=>{e.preventDefault();openMenu(e.clientX,e.clientY,el);});
     });
-    syncHomeProgress();
-  }
+    document.addEventListener('click',(e)=>{if(!menu.contains(e.target)) closeMenu();});
+    menu.addEventListener('click',(e)=>{
+      const btn = e.target.closest('button[data-action]'); if(!btn || !currentResource) return;
+      const action = btn.dataset.action;
+      if(action==='open'){const href=getLink(currentResource); if(href) window.open(href,'_blank','noopener,noreferrer');}
+      if(action==='edit'){const val=prompt('Paste or edit link for:\n'+(currentResource.dataset.title||''), getLink(currentResource)||'https://'); if(val) setLink(currentResource,val.trim());}
+      if(action==='thumb'){picker.click(); return;}
+      if(action==='clear-thumb'){clearThumb(currentResource);}
+      closeMenu();
+    });
+    picker.addEventListener('change',()=>{
+      const file = picker.files && picker.files[0]; if(!file || !currentResource) return;
+      const reader = new FileReader();
+      reader.onload=(e)=>{setThumb(currentResource,e.target.result); closeMenu();};
+      reader.readAsDataURL(file); picker.value='';
+    });
+    window.addEventListener('scroll',closeMenu,true); window.addEventListener('resize',closeMenu);
+  </script>
 
-  function syncHomeProgress(){
-    const snapshot = {
-      m0: modulePct('m0'),
-      m1: modulePct('m1'),
-      m2: modulePct('m2'),
-      m3: modulePct('m3'),
-      m4: modulePct('m4')
-    };
-    localStorage.setItem('ai_module_snapshot', JSON.stringify(snapshot));
-  }
-
-  document.addEventListener('change', function(e){
-    const t = e.target;
-    if(!(t instanceof HTMLInputElement)) return;
-    if(!t.matches('input[type="checkbox"][data-id]')) return;
-    const s = getState();
-    s[t.dataset.id] = t.checked;
-    setState(s);
-    renderAll();
-    if(window.refreshHomeWidgets) window.refreshHomeWidgets();
-  });
-
-  document.addEventListener('DOMContentLoaded', renderAll);
-})();
-</script>
-<script src="assets/js/enhancements.js"></script>
-</body>
-</html>
+</body></html>
