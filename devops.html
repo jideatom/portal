@@ -2,111 +2,91 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0f172a">
-<title>DevOps Path · Jideatom LP</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#f0f2f7;--bg2:#fff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,.08);--border2:rgba(15,23,42,.14);--shadow:0 10px 30px rgba(15,23,42,.08);--accent:#0f766e;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif}
-body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.10)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans)}a{text-decoration:none;color:inherit}button,input{font-family:var(--sans)}
-header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:10px}body.dark header{background:rgba(8,12,20,.82)}
-.back{color:var(--accent);font-size:1.25rem;font-weight:800;background:none;border:none}.htxt{flex:1}.htxt h1{margin:0;font-size:.98rem;font-weight:800}.htxt p{margin:2px 0 0;font-size:.64rem;color:var(--text2);font-family:var(--mono);font-weight:700}
-.theme-btn{min-width:40px;min-height:40px;border-radius:12px;border:1px solid var(--border2);background:var(--bg2);color:var(--text)}
-.wrap{max-width:920px;margin:0 auto;padding:16px 16px 92px}
-.hero{background:linear-gradient(135deg,#052e2b,#0f766e 55%, #34d399);border-radius:24px;padding:20px;color:#fff;box-shadow:var(--shadow);margin-bottom:16px}
-.hero-k{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.14);font-size:.62rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;font-family:var(--mono)}
-.hero h2{margin:12px 0 6px;font-size:1.4rem;font-weight:800}.hero p{margin:0;color:rgba(255,255,255,.86);line-height:1.55;max-width:65ch;font-weight:600}
-.hero-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.hero-chip{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.12);font-size:.75rem;font-weight:800}
-.section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}.section-title h2{margin:0;font-size:1rem;font-weight:800}.section-title span{font-size:.68rem;color:var(--text2);font-family:var(--mono)}
-.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.sum-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:14px;text-align:center;box-shadow:var(--shadow)}.sum-num{font-size:1.35rem;font-weight:800;font-family:var(--mono);color:var(--accent)}.sum-lbl{font-size:.56rem;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:.8px;font-weight:800}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
-.kicker{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);font-family:var(--mono);margin-bottom:8px}
-.card h3{margin:0 0 6px;font-size:1rem;font-weight:800}.card p{margin:0;color:var(--text2);line-height:1.55;font-size:.78rem;font-weight:600}
-.track-card{padding:18px}.track-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}.track-tag{padding:6px 10px;border-radius:999px;background:var(--bg3);font-size:.62rem;font-weight:800;font-family:var(--mono)}
-.bullets{display:grid;gap:8px;margin-top:12px}.bullet{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--bg3);font-size:.76rem;font-weight:700;color:var(--text2)}.check{width:18px;height:18px;border-radius:999px;display:grid;place-items:center;background:#d1fae5;color:var(--accent);font-size:.7rem;flex-shrink:0;margin-top:1px}
-.path-list{display:grid;gap:12px}.path-step{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:flex-start;padding:14px;border-radius:18px;background:var(--bg2);border:1px solid var(--border);box-shadow:var(--shadow)}
-.step-no{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#0f766e,#34d399);color:#fff;font-size:1rem;font-weight:800}
-.step-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.step-top h3{margin:0;font-size:1rem;font-weight:800}.step-sub{margin:4px 0 10px;color:var(--text2);font-size:.78rem;font-weight:600;line-height:1.5}
-.badge{padding:6px 10px;border-radius:999px;background:var(--bg3);font-size:.6rem;font-weight:800;font-family:var(--mono)}
-.ck-list{display:grid;gap:8px}.ck{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid transparent}.ck span{font-size:.76rem;color:var(--text2);font-weight:700;line-height:1.45}
-.course-box{display:grid;gap:8px}.course{padding:10px 12px;border-radius:14px;background:var(--bg3);border:1px solid var(--border)}.course strong{display:block;font-size:.82rem;font-weight:800}.course span{display:block;font-size:.72rem;color:var(--text2);margin-top:3px;font-weight:600;line-height:1.45}
-.books-grid{display:grid;gap:10px}.book{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:flex-start;padding:12px;border-radius:16px;background:var(--bg3)}.book-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#d1fae5}
-.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(15,118,110,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
-@media (max-width:760px){.grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
-</style>
+<title>DevOps</title>
+<link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-<header><button class="back" onclick="history.back()">←</button><div class="htxt"><h1>⚙️ DevOps</h1><p>execution path · automation first</p></div><button class="theme-btn" id="themeBtn">🌙</button></header>
-<div class="wrap">
-<section class="hero"><div class="hero-k">Elite execution path</div><h2>DevOps for your actual lane: Git → Ansible → CI/CD.</h2><p>This page is tailored to your path as a network-aware automation engineer. It avoids Kubernetes overload and generic DevOps bootcamps. The focus is control, automation, and production workflow discipline.</p><div class="hero-row"><div class="hero-chip">Version control</div><div class="hero-chip">Network automation</div><div class="hero-chip">CI/CD execution</div></div></section>
 
-<div class="section-title"><h2>Track Snapshot</h2><span>real progress</span></div>
-<div class="summary-grid">
-  <div class="sum-card"><div class="sum-num">3</div><div class="sum-lbl">Stages</div></div>
-  <div class="sum-card"><div class="sum-num">Git</div><div class="sum-lbl">Starts here</div></div>
-  <div class="sum-card"><div class="sum-num">CI/CD</div><div class="sum-lbl">Ends here</div></div>
+<div class="container">
+
+<div class="section-title">
+  <h2>DevOps Track</h2>
 </div>
 
-<div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
-<div class="grid">
-  <article class="card track-card">
-    <div class="kicker">Keep</div>
-    <div class="track-head"><h3>High-leverage path</h3><div class="track-tag">Execution first</div></div>
-    <p>Keep only the parts of DevOps that directly strengthen your current stack: Git discipline, Ansible automation, and pipeline delivery.</p>
-    <div class="bullets">
-      <div class="bullet"><div class="check">✓</div><div>Git and branch control</div></div>
-      <div class="bullet"><div class="check">✓</div><div>Ansible for real network/system automation</div></div>
-      <div class="bullet"><div class="check">✓</div><div>Practical CI/CD over tool hoarding</div></div>
-    </div>
-  </article>
-  <article class="card track-card">
-    <div class="kicker">Drop</div>
-    <div class="track-head"><h3>Noise and overload</h3><div class="track-tag">Clarity wins</div></div>
-    <p>Drop Kubernetes-first overload, broad DevOps bootcamps, and cloud-specific tool sprawl until the core lane is stable.</p>
-    <div class="bullets">
-      <div class="bullet"><div class="check">•</div><div>Kubernetes before Git + Ansible + CI/CD</div></div>
-      <div class="bullet"><div class="check">•</div><div>Generic DevOps survey courses</div></div>
-      <div class="bullet"><div class="check">•</div><div>Too many tools at once</div></div>
-    </div>
-  </article>
+<div class="section-title">
+  <h2>Companion Books</h2>
+  <span>reference layer</span>
 </div>
 
-<div class="section-title"><h2>Primary Path</h2><span>do this in order</span></div>
-<div class="path-list">
-  <article class="path-step"><div class="step-no">D1</div><div><div class="step-top"><h3>Git & GitHub Control</h3><div class="badge">foundation</div></div><p class="step-sub">Learn branches, merges, pull requests, revert, and recovery. DevOps starts with version control discipline, not containers.</p><div class="ck-list"><div class="ck"><span>Create and work with branches confidently</span></div><div class="ck"><span>Use pull requests and merge workflows</span></div><div class="ck"><span>Recover from mistakes with reset / revert</span></div></div><div class="course-box" style="margin-top:10px"><div class="course"><strong>Academind — Git & GitHub: The Practical Guide</strong><span>The best Git starting point from your library for practical execution.</span></div></div></div></article>
-  <article class="path-step"><div class="step-no">D2</div><div><div class="step-top"><h3>Automation with Ansible</h3><div class="badge">core edge</div></div><p class="step-sub">Use your networking background as leverage. This is where DevOps becomes real infrastructure automation for you.</p><div class="ck-list"><div class="ck"><span>Write and run Ansible playbooks</span></div><div class="ck"><span>Automate real network or system tasks</span></div><div class="ck"><span>Understand inventory, roles, and repeatability</span></div></div><div class="course-box" style="margin-top:10px"><div class="course"><strong>CBTNuggets — Automating Networks with Ansible</strong><span>Your strongest DevOps bridge because it matches your CCNP path.</span></div></div></div></article>
-  <article class="path-step"><div class="step-no">D3</div><div><div class="step-top"><h3>CI/CD Execution</h3><div class="badge">delivery</div></div><p class="step-sub">Build practical pipelines that take code from commit to delivery without relying on theory-heavy survey material.</p><div class="ck-list"><div class="ck"><span>Create a working CI/CD pipeline</span></div><div class="ck"><span>Understand stages, jobs, runners, and artifacts</span></div><div class="ck"><span>Use pipelines in a real project repo</span></div></div><div class="course-box" style="margin-top:10px"><div class="course"><strong>TechWorldNana — GitLab CI/CD: From Zero To Hero</strong><span>The clearest production-style pipeline path in your library.</span></div></div></div></article>
+<div class="books-grid">
+
+<article class="book">
+  <div class="book-icon">📘</div>
+  <div>
+    <strong>DevOps Handbook</strong>
+    <span>Main DevOps operating manual.</span>
+  </div>
+</article>
+
+<article class="book">
+  <div class="book-icon">📘</div>
+  <div>
+    <strong>Fundamentals of DevOps and Software Delivery</strong>
+    <span>Main practical guide to deploying and managing software in production.</span>
+  </div>
+</article>
+
+<article class="book">
+  <div class="book-icon">📘</div>
+  <div>
+    <strong>DevOps Explained With Ease</strong>
+    <span>Fast clarity across cloud, Linux, Git, Docker, and CI/CD.</span>
+  </div>
+</article>
+
+<article class="book">
+  <div class="book-icon">📘</div>
+  <div>
+    <strong>Automating and Orchestrating Networks With NetDevOps</strong>
+    <span>Your network-engineering advantage layer.</span>
+  </div>
+</article>
+
+<article class="book">
+  <div class="book-icon">📘</div>
+  <div>
+    <strong>Hands-On Python for DevOps</strong>
+    <span>Python automation for real workflows.</span>
+  </div>
+</article>
+
+<article class="book">
+  <div class="book-icon">📘</div>
+  <div>
+    <strong>Ansible: The Practical Guide</strong>
+    <span>Automation + configuration management.</span>
+  </div>
+</article>
+
+<article class="book">
+  <div class="book-icon">📘</div>
+  <div>
+    <strong>Ultimate Docker Container Book</strong>
+    <span>Containerization and deployment.</span>
+  </div>
+</article>
+
+<article class="book">
+  <div class="book-icon">📘</div>
+  <div>
+    <strong>Infrastructure as Code with Pulumi</strong>
+    <span>Modern infrastructure automation.</span>
+  </div>
+</article>
+
 </div>
 
-<div class="section-title"><h2>Companion Courses</h2><span>tight support only</span></div>
-<article class="card"><div class="course-box"><div class="course"><strong>Dometrain — From Zero to Hero GitHub Actions</strong><span>Optional CI alternative after GitLab CI/CD is stable.</span></div><div class="course"><strong>ArdanLabs — Ultimate Docker</strong><span>Add only after the first 3 stages are completed.</span></div></div></article>
-
-<div class="section-title"><h2>Companion Books</h2><span>reference layer</span></div>
-<div class="books-grid"><article class="book"><div class="book-icon">📘</div><div><strong>DevOps Engineer’s Guidebook</strong><div class="note">Light reference for principles and terminology, not your main course path.</div></div></article></div>
-
-<div class="section-title"><h2>Execution Rules</h2><span>protect depth</span></div>
-<div class="grid">
-  <article class="card"><div class="kicker">Rule 1</div><h3>Do Git first</h3><p>Do not jump to containers or pipelines until Git workflows feel natural.</p></article>
-  <article class="card"><div class="kicker">Rule 2</div><h3>Exploit your network edge</h3><p>Ansible is your high-leverage DevOps entry because it directly matches your background.</p></article>
-  <article class="card"><div class="kicker">Rule 3</div><h3>Build one real pipeline</h3><p>DevOps counts only when you can ship a working CI/CD flow, not when you collect tool names.</p></article>
-  <article class="card"><div class="kicker">Rule 4</div><h3>Add Docker later</h3><p>Containers come after Git, Ansible, and pipeline discipline, not before.</p></article>
 </div>
-</div>
-<nav class="bnav"><div class="bnav-inner">
-<a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a>
-<a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a>
-<a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a>
-<a class="ni" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a>
-<a class="ni active" href="devops.html"><span>⚙️</span><span class="ni-lbl">DevOps</span></a>
-<a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a>
-<a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a>
-<a class="ni" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a>
-</div></nav>
-<script>
-(function(){const btn=document.getElementById('themeBtn');function apply(){const t=localStorage.getItem('theme')||'light';document.body.classList.toggle('dark',t==='dark');btn.textContent=t==='dark'?'☀️':'🌙'}btn.onclick=function(){localStorage.setItem('theme',document.body.classList.contains('dark')?'light':'dark');apply()};apply();})();
-</script>
+
 </body>
 </html>
