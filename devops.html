@@ -103,11 +103,10 @@
     <a href="index.html">Home</a><a href="linux.html">Linux</a><a href="python.html">Python</a><a href="ai.html">AI</a><a href="devops.html" class="active">DevOps</a><a href="cloud.html">Cloud</a><a href="courses.html">Courses</a><a href="playbook.html">Playbook</a>
   </nav>
 
-  <input id="thumbPicker" type="file" accept="image/*" style="display:none">
   <div id="ctxMenu" class="ctx-menu">
     <button data-action="open">Open link</button>
     <button data-action="edit">Edit link</button>
-    <button data-action="thumb">Set thumbnail</button>
+    <button data-action="thumb-url">Set thumbnail URL</button>
     <button data-action="clear-thumb">Clear thumbnail</button>
   </div>
 
@@ -116,7 +115,6 @@
     const DB_NAME = 'portal_resource_thumbs_v1';
     const STORE_NAME = 'thumbs';
     const menu = document.getElementById('ctxMenu');
-    const picker = document.getElementById('thumbPicker');
     let currentResource = null;
     let thumbUrlCache = new Map();
 
@@ -151,71 +149,20 @@
       db.close();
     }
 
-    async function getThumbBlob(key){
-      const db = await openDb();
-      const result = await new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, 'readonly');
-        const req = tx.objectStore(STORE_NAME).get(key);
-        req.onsuccess = () => resolve(req.result || null);
-        req.onerror = () => reject(req.error);
-      });
-      db.close();
-      return result;
-    }
+    async 
+    function getThumb(el){ return getMap(THUMB_KEY)[keyFor(el)] || ''; }
+    function setThumb(el, url){ const m = getMap(THUMB_KEY); m[keyFor(el)] = url; setMap(THUMB_KEY, m); renderResource(el); }
+    function clearThumb(el){ const m = getMap(THUMB_KEY); delete m[keyFor(el)]; setMap(THUMB_KEY, m); renderResource(el); }
 
-    async function clearThumbBlob(key){
-      const db = await openDb();
-      await new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, 'readwrite');
-        tx.objectStore(STORE_NAME).delete(key);
-        tx.oncomplete = () => resolve();
-        tx.onerror = () => reject(tx.error);
-      });
-      db.close();
-    }
-
-    async function compressImageToBlob(file){
-      const dataUrl = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-
-      const img = await new Promise((resolve, reject) => {
-        const im = new Image();
-        im.onload = () => resolve(im);
-        im.onerror = reject;
-        im.src = dataUrl;
-      });
-
-      const maxSide = 280;
-      let width = img.width;
-      let height = img.height;
-      const scale = Math.min(1, maxSide / Math.max(width, height));
-      width = Math.max(1, Math.round(width * scale));
-      height = Math.max(1, Math.round(height * scale));
-
-      const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, width, height);
-
-      let quality = 0.82;
-      let blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
-      while (blob && blob.size > 160 * 1024 && quality > 0.45) {
-        quality -= 0.08;
-        blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
-      }
-      if (!blob) throw new Error('Compression failed');
-      return blob;
-    }
-
-    async function renderResource(el){
+    function renderResource(el){
       const thumb = el.querySelector('.thumb');
+      if(!thumb) return;
       const href = getLink(el);
-      const key = keyFor(el);
+      const img = getThumb(el);
+
+      thumb.classList.toggle('has-image', !!img);
+      thumb.style.backgroundImage = img ? `url("${img}")` : '';
+      thumb.textContent = img ? '' : '📘';
 
       let badge = el.querySelector('.badge-link');
       if(href){
@@ -227,24 +174,6 @@
         }
       } else if (badge){
         badge.remove();
-      }
-
-      const blob = await getThumbBlob(key);
-      if (thumbUrlCache.has(key)) {
-        URL.revokeObjectURL(thumbUrlCache.get(key));
-        thumbUrlCache.delete(key);
-      }
-
-      if (blob) {
-        const url = URL.createObjectURL(blob);
-        thumbUrlCache.set(key, url);
-        thumb.classList.add('has-image');
-        thumb.style.backgroundImage = `url("${url}")`;
-        thumb.textContent = '';
-      } else {
-        thumb.classList.remove('has-image');
-        thumb.style.backgroundImage = '';
-        thumb.textContent = '📘';
       }
     }
 
@@ -260,12 +189,14 @@
       currentResource = null;
     }
 
-    document.querySelectorAll('.resource').forEach(el => {
+    document.querySelectorAll('.resource,.course,.book,.stack-item').forEach(el => {
       renderResource(el);
+
       el.addEventListener('click', () => {
         const href = getLink(el);
         if(href) window.open(href, '_blank', 'noopener,noreferrer');
       });
+
       el.addEventListener('contextmenu', (e) => {
         e.preventDefault();
         openMenu(e.clientX, e.clientY, el);
@@ -276,7 +207,7 @@
       if(!menu.contains(e.target)) closeMenu();
     });
 
-    menu.addEventListener('click', async (e) => {
+    menu.addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-action]');
       if(!btn || !currentResource) return;
       const action = btn.dataset.action;
@@ -287,40 +218,26 @@
       }
 
       if(action === 'edit'){
-        const val = prompt('Paste or edit link for:\n' + (currentResource.dataset.title || ''), getLink(currentResource) || 'https://');
+        const val = prompt('Paste or edit link for:
+' + (currentResource.dataset.title || ''), getLink(currentResource) || 'https://');
         if(val) setLink(currentResource, val.trim());
       }
 
-      if(action === 'thumb'){
-        picker.click();
-        return;
+      if(action === 'thumb-url'){
+        const val = prompt('Paste image URL for thumbnail:
+' + (currentResource.dataset.title || ''), getThumb(currentResource) || 'https://');
+        if(val) setThumb(currentResource, val.trim());
       }
 
       if(action === 'clear-thumb'){
-        await clearThumbBlob(keyFor(currentResource));
-        await renderResource(currentResource);
+        clearThumb(currentResource);
       }
 
       closeMenu();
     });
 
-    picker.addEventListener('change', async () => {
-      const file = picker.files && picker.files[0];
-      if(!file || !currentResource) return;
-      try{
-        const blob = await compressImageToBlob(file);
-        await setThumbBlob(keyFor(currentResource), blob);
-        await renderResource(currentResource);
-      } catch (e) {
-        alert('Thumbnail could not be saved. Try a smaller image.');
-      } finally {
-        closeMenu();
-        picker.value = '';
-      }
-    });
-
     window.addEventListener('scroll', closeMenu, true);
     window.addEventListener('resize', closeMenu);
-  </script>
+</script>
 </body>
 </html>

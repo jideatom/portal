@@ -205,18 +205,16 @@
 </div></div>
 <nav class="bottom-nav"><a href="index.html">Home</a><a href="linux.html">Linux</a><a href="python.html">Python</a><a href="ai.html" class="active">AI</a><a href="devops.html">DevOps</a><a href="cloud.html">Cloud</a><a href="courses.html">Courses</a><a href="playbook.html">Playbook</a></nav>
 
-  <input id="thumbPicker" type="file" accept="image/*" style="display:none">
   <div id="ctxMenu" class="ctx-menu">
     <button data-action="open">Open link</button>
     <button data-action="edit">Edit link</button>
-    <button data-action="thumb">Set thumbnail</button>
+    <button data-action="thumb-url">Set thumbnail URL</button>
     <button data-action="clear-thumb">Clear thumbnail</button>
   </div>
   <script>
     const LINK_KEY = "ai_links_v1";
     const THUMB_KEY = "ai_thumbs_v1";
     const menu = document.getElementById('ctxMenu');
-    const picker = document.getElementById('thumbPicker');
     let currentResource = null;
     function slug(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,90)}
     function keyFor(el){return slug(el.dataset.title || el.innerText.trim())}
@@ -256,29 +254,13 @@
       if(action==='clear-thumb'){clearThumb(currentResource);}
       closeMenu();
     });
-    picker.addEventListener('change', async () => {
-  const file = picker.files && picker.files[0];
-  if(!file || !currentResource) return;
-  try{
-    let dataUrl;
-    if (window.compressThumbnailForLocalStorage) {
-      dataUrl = await window.compressThumbnailForLocalStorage(file);
-    } else {
+    picker.addEventListener('change',()=>{
+      const file = picker.files && picker.files[0]; if(!file || !currentResource) return;
       const reader = new FileReader();
-      dataUrl = await new Promise((resolve, reject) => {
-        reader.onload = e => resolve(e.target.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-    setThumb(currentResource, dataUrl);
-  } catch (e) {
-    alert('Thumbnail could not be saved. Try a smaller image.');
-  } finally {
-    closeMenu();
-    picker.value = '';
-  }
-});
+      reader.onload=(e)=>{setThumb(currentResource,e.target.result); closeMenu();};
+      reader.readAsDataURL(file); picker.value='';
+    });
+    window.addEventListener('scroll',closeMenu,true); window.addEventListener('resize',closeMenu);
   </script>
 
 </body></html>

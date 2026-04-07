@@ -82,18 +82,16 @@
 </div>
 <nav class="bottom-nav"><a href="index.html">Home</a><a href="linux.html">Linux</a><a href="python.html">Python</a><a href="ai.html">AI</a><a href="devops.html">DevOps</a><a href="cloud.html">Cloud</a><a href="courses.html" class="active">Courses</a><a href="playbook.html">Playbook</a></nav>
 
-  <input id="thumbPicker" type="file" accept="image/*" style="display:none">
   <div id="ctxMenu" class="ctx-menu">
     <button data-action="open">Open link</button>
     <button data-action="edit">Edit link</button>
-    <button data-action="thumb">Set thumbnail</button>
+    <button data-action="thumb-url">Set thumbnail URL</button>
     <button data-action="clear-thumb">Clear thumbnail</button>
   </div>
   <script>
     const LINK_KEY = "courses_links_v1";
     const THUMB_KEY = "courses_thumbs_v1";
     const menu = document.getElementById('ctxMenu');
-    const picker = document.getElementById('thumbPicker');
     let currentResource = null;
     function slug(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,90)}
     function keyFor(el){return slug(el.dataset.title || el.innerText.trim())}
