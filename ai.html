@@ -44,6 +44,15 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 .note{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
 @media (max-width:760px){.grid,.mini-grid{grid-template-columns:1fr}.hero h2{font-size:1.22rem}}
+
+.ai-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+.ai-tab{padding:10px 14px;border-radius:999px;background:var(--bg3);font-size:.72rem;font-weight:800}
+.ai-link-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:16px}
+.ai-link-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ai-mini{background:var(--bg3);border-radius:14px;padding:12px}
+.ai-mini strong{display:block;font-size:.76rem;margin-bottom:4px}
+.ai-mini span{display:block;font-size:.72rem;color:var(--text2);line-height:1.45}
+@media (max-width:760px){.ai-link-grid{grid-template-columns:1fr}}
 </style>
 <style>
 .module-track{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
@@ -76,6 +85,20 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 <div class="hero-chip">One agent build</div>
 </div>
 </section>
+<section class="ai-link-card">
+<div class="section-title" style="margin:0 0 12px"><h2>AI Tabs</h2><span>AI + Claude unified</span></div>
+<div class="ai-tabs">
+<a class="ai-tab" href="#ai-core">AI Core</a>
+<a class="ai-tab" href="#claude-workflows">Claude Workflows</a>
+<a class="ai-tab" href="#course-library">Course Library</a>
+</div>
+<div class="ai-link-grid">
+<div class="ai-mini" id="ai-core"><strong>AI Core</strong><span>Foundations, agents, RAG, and AI engineering progression live here.</span></div>
+<div class="ai-mini" id="claude-workflows"><strong>Claude Workflows</strong><span>Claude is now part of AI. Use it for prompting, code workflows, and MCP progression inside this page.</span></div>
+<div class="ai-mini" id="course-library"><strong>Course Library</strong><span>Use the companion courses and books below as the AI + Claude stack.</span></div>
+</div>
+</section>
+
 <div class="section-title"><h2>Track Standard</h2><span>what stays vs what goes</span></div>
 <div class="grid">
 <article class="card track-card">
@@ -109,8 +132,8 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 <div class="step-top"><h3>Claude workflow base</h3><div class="badge">Applied tooling</div></div>
 <p class="step-sub">Use exactly one serious Claude engineering course so Claude becomes a build tool, not a side hobby.</p>
 <div class="course-box">
-<div class="course"><strong>Stage 1: Coursera — Google AI Professional Certificate</strong><span>Start here for AI fundamentals and core mental models.</span></div>
-<div class="course"><strong>Stage 1 support: FM — Practical Prompt Engineering for Developers</strong><span>Use one strong prompting course during fundamentals.</span></div>
+<div class="course"><strong>Primary: AiHero — Claude Code for Real Engineers</strong><span>Use this as your Claude engineering anchor. Stronger signal than generic cowork or productivity courses.</span></div>
+<div class="course"><strong>Optional backup: CodeWithMosh — Claude Code for Professional Developers</strong><span>Keep only as secondary reference. Do not run both in parallel.</span></div>
 </div>
 </div>
 </article>
@@ -120,8 +143,8 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 <div class="step-top"><h3>Prompting + LLM intuition</h3><div class="badge">Foundation</div></div>
 <p class="step-sub">Build strong prompting discipline and a practical feel for how LLM systems actually behave.</p>
 <div class="course-box">
-<div class="course"><strong>Stage 2: CodeWithMosh — Build AI-Powered Apps</strong><span>Build simple AI apps before agents and advanced systems.</span></div>
-<div class="course"><strong>Stage 2 support: TOWARDS_AI — Full Stack AI Engineering</strong><span>Use as applied engineering reinforcement, not as a second main path.</span></div>
+<div class="course"><strong>FM — Practical Prompt Engineering for Developers</strong><span>Your single prompting course. Use it to sharpen structure, examples, context control, and evaluation mindset.</span></div>
+<div class="course"><strong>Hands-On Large Language Models</strong><span>Your practical intuition book for embeddings, retrieval, and applied LLM workflows.</span></div>
 </div>
 </div>
 </article>
@@ -131,8 +154,8 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 <div class="step-top"><h3>AI engineering core</h3><div class="badge">Main backbone</div></div>
 <p class="step-sub">This is your central execution layer. Most of your AI build momentum should come from here.</p>
 <div class="course-box">
-<div class="course"><strong>Stage 3: LINKd — Claude Code 101</strong><span>Introduce Claude once your AI basics are stable.</span></div>
-<div class="course"><strong>Stage 3 support: LINKd — Claude Code in Action</strong><span>Use this to turn Claude into a repeatable workflow tool.</span></div>
+<div class="course"><strong>MAVEN — The AI Engineering Bootcamp</strong><span>Main course backbone. This is the structured external path you should actually finish.</span></div>
+<div class="course"><strong>AI Engineering — Chip Huyen</strong><span>Read alongside the bootcamp so your implementation grows with system-level judgment.</span></div>
 </div>
 </div>
 </article>
@@ -142,8 +165,8 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 <div class="step-top"><h3>RAG + production thinking</h3><div class="badge">System design</div></div>
 <p class="step-sub">This is where toy prompting becomes real systems work: retrieval, evaluation, architecture, and production discipline.</p>
 <div class="course-box">
-<div class="course"><strong>Stage 4: FM — Build an AI Agent from Scratch, v2</strong><span>Now enter agents in a controlled, practical way.</span></div>
-<div class="course"><strong>Stage 4 support: Dometrain — Getting Started MCP</strong><span>Use one MCP introduction only.</span></div>
+<div class="course"><strong>Designing Machine Learning Systems</strong><span>Your production-thinking companion: architecture, tradeoffs, evaluation discipline, and deployment judgment.</span></div>
+<div class="course"><strong>Hands-On LLMs + Maven overlap</strong><span>Use both here for chunking, retrieval, evaluation, and grounded assistant design.</span></div>
 </div>
 </div>
 </article>
@@ -153,12 +176,23 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 <div class="step-top"><h3>Agents + MCP</h3><div class="badge">Implementation</div></div>
 <p class="step-sub">One course for agents, one course for MCP. Enough to build real workflows without drowning in overlap.</p>
 <div class="course-box">
-<div class="course"><strong>Stage 5: MAVEN — The AI Engineering Bootcamp</strong><span>This is your main advanced production AI course.</span></div>
-<div class="course"><strong>Stage 5 support: UD — AI Engineer Core Track LLM Engineering, RAG, Agents</strong><span>Use for deeper systems after the Maven backbone is in motion.</span></div>
+<div class="course"><strong>FM — Build an AI Agent from Scratch, v2</strong><span>Your single agent build course. Use it to ship a real workflow, not just watch demos.</span></div>
+<div class="course"><strong>FM — Complete Intro to MCP</strong><span>Your single MCP primary. Keep the other MCP intros only as supporting reference if needed.</span></div>
 </div>
 </div>
 </article>
 </div>
+
+<div class="section-title"><h2>Claude Workflows</h2><span>inside AI now</span></div>
+<article class="card">
+<div class="course-box">
+<div class="course"><strong>Stage 1 — LINKd: Claude Code 101</strong><span>Get comfortable with prompt-to-product Claude usage before deeper agent work.</span></div>
+<div class="course"><strong>Stage 2 — LINKd: Claude Code in Action</strong><span>Move from simple prompts to practical workflows and real use cases.</span></div>
+<div class="course"><strong>Stage 3 — CodeWithMosh: Claude Code for Professional Developers</strong><span>Use Claude inside developer workflows after the basics are stable.</span></div>
+<div class="course"><strong>Stage 4 — FM: Cursor &amp; Claude Code Professional AI Setup</strong><span>Integrate Claude into your build environment and coding routine.</span></div>
+<div class="course"><strong>Stage 5 — FM / Dometrain / Anthropic MCP intros</strong><span>Only after core Claude usage is stable, move into MCP and deeper tool workflows.</span></div>
+</div>
+</article>
 <div class="section-title"><h2>Companion Books</h2><span>thinking layer</span></div>
 <div class="books-grid">
 <article class="book">
@@ -202,16 +236,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdro
 <p>Remove duplicated Claude beginner tracks, repeated MCP intros, and low-signal challenge content. Keep them in your file archive if you want, but do not keep them in the active roadmap. The active roadmap should feel smaller, cleaner, and more dangerous.</p>
 </article>
 </div>
-<nav class="bnav"><div class="bnav-inner">
-<a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a>
-<a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a>
-<a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a>
-<a class="ni active" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a>
-<a class="ni" href="claude.html"><span>🟠</span><span class="ni-lbl">Claude</span></a>
-<a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a>
-<a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a>
-<a class="ni" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a>
-</div></nav>
+<nav class="bnav"><div class="bnav-inner"><a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a><a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a><a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a><a class="ni active" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a><a class="ni" href="devops.html"><span>⚙️</span><span class="ni-lbl">DevOps</span></a><a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a><a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a><a class="ni" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a></div></nav>
 <script>
 (function(){
   const btn=document.getElementById('themeBtn');
