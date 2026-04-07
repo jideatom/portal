@@ -1,209 +1,207 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Linux</title><style>
+<html lang="en">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Linux</title>
+  <style>
     :root{
       --bg:#f3f5fa;--card:#ffffff;--soft:#e9edf6;--text:#0f172a;--muted:#64748b;
       --line:#d9deea;--accent:#10b981;--accent2:#7c3aed;--shadow:0 10px 30px rgba(15,23,42,.08);--radius:18px;
     }
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-    .wrap{width:min(980px,calc(100% - 32px));margin:20px auto 100px}
+    .wrap{width:min(1100px,calc(100% - 32px));margin:20px auto 100px}
     .hero{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:22px;padding:22px 24px;box-shadow:var(--shadow);margin-bottom:18px}
     .eyebrow{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;background:rgba(255,255,255,.18);border-radius:999px;margin-bottom:10px}
     .hero h1{margin:0 0 8px;font-size:32px;line-height:1.1}
-    .hero p{margin:0;max-width:780px;color:rgba(255,255,255,.92);line-height:1.5;font-weight:500}
+    .hero p{margin:0;max-width:820px;color:rgba(255,255,255,.92);line-height:1.5;font-weight:500}
     .section-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:20px 2px 10px}
     .section-title h2{margin:0;font-size:22px}
     .section-title span{font-size:12px;color:var(--muted);text-transform:lowercase;letter-spacing:.06em}
     .grid-3,.grid-2{display:grid;gap:14px;margin-bottom:16px}
-    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
     .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
     .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--accent2);margin-bottom:8px}
-    .card h3{margin:0 0 6px;font-size:18px;line-height:1.2}.card p{margin:0;color:var(--muted);line-height:1.5;font-weight:500}
-    .path-grid{display:grid;gap:14px;margin-bottom:16px}
+    .card h3{margin:0 0 6px;font-size:18px;line-height:1.2}
+    .card p{margin:0;color:var(--muted);line-height:1.5;font-weight:500}
+    .path-grid,.books-grid,.resource-list{display:grid;gap:14px;margin-bottom:16px}
     .path-step{display:grid;grid-template-columns:56px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow)}
     .step-badge{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-    .step-body h3{margin:0 0 4px;font-size:20px}.step-sub{margin:0 0 12px;color:var(--muted);font-weight:500}
-    .course,.book{position:relative;cursor:pointer}
+    .step-body h3{margin:0 0 4px;font-size:20px}
+    .step-sub{margin:0 0 12px;color:var(--muted);font-weight:500}
+    .course,.book,.resource,.stack-item{position:relative;cursor:pointer}
     .course{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
-    .books-grid{display:grid;gap:12px;margin-bottom:16px}
-    .book{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+    .book,.resource{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
     .thumb{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#dbeafe,#c7d2fe);font-size:22px;overflow:hidden;background-size:cover;background-position:center;border:1px solid rgba(124,58,237,.14)}
     .thumb.has-image{color:transparent}
     .resource-body strong{display:block;font-size:15px;line-height:1.3;margin-bottom:4px}
     .resource-body span{display:block;color:var(--muted);font-size:14px;line-height:1.45;font-weight:500}
     .resource-body .mini-hint{display:block;margin-top:6px;font-size:11px;color:#94a3b8}
+    .tab-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .tab-pill{padding:10px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--text)}
+    .stack-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+    .stack-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .stack-item{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:12px}
+    .stack-item strong{display:block;font-size:14px;margin-bottom:4px}
+    .stack-item span{display:block;font-size:13px;color:var(--muted);line-height:1.45}
     .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:min(860px,calc(100% - 24px));background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:10px;display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
     .bottom-nav a{text-decoration:none;color:var(--muted);font-size:12px;font-weight:800;text-align:center;padding:10px 6px;border-radius:14px}
-    .bottom-nav a.active{background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 70%, white));color:#fff}
-    .ctx-menu{position:fixed;z-index:9999;min-width:180px;background:#0f172a;color:#fff;border:1px solid rgba(255,255,255,.1);border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,.25);padding:6px;display:none}
+    .bottom-nav a.active{background:linear-gradient(135deg,var(--accent),#60a5fa);color:#fff}
+    .ctx-menu{position:fixed;z-index:9999;min-width:190px;background:#0f172a;color:#fff;border:1px solid rgba(255,255,255,.1);border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,.25);padding:6px;display:none}
     .ctx-menu.open{display:block}
     .ctx-menu button{display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer}
     .ctx-menu button:hover{background:rgba(255,255,255,.08)}
     .badge-link{position:absolute;top:10px;right:10px;font-size:10px;font-weight:800;color:var(--accent2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 8px}
-    @media (max-width:820px){.grid-3,.grid-2{grid-template-columns:1fr}.hero h1{font-size:26px}.bottom-nav{grid-template-columns:repeat(4,1fr);row-gap:8px}}
-</style></head>
-<body><div class="wrap">
-<section class="hero"><div class="eyebrow">elite execution path</div><h1>Linux for shell confidence, ops discipline, and networking support.</h1><p>Use this lane to turn Linux into your command-line base for troubleshooting, automation, systems confidence, and network-adjacent work.</p></section>
-<div class="section-title"><h2>Track Snapshot</h2><span>execution first</span></div>
-<div class="grid-3">
-  <article class="card"><div class="kicker">why it matters</div><h3>High-leverage path</h3><p>This lane directly supports your Linux, DevOps, cloud, and AI build capacity.</p></article>
-  <article class="card"><div class="kicker">your edge</div><h3>Applied systems work</h3><p>Keep this track tied to automation, APIs, networking, and real projects.</p></article>
-  <article class="card"><div class="kicker">rule</div><h3>Build before expanding</h3><p>Do not add more resources until one stage produces a useful output.</p></article>
-</div>
-<div class="section-title"><h2>Primary Path</h2><span>stage progression</span></div>
-<div class="path-grid">
-      <article class="path-step">
-        <div class="step-badge">L0</div>
-        <div class="step-body">
-          <h3>CLI Mastery</h3>
-          <p class="step-sub">Get fully comfortable in terminal first.</p>
-          <div class="course resource" data-stage="1" data-id="linux-1" data-kind="course" data-title="PIKUMA – Master the Linux Command-Line & Bash Scripting">
-            <div class="thumb">📘</div>
-            <div class="resource-body">
-              <strong>PIKUMA – Master the Linux Command-Line & Bash Scripting</strong>
-              <span>Command-line confidence and Bash foundation.</span>
-              <small class="mini-hint">Right-click for link and thumbnail options.</small>
-            </div>
-          </div>
-        </div>
-      </article>
-      <article class="path-step">
-        <div class="step-badge">L1</div>
-        <div class="step-body">
-          <h3>System Understanding</h3>
-          <p class="step-sub">Know what the OS is doing under the hood.</p>
-          <div class="course resource" data-stage="2" data-id="linux-2" data-kind="course" data-title="PEARSONS – Linux Fundamentals, 3rd Edition">
-            <div class="thumb">📘</div>
-            <div class="resource-body">
-              <strong>PEARSONS – Linux Fundamentals, 3rd Edition</strong>
-              <span>Core Linux operating system understanding.</span>
-              <small class="mini-hint">Right-click for link and thumbnail options.</small>
-            </div>
-          </div>
-        </div>
-      </article>
-      <article class="path-step">
-        <div class="step-badge">L2</div>
-        <div class="step-body">
-          <h3>Networking</h3>
-          <p class="step-sub">Turn Linux into a network engineer tool.</p>
-          <div class="course resource" data-stage="3" data-id="linux-3" data-kind="course" data-title="PEARSONS – Linux Networking - Basics and Beyond">
-            <div class="thumb">📘</div>
-            <div class="resource-body">
-              <strong>PEARSONS – Linux Networking - Basics and Beyond</strong>
-              <span>Linux networking aligned with your CCNP edge.</span>
-              <small class="mini-hint">Right-click for link and thumbnail options.</small>
-            </div>
-          </div>
-        </div>
-      </article>
-      <article class="path-step">
-        <div class="step-badge">L3</div>
-        <div class="step-body">
-          <h3>Professional Linux</h3>
-          <p class="step-sub">Operate Linux like a real engineer.</p>
-          <div class="course resource" data-stage="4" data-id="linux-4" data-kind="course" data-title="CBTNuggets – Red Hat Certified System Administrator (RHCSA) Exam EX200">
-            <div class="thumb">📘</div>
-            <div class="resource-body">
-              <strong>CBTNuggets – Red Hat Certified System Administrator (RHCSA) Exam EX200</strong>
-              <span>Enterprise Linux administration path.</span>
-              <small class="mini-hint">Right-click for link and thumbnail options.</small>
-            </div>
-          </div>
-        </div>
-      </article>
-</div>
-<div class="section-title"><h2>Companion Books</h2><span>reference layer</span></div>
-<div class="books-grid">
-      <article class="book resource" data-kind="book" data-title="Linux Command Line – A Complete Introduction">
-        <div class="thumb">📘</div>
-        <div class="resource-body">
-          <strong>Linux Command Line – A Complete Introduction</strong>
-          <span>Main command-line book.</span>
-          <small class="mini-hint">Right-click for link and thumbnail options.</small>
-        </div>
-      </article>
-      <article class="book resource" data-kind="book" data-title="Linux for Networking Professionals">
-        <div class="thumb">📘</div>
-        <div class="resource-body">
-          <strong>Linux for Networking Professionals</strong>
-          <span>Directly aligned with your networking edge.</span>
-          <small class="mini-hint">Right-click for link and thumbnail options.</small>
-        </div>
-      </article>
-      <article class="book resource" data-kind="book" data-title="Linux Bible">
-        <div class="thumb">📘</div>
-        <div class="resource-body">
-          <strong>Linux Bible</strong>
-          <span>Reference layer, not a main path.</span>
-          <small class="mini-hint">Right-click for link and thumbnail options.</small>
-        </div>
-      </article>
-</div>
-<div class="section-title"><h2>Execution Rules</h2><span>protect depth</span></div>
-<div class="grid-2">
-  <article class="card"><div class="kicker">rule 1</div><h3>Finish before you expand</h3><p>Do not stack new resources before completing the current stage checkpoint.</p></article>
-  <article class="card"><div class="kicker">rule 2</div><h3>Build every module</h3><p>Each stage should result in a script, API, automation, or useful terminal skill.</p></article>
-  <article class="card"><div class="kicker">rule 3</div><h3>Tie it to real work</h3><p>Use this lane to support your projects, automation, APIs, and infrastructure tasks.</p></article>
-  <article class="card"><div class="kicker">rule 4</div><h3>Keep references tight</h3><p>One core path, a few companion books, and no random switching.</p></article>
-</div></div>
-<nav class="bottom-nav"><a href="index.html">Home</a><a href="linux.html" class="active">Linux</a><a href="python.html">Python</a><a href="ai.html">Ai</a><a href="devops.html">Devops</a><a href="cloud.html">Cloud</a><a href="courses.html">Courses</a><a href="playbook.html">Playbook</a></nav>
-
+    @media (max-width:900px){
+      .grid-3,.grid-2{grid-template-columns:1fr}
+      .stack-row{grid-template-columns:1fr}
+      .hero h1{font-size:26px}
+      .bottom-nav{grid-template-columns:repeat(4,1fr);row-gap:8px}
+    }
+  </style>
+</head>
+<body data-link-key="linux_links_v1" data-thumb-key="linux_thumbs_v1">
+  <div class="wrap">
+    <section class="hero"><div class="eyebrow">elite execution path</div><h1>Linux for shell confidence, ops discipline, and networking support.</h1><p>Use this lane to turn Linux into your command-line base for troubleshooting, automation, systems confidence, and network-adjacent work.</p></section>
+    <div class="section-title"><h2>Track Snapshot</h2><span>execution first</span></div>
+    <div class="grid-3"><article class="card"><div class="kicker">focus</div><h3>Operational leverage</h3><p>Linux gives you terminal fluency, ops confidence, and direct leverage for DevOps and cloud work.</p></article><article class="card"><div class="kicker">focus</div><h3>Network engineer advantage</h3><p>Linux becomes more valuable when tied to networking, automation, and troubleshooting.</p></article><article class="card"><div class="kicker">focus</div><h3>CLI before complexity</h3><p>Do not jump into advanced admin or cloud tasks without terminal confidence.</p></article></div>
+    <div class="section-title"><h2>Primary Path</h2><span>stage progression</span></div>
+    <div class="path-grid"><article class="path-step"><div class="step-badge">L0</div><div class="step-body"><h3>CLI Mastery</h3><p class="step-sub">Get fully comfortable in terminal first.</p><div class="course resource" data-title="PIKUMA – Master the Linux Command-Line & Bash Scripting"><div class="thumb">📘</div><div class="resource-body"><strong>PIKUMA – Master the Linux Command-Line & Bash Scripting</strong><span>Command-line confidence and Bash foundation.</span><small class="mini-hint">Right-click for link and thumbnail URL.</small></div></div></div></article><article class="path-step"><div class="step-badge">L1</div><div class="step-body"><h3>System Understanding</h3><p class="step-sub">Know what the OS is doing under the hood.</p><div class="course resource" data-title="PEARSONS – Linux Fundamentals, 3rd Edition"><div class="thumb">📘</div><div class="resource-body"><strong>PEARSONS – Linux Fundamentals, 3rd Edition</strong><span>Core Linux operating system understanding.</span><small class="mini-hint">Right-click for link and thumbnail URL.</small></div></div></div></article><article class="path-step"><div class="step-badge">L2</div><div class="step-body"><h3>Networking</h3><p class="step-sub">Turn Linux into a network engineer tool.</p><div class="course resource" data-title="PEARSONS – Linux Networking - Basics and Beyond"><div class="thumb">📘</div><div class="resource-body"><strong>PEARSONS – Linux Networking - Basics and Beyond</strong><span>Linux networking aligned with your CCNP edge.</span><small class="mini-hint">Right-click for link and thumbnail URL.</small></div></div></div></article><article class="path-step"><div class="step-badge">L3</div><div class="step-body"><h3>Professional Linux</h3><p class="step-sub">Operate Linux like a real engineer.</p><div class="course resource" data-title="CBTNuggets – Red Hat Certified System Administrator (RHCSA) Exam EX200"><div class="thumb">📘</div><div class="resource-body"><strong>CBTNuggets – Red Hat Certified System Administrator (RHCSA) Exam EX200</strong><span>Enterprise Linux administration path.</span><small class="mini-hint">Right-click for link and thumbnail URL.</small></div></div></div></article></div>
+    
+    <div class="section-title"><h2>Companion Books</h2><span>reference layer</span></div>
+    <div class="books-grid"><article class="book resource" data-title="Linux Command Line – A Complete Introduction"><div class="thumb">📘</div><div class="resource-body"><strong>Linux Command Line – A Complete Introduction</strong><span>Main command-line book.</span><small class="mini-hint">Right-click for link and thumbnail URL.</small></div></div></article><article class="book resource" data-title="Linux for Networking Professionals"><div class="thumb">📘</div><div class="resource-body"><strong>Linux for Networking Professionals</strong><span>Directly aligned with your networking edge.</span><small class="mini-hint">Right-click for link and thumbnail URL.</small></div></div></article><article class="book resource" data-title="Linux Bible"><div class="thumb">📘</div><div class="resource-body"><strong>Linux Bible</strong><span>Reference layer, not a main path.</span><small class="mini-hint">Right-click for link and thumbnail URL.</small></div></div></article></div>
+    <div class="section-title"><h2>Execution Rules</h2><span>protect depth</span></div>
+    <div class="grid-2">
+      <article class="card"><div class="kicker">rule 1</div><h3>Finish before expanding</h3><p>Do not add new resources before the current stage produces output.</p></article>
+      <article class="card"><div class="kicker">rule 2</div><h3>Build every stage</h3><p>Each stage should result in a useful script, API, automation, or deployable outcome.</p></article>
+      <article class="card"><div class="kicker">rule 3</div><h3>Tie it to real work</h3><p>Use the track to support projects, not passive content accumulation.</p></article>
+      <article class="card"><div class="kicker">rule 4</div><h3>Keep references tight</h3><p>One main path, a few books, and no random switching.</p></article>
+    </div>
+  </div>
+  <nav class="bottom-nav"><a href="index.html">Home</a><a href="linux.html" class="active">Linux</a><a href="python.html">Python</a><a href="ai.html">AI</a><a href="devops.html">DevOps</a><a href="cloud.html">Cloud</a><a href="courses.html">Courses</a><a href="playbook.html">Playbook</a></nav>
   <div id="ctxMenu" class="ctx-menu">
     <button data-action="open">Open link</button>
     <button data-action="edit">Edit link</button>
     <button data-action="thumb-url">Set thumbnail URL</button>
     <button data-action="clear-thumb">Clear thumbnail</button>
   </div>
+
   <script>
-    const LINK_KEY = location.pathname.includes('python') ? 'python_links_v1' : 'linux_links_v1';
-    const THUMB_KEY = location.pathname.includes('python') ? 'python_thumbs_v1' : 'linux_thumbs_v1';
+    const LINK_KEY = document.body.dataset.linkKey;
+    const THUMB_KEY = document.body.dataset.thumbKey;
     const menu = document.getElementById('ctxMenu');
     let currentResource = null;
-    function slug(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,90)}
-    function keyFor(el){return slug(el.dataset.title || el.innerText.trim())}
-    function getMap(name){try{return JSON.parse(localStorage.getItem(name)||'{}')}catch(e){return {}}}
-    function setMap(name, value){localStorage.setItem(name, JSON.stringify(value))}
-    function getLink(el){return getMap(LINK_KEY)[keyFor(el)] || ''}
-    function setLink(el, url){const m=getMap(LINK_KEY);m[keyFor(el)]=url;setMap(LINK_KEY,m);renderResource(el)}
-    function getThumb(el){return getMap(THUMB_KEY)[keyFor(el)] || ''}
-    function setThumb(el, dataUrl){const m=getMap(THUMB_KEY);m[keyFor(el)]=dataUrl;setMap(THUMB_KEY,m);renderResource(el)}
-    function clearThumb(el){const m=getMap(THUMB_KEY);delete m[keyFor(el)];setMap(THUMB_KEY,m);renderResource(el)}
+
+    function slug(s){
+      return (s || '').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,90);
+    }
+    function keyFor(el){
+      return slug(el.dataset.title || el.innerText.trim());
+    }
+    function getMap(name){
+      try { return JSON.parse(localStorage.getItem(name) || '{}'); }
+      catch(e){ return {}; }
+    }
+    function setMap(name, value){
+      localStorage.setItem(name, JSON.stringify(value));
+    }
+    function getLink(el){
+      return getMap(LINK_KEY)[keyFor(el)] || '';
+    }
+    function setLink(el, url){
+      const m = getMap(LINK_KEY);
+      m[keyFor(el)] = url;
+      setMap(LINK_KEY, m);
+      renderResource(el);
+    }
+    function getThumb(el){
+      return getMap(THUMB_KEY)[keyFor(el)] || '';
+    }
+    function setThumb(el, url){
+      const m = getMap(THUMB_KEY);
+      m[keyFor(el)] = url;
+      setMap(THUMB_KEY, m);
+      renderResource(el);
+    }
+    function clearThumb(el){
+      const m = getMap(THUMB_KEY);
+      delete m[keyFor(el)];
+      setMap(THUMB_KEY, m);
+      renderResource(el);
+    }
     function renderResource(el){
       const thumb = el.querySelector('.thumb');
+      if (!thumb) return;
       const href = getLink(el);
       const img = getThumb(el);
+
       thumb.classList.toggle('has-image', !!img);
-      thumb.style.backgroundImage = img ? `url("${img}")` : '';
+      thumb.style.backgroundImage = img ? 'url("' + img + '")' : '';
       thumb.textContent = img ? '' : '📘';
+
       let badge = el.querySelector('.badge-link');
-      if(href){ if(!badge){badge=document.createElement('div');badge.className='badge-link';badge.textContent='linked';el.appendChild(badge);} }
-      else if(badge){ badge.remove(); }
+      if (href) {
+        if (!badge) {
+          badge = document.createElement('div');
+          badge.className = 'badge-link';
+          badge.textContent = 'linked';
+          el.appendChild(badge);
+        }
+      } else if (badge) {
+        badge.remove();
+      }
     }
-    function openMenu(x,y,el){currentResource=el;menu.style.left=x+'px';menu.style.top=y+'px';menu.classList.add('open')}
-    function closeMenu(){menu.classList.remove('open');currentResource=null}
-    document.querySelectorAll('.resource').forEach(el=>{
+    function openMenu(x, y, el){
+      currentResource = el;
+      menu.style.left = x + 'px';
+      menu.style.top = y + 'px';
+      menu.classList.add('open');
+    }
+    function closeMenu(){
+      menu.classList.remove('open');
+      currentResource = null;
+    }
+
+    document.querySelectorAll('.resource,.course,.book,.stack-item').forEach(el => {
       renderResource(el);
-      el.addEventListener('click',()=>{const href=getLink(el); if(href) window.open(href,'_blank','noopener,noreferrer');});
-      el.addEventListener('contextmenu',(e)=>{e.preventDefault();openMenu(e.clientX,e.clientY,el);});
+
+      el.addEventListener('click', function(){
+        const href = getLink(el);
+        if (href) window.open(href, '_blank', 'noopener,noreferrer');
+      });
+
+      el.addEventListener('contextmenu', function(e){
+        e.preventDefault();
+        openMenu(e.clientX, e.clientY, el);
+      });
     });
-    document.addEventListener('click',(e)=>{if(!menu.contains(e.target)) closeMenu();});
-    menu.addEventListener('click',(e)=>{
-      const btn = e.target.closest('button[data-action]'); if(!btn || !currentResource) return;
+
+    document.addEventListener('click', function(e){
+      if (!menu.contains(e.target)) closeMenu();
+    });
+
+    menu.addEventListener('click', function(e){
+      const btn = e.target.closest('button[data-action]');
+      if (!btn || !currentResource) return;
       const action = btn.dataset.action;
-      if(action==='open'){const href=getLink(currentResource); if(href) window.open(href,'_blank','noopener,noreferrer');}
-      if(action==='edit'){const val=prompt('Paste or edit link for:\n'+(currentResource.dataset.title||''), getLink(currentResource)||'https://'); if(val) setLink(currentResource,val.trim());}
-      if(action==='thumb'){picker.click(); return;}
-      if(action==='clear-thumb'){clearThumb(currentResource);}
+
+      if (action === 'open') {
+        const href = getLink(currentResource);
+        if (href) window.open(href, '_blank', 'noopener,noreferrer');
+      } else if (action === 'edit') {
+        const val = prompt('Paste or edit link for:\n' + (currentResource.dataset.title || ''), getLink(currentResource) || 'https://');
+        if (val) setLink(currentResource, val.trim());
+      } else if (action === 'thumb-url') {
+        const val = prompt('Paste image URL for thumbnail:\n' + (currentResource.dataset.title || ''), getThumb(currentResource) || 'https://');
+        if (val) setThumb(currentResource, val.trim());
+      } else if (action === 'clear-thumb') {
+        clearThumb(currentResource);
+      }
+
       closeMenu();
     });
-    picker.addEventListener('change',()=>{
-      const file = picker.files && picker.files[0]; if(!file || !currentResource) return;
-      const reader = new FileReader();
-      reader.onload=(e)=>{setThumb(currentResource,e.target.result); closeMenu();};
-      reader.readAsDataURL(file); picker.value='';
-    });
-    window.addEventListener('scroll',closeMenu,true); window.addEventListener('resize',closeMenu);
+
+    window.addEventListener('scroll', closeMenu, true);
+    window.addEventListener('resize', closeMenu);
   </script>
 
 </body></html>
