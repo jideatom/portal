@@ -43,7 +43,7 @@
     .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:min(860px, calc(100% - 24px));background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:10px;display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
     .bottom-nav a{text-decoration:none;color:var(--muted);font-size:12px;font-weight:800;text-align:center;padding:10px 6px;border-radius:14px}
     .bottom-nav a.active{background:linear-gradient(135deg,var(--accent),#fb923c);color:#fff}
-    .ctx-menu{position:fixed;z-index:9999;min-width:180px;background:#0f172a;color:#fff;border:1px solid rgba(255,255,255,.1);border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,.25);padding:6px;display:none}
+    .ctx-menu{position:fixed;z-index:9999;min-width:190px;background:#0f172a;color:#fff;border:1px solid rgba(255,255,255,.1);border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,.25);padding:6px;display:none}
     .ctx-menu.open{display:block}
     .ctx-menu button{display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer}
     .ctx-menu button:hover{background:rgba(255,255,255,.08)}
@@ -71,69 +71,10 @@
     <div class="section-title"><h2>Primary Path</h2><span>stage progression</span></div>
 
     <div class="path-grid">
-      <article class="path-step">
-        <div class="step-badge">D0</div>
-        <div class="step-body">
-          <h3>Git Foundation</h3>
-          <p class="step-sub">Everything starts here.</p>
-          <div class="course resource" data-id="devops-1" data-kind="course" data-title="Academind – Git & GitHub: The Practical Guide">
-            <div class="thumb">📘</div>
-            <div class="resource-body">
-              <strong>Academind – Git & GitHub: The Practical Guide</strong>
-              <span>Version control and workflow discipline.</span>
-              <small class="mini-hint">Right-click for link and thumbnail options.</small>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <article class="path-step">
-        <div class="step-badge">D1</div>
-        <div class="step-body">
-          <h3>Automation Layer</h3>
-          <p class="step-sub">Leverage your network background.</p>
-          <div class="course resource" data-id="devops-2" data-kind="course" data-title="CBTNuggets – Automating Networks with Ansible">
-            <div class="thumb">📘</div>
-            <div class="resource-body">
-              <strong>CBTNuggets – Automating Networks with Ansible</strong>
-              <span>Network + infrastructure automation backbone.</span>
-              <small class="mini-hint">Right-click for link and thumbnail options.</small>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <article class="path-step">
-        <div class="step-badge">D2</div>
-        <div class="step-body">
-          <h3>CI/CD Pipelines</h3>
-          <p class="step-sub">Make delivery repeatable.</p>
-          <div class="course resource" data-id="devops-3" data-kind="course" data-title="TechWorldNana – GitLab CI/CD: From Zero to Hero">
-            <div class="thumb">📘</div>
-            <div class="resource-body">
-              <strong>TechWorldNana – GitLab CI/CD: From Zero to Hero</strong>
-              <span>Build and ship automatically.</span>
-              <small class="mini-hint">Right-click for link and thumbnail options.</small>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <article class="path-step">
-        <div class="step-badge">D3</div>
-        <div class="step-body">
-          <h3>Containers</h3>
-          <p class="step-sub">Only after pipeline maturity.</p>
-          <div class="course resource" data-id="devops-4" data-kind="course" data-title="CodeWithMosh – The Ultimate Docker Course">
-            <div class="thumb">📘</div>
-            <div class="resource-body">
-              <strong>CodeWithMosh – The Ultimate Docker Course</strong>
-              <span>Containerization layer after Git, Ansible, and CI/CD.</span>
-              <small class="mini-hint">Right-click for link and thumbnail options.</small>
-            </div>
-          </div>
-        </div>
-      </article>
+      <article class="path-step"><div class="step-badge">D0</div><div class="step-body"><h3>Git Foundation</h3><p class="step-sub">Everything starts here.</p><div class="course resource" data-id="devops-1" data-kind="course" data-title="Academind – Git & GitHub: The Practical Guide"><div class="thumb">📘</div><div class="resource-body"><strong>Academind – Git & GitHub: The Practical Guide</strong><span>Version control and workflow discipline.</span><small class="mini-hint">Right-click for link and thumbnail options.</small></div></div></div></article>
+      <article class="path-step"><div class="step-badge">D1</div><div class="step-body"><h3>Automation Layer</h3><p class="step-sub">Leverage your network background.</p><div class="course resource" data-id="devops-2" data-kind="course" data-title="CBTNuggets – Automating Networks with Ansible"><div class="thumb">📘</div><div class="resource-body"><strong>CBTNuggets – Automating Networks with Ansible</strong><span>Network + infrastructure automation backbone.</span><small class="mini-hint">Right-click for link and thumbnail options.</small></div></div></div></article>
+      <article class="path-step"><div class="step-badge">D2</div><div class="step-body"><h3>CI/CD Pipelines</h3><p class="step-sub">Make delivery repeatable.</p><div class="course resource" data-id="devops-3" data-kind="course" data-title="TechWorldNana – GitLab CI/CD: From Zero to Hero"><div class="thumb">📘</div><div class="resource-body"><strong>TechWorldNana – GitLab CI/CD: From Zero to Hero</strong><span>Build and ship automatically.</span><small class="mini-hint">Right-click for link and thumbnail options.</small></div></div></div></article>
+      <article class="path-step"><div class="step-badge">D3</div><div class="step-body"><h3>Containers</h3><p class="step-sub">Only after pipeline maturity.</p><div class="course resource" data-id="devops-4" data-kind="course" data-title="CodeWithMosh – The Ultimate Docker Course"><div class="thumb">📘</div><div class="resource-body"><strong>CodeWithMosh – The Ultimate Docker Course</strong><span>Containerization layer after Git, Ansible, and CI/CD.</span><small class="mini-hint">Right-click for link and thumbnail options.</small></div></div></div></article>
     </div>
 
     <div class="section-title"><h2>Companion Books</h2><span>reference layer</span></div>
@@ -159,14 +100,7 @@
   </div>
 
   <nav class="bottom-nav">
-    <a href="index.html">Home</a>
-    <a href="linux.html">Linux</a>
-    <a href="python.html">Python</a>
-    <a href="ai.html">AI</a>
-    <a href="devops.html" class="active">DevOps</a>
-    <a href="cloud.html">Cloud</a>
-    <a href="courses.html">Courses</a>
-    <a href="playbook.html">Playbook</a>
+    <a href="index.html">Home</a><a href="linux.html">Linux</a><a href="python.html">Python</a><a href="ai.html">AI</a><a href="devops.html" class="active">DevOps</a><a href="cloud.html">Cloud</a><a href="courses.html">Courses</a><a href="playbook.html">Playbook</a>
   </nav>
 
   <input id="thumbPicker" type="file" accept="image/*" style="display:none">
@@ -179,29 +113,109 @@
 
   <script>
     const LINK_KEY = 'devops_links_v1';
-    const THUMB_KEY = 'devops_thumbs_v1';
+    const DB_NAME = 'portal_resource_thumbs_v1';
+    const STORE_NAME = 'thumbs';
     const menu = document.getElementById('ctxMenu');
     const picker = document.getElementById('thumbPicker');
     let currentResource = null;
+    let thumbUrlCache = new Map();
 
     function slug(s){ return (s || '').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,90); }
-    function keyFor(el){ return slug(el.dataset.title || el.innerText.trim()); }
-    function getMap(name){ try { return JSON.parse(localStorage.getItem(name) || '{}'); } catch(e){ return {}; } }
-    function setMap(name, value){ localStorage.setItem(name, JSON.stringify(value)); }
-    function getLink(el){ return getMap(LINK_KEY)[keyFor(el)] || ''; }
-    function setLink(el, url){ const m = getMap(LINK_KEY); m[keyFor(el)] = url; setMap(LINK_KEY, m); renderResource(el); }
-    function getThumb(el){ return getMap(THUMB_KEY)[keyFor(el)] || ''; }
-    function setThumb(el, dataUrl){ const m = getMap(THUMB_KEY); m[keyFor(el)] = dataUrl; setMap(THUMB_KEY, m); renderResource(el); }
-    function clearThumb(el){ const m = getMap(THUMB_KEY); delete m[keyFor(el)]; setMap(THUMB_KEY, m); renderResource(el); }
+    function keyFor(el){ return 'devops::' + slug(el.dataset.title || el.innerText.trim()); }
 
-    function renderResource(el){
+    function getLinkMap(){ try { return JSON.parse(localStorage.getItem(LINK_KEY) || '{}'); } catch(e){ return {}; } }
+    function setLinkMap(value){ localStorage.setItem(LINK_KEY, JSON.stringify(value)); }
+    function getLink(el){ return getLinkMap()[keyFor(el)] || ''; }
+    function setLink(el, url){ const m = getLinkMap(); m[keyFor(el)] = url; setLinkMap(m); renderResource(el); }
+
+    function openDb(){
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, 1);
+        req.onupgradeneeded = () => {
+          const db = req.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME);
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function setThumbBlob(key, blob){
+      const db = await openDb();
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).put(blob, key);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+      db.close();
+    }
+
+    async function getThumbBlob(key){
+      const db = await openDb();
+      const result = await new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const req = tx.objectStore(STORE_NAME).get(key);
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror = () => reject(req.error);
+      });
+      db.close();
+      return result;
+    }
+
+    async function clearThumbBlob(key){
+      const db = await openDb();
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).delete(key);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+      db.close();
+    }
+
+    async function compressImageToBlob(file){
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      const img = await new Promise((resolve, reject) => {
+        const im = new Image();
+        im.onload = () => resolve(im);
+        im.onerror = reject;
+        im.src = dataUrl;
+      });
+
+      const maxSide = 280;
+      let width = img.width;
+      let height = img.height;
+      const scale = Math.min(1, maxSide / Math.max(width, height));
+      width = Math.max(1, Math.round(width * scale));
+      height = Math.max(1, Math.round(height * scale));
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      let quality = 0.82;
+      let blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
+      while (blob && blob.size > 160 * 1024 && quality > 0.45) {
+        quality -= 0.08;
+        blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
+      }
+      if (!blob) throw new Error('Compression failed');
+      return blob;
+    }
+
+    async function renderResource(el){
       const thumb = el.querySelector('.thumb');
       const href = getLink(el);
-      const img = getThumb(el);
-
-      thumb.classList.toggle('has-image', !!img);
-      thumb.style.backgroundImage = img ? `url("${img}")` : '';
-      thumb.textContent = img ? '' : '📘';
+      const key = keyFor(el);
 
       let badge = el.querySelector('.badge-link');
       if(href){
@@ -214,41 +228,24 @@
       } else if (badge){
         badge.remove();
       }
-    }
 
-    function compressThumbnailForLocalStorage(file){
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onerror = reject;
-        reader.onload = () => {
-          const img = new Image();
-          img.onerror = reject;
-          img.onload = () => {
-            const maxSide = 240;
-            let width = img.width;
-            let height = img.height;
-            const scale = Math.min(1, maxSide / Math.max(width, height));
-            width = Math.max(1, Math.round(width * scale));
-            height = Math.max(1, Math.round(height * scale));
+      const blob = await getThumbBlob(key);
+      if (thumbUrlCache.has(key)) {
+        URL.revokeObjectURL(thumbUrlCache.get(key));
+        thumbUrlCache.delete(key);
+      }
 
-            const canvas = document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-
-            let quality = 0.82;
-            let dataUrl = canvas.toDataURL('image/jpeg', quality);
-            while (dataUrl.length > 180000 && quality > 0.45) {
-              quality -= 0.08;
-              dataUrl = canvas.toDataURL('image/jpeg', quality);
-            }
-            resolve(dataUrl);
-          };
-          img.src = reader.result;
-        };
-        reader.readAsDataURL(file);
-      });
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        thumbUrlCache.set(key, url);
+        thumb.classList.add('has-image');
+        thumb.style.backgroundImage = `url("${url}")`;
+        thumb.textContent = '';
+      } else {
+        thumb.classList.remove('has-image');
+        thumb.style.backgroundImage = '';
+        thumb.textContent = '📘';
+      }
     }
 
     function openMenu(x, y, el){
@@ -265,12 +262,10 @@
 
     document.querySelectorAll('.resource').forEach(el => {
       renderResource(el);
-
       el.addEventListener('click', () => {
         const href = getLink(el);
         if(href) window.open(href, '_blank', 'noopener,noreferrer');
       });
-
       el.addEventListener('contextmenu', (e) => {
         e.preventDefault();
         openMenu(e.clientX, e.clientY, el);
@@ -281,7 +276,7 @@
       if(!menu.contains(e.target)) closeMenu();
     });
 
-    menu.addEventListener('click', (e) => {
+    menu.addEventListener('click', async (e) => {
       const btn = e.target.closest('button[data-action]');
       if(!btn || !currentResource) return;
       const action = btn.dataset.action;
@@ -302,7 +297,8 @@
       }
 
       if(action === 'clear-thumb'){
-        clearThumb(currentResource);
+        await clearThumbBlob(keyFor(currentResource));
+        await renderResource(currentResource);
       }
 
       closeMenu();
@@ -312,8 +308,9 @@
       const file = picker.files && picker.files[0];
       if(!file || !currentResource) return;
       try{
-        const dataUrl = await compressThumbnailForLocalStorage(file);
-        setThumb(currentResource, dataUrl);
+        const blob = await compressImageToBlob(file);
+        await setThumbBlob(keyFor(currentResource), blob);
+        await renderResource(currentResource);
       } catch (e) {
         alert('Thumbnail could not be saved. Try a smaller image.');
       } finally {
