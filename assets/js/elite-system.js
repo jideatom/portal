@@ -62,7 +62,7 @@
     if(!p) return;
 
     p.className = min() ? 'coach-dock minimized' : 'coach-dock';
-    p.innerHTML = `<div class="coach-head"><div><div class="coach-kicker">AI Coach</div><div class="coach-title">Execution guidance</div></div><button type="button" class="coach-toggle">${min() ? '＋' : '—'}</button></div><div class="coach-body"><div class="coach-line"><strong>Coach:</strong> <span>${coach()}</span></div><div class="coach-grid"><div class="coach-stat"><span>Streak</span><strong>${gs()}d</strong></div><div class="coach-stat"><span>Progress</span><strong>${Object.keys(gp()).length}</strong></div></div><div class="coach-next"><span>Next action</span><strong>${next()}</strong></div></div>`;
+    p.innerHTML = `<div class="coach-head"><div><div class="coach-kicker">AI Coach</div><div class="coach-title">Execution guidance</div></div><button type="button" class="coach-toggle">${min() ? '＋' : '—'}</button></div><div class="coach-body"><div class="coach-line"><strong>Coach:</strong> <span>${coach()}</span></div><div class="coach-grid"><div class="coach-stat"><span>Streak</span><strong>${gs()} day${gs()===1?'':'s'}</strong></div><div class="coach-stat"><span>Progress</span><strong>${Object.keys(gp()).length}</strong></div></div><div class="coach-next"><span>Next action</span><strong>${next()}</strong></div></div>`;
 
     p.querySelector('.coach-toggle').addEventListener('click', function(){
       const nm = !p.classList.contains('minimized');
@@ -87,6 +87,40 @@
 
     renderCoach();
     location.reload();
+  };
+
+  window.compressThumbnailForLocalStorage = function(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        const img = new Image();
+        img.onerror = reject;
+        img.onload = () => {
+          const maxSide = 240;
+          let { width, height } = img;
+          const scale = Math.min(1, maxSide / Math.max(width, height));
+          width = Math.max(1, Math.round(width * scale));
+          height = Math.max(1, Math.round(height * scale));
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          let quality = 0.82;
+          let dataUrl = canvas.toDataURL('image/jpeg', quality);
+          while (dataUrl.length > 180000 && quality > 0.45) {
+            quality -= 0.08;
+            dataUrl = canvas.toDataURL('image/jpeg', quality);
+          }
+          resolve(dataUrl);
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
   };
 
   document.addEventListener('DOMContentLoaded', () => {

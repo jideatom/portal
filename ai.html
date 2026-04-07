@@ -256,13 +256,29 @@
       if(action==='clear-thumb'){clearThumb(currentResource);}
       closeMenu();
     });
-    picker.addEventListener('change',()=>{
-      const file = picker.files && picker.files[0]; if(!file || !currentResource) return;
+    picker.addEventListener('change', async () => {
+  const file = picker.files && picker.files[0];
+  if(!file || !currentResource) return;
+  try{
+    let dataUrl;
+    if (window.compressThumbnailForLocalStorage) {
+      dataUrl = await window.compressThumbnailForLocalStorage(file);
+    } else {
       const reader = new FileReader();
-      reader.onload=(e)=>{setThumb(currentResource,e.target.result); closeMenu();};
-      reader.readAsDataURL(file); picker.value='';
-    });
-    window.addEventListener('scroll',closeMenu,true); window.addEventListener('resize',closeMenu);
+      dataUrl = await new Promise((resolve, reject) => {
+        reader.onload = e => resolve(e.target.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+    setThumb(currentResource, dataUrl);
+  } catch (e) {
+    alert('Thumbnail could not be saved. Try a smaller image.');
+  } finally {
+    closeMenu();
+    picker.value = '';
+  }
+});
   </script>
 
 </body></html>
