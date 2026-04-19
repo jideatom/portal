@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#0f172a"/>
+  <title>Playbook · Jideatom LP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+
+:root{
+  --bg:#e7edf5;
+  --bg2:#ffffff;
+  --bg3:#edf2f8;
+  --text:#122033;
+  --text2:#4f6178;
+  --text3:#8090a8;
+  --border:rgba(28,39,64,.10);
+  --border2:rgba(54,72,108,.18);
+  --shadow:0 20px 44px rgba(20,32,52,.09);
+  --radius:20px;
+  --accent:#4f57d9;
+  --accent-strong:#3f47c7;
+  --accent2:#3f7686;
+  --mono:'Space Mono',monospace;
+  --sans:'DM Sans',sans-serif;
+  --green:#13956f;
+  --yellow:#c48728;
+  --red:#c95b72;
+}
+body.dark{
+  --bg:#09111c;
+  --bg2:#101a29;
+  --bg3:#162334;
+  --text:#e9eff8;
+  --text2:#9eacc2;
+  --text3:#6f829d;
+  --border:rgba(255,255,255,.07);
+  --border2:rgba(185,197,221,.14);
+  --shadow:0 20px 46px rgba(0,0,0,.34);
+  --accent:#7d84ff;
+  --accent-strong:#6d74f2;
+  --accent2:#59a0a0;
+  --green:#2fca98;
+  --yellow:#e4a140;
+  --red:#ee7d93;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top left, rgba(79,87,217,.12), transparent 32%),
+    radial-gradient(circle at top right, rgba(63,118,134,.10), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,0)),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--sans)
+}
+button,input,textarea,select{font-family:var(--sans)}
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 10px 26px rgba(18,32,51,.06)
+}
+body.dark header{background:rgba(9,17,28,.78)}
+.back{color:var(--accent);font-size:1.25rem;font-weight:800;background:none;border:none}
+.htxt{flex:1}
+.htxt h1{margin:0;font-size:1rem;font-weight:800}
+.htxt p{margin:2px 0 0;font-size:.64rem;color:var(--text2);font-family:var(--mono);font-weight:700}
+.theme-btn{
+  min-width:42px;
+  min-height:42px;
+  border-radius:14px;
+  border:1px solid var(--border2);
+  background:var(--bg2);
+  color:var(--text);
+  box-shadow:0 8px 18px rgba(18,32,51,.06), inset 0 1px 0 rgba(255,255,255,.6)
+}
+.wrap{max-width:880px;margin:0 auto;padding:22px 16px 96px}
+.goal-card{
+  border-radius:26px;
+  padding:24px 22px;
+  background:linear-gradient(135deg,#1c2942 0%, #314972 48%, #335d68 100%);
+  color:#f8fbff;
+  box-shadow:0 24px 48px rgba(24,37,63,.22);
+  margin-bottom:18px;
+  border:1px solid rgba(255,255,255,.10)
+}
+.gc-lbl{font-size:.62rem;font-family:var(--mono);font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(248,251,255,.74)}
+.gc-title{font-size:1.15rem;font-weight:800;margin:6px 0}
+.gc-sub{font-size:.8rem;color:rgba(248,251,255,.86);line-height:1.58}
+.play-tabs{display:flex;gap:10px;margin:0 0 18px;flex-wrap:wrap}
+.play-tab{
+  padding:11px 15px;
+  border-radius:999px;
+  border:1px solid rgba(79,87,217,.10);
+  background:rgba(255,255,255,.78);
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text2);
+  box-shadow:0 10px 22px rgba(18,32,51,.05)
+}
+body.dark .play-tab{background:rgba(16,26,41,.84)}
+.play-tab.active{
+  background:linear-gradient(135deg,var(--accent),var(--accent-strong));
+  color:#fff;
+  border-color:transparent;
+  box-shadow:0 16px 30px rgba(79,87,217,.28)
+}
+.play-panel{display:none}
+.play-panel.active{display:block}
+.card,.month-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.82));
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(10px)
+}
+body.dark .card, body.dark .month-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)), var(--bg2)
+}
+.month-card{margin-bottom:14px;padding:0;overflow:hidden}
+.sec-lbl{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-family:var(--mono);margin-bottom:12px}
+.month-hdr{display:flex;align-items:center;gap:10px;padding:15px 18px;cursor:pointer;background:linear-gradient(180deg, rgba(79,87,217,.06), transparent)}
+.month-hdr span{font-weight:800}.month-dot{width:10px;height:10px;border-radius:50%}
+.month-body{display:none;padding:0 18px 18px}.month-body.open{display:block}
+.ms-row{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.ms-row:last-child{border-bottom:none}
+.ms-check{width:22px;height:22px;border-radius:7px;border:2px solid var(--border2);display:grid;place-items:center;font-size:.74rem;cursor:pointer;flex-shrink:0;background:transparent;color:var(--accent)}
+.ms-check.done{background:linear-gradient(135deg,var(--green),#23bb8e);border-color:transparent;color:#fff;box-shadow:0 10px 18px rgba(19,149,111,.24)}
+.ms-copy{flex:1}.ms-title{font-size:.84rem;font-weight:700;line-height:1.45}.ms-title.done{text-decoration:line-through;color:var(--text3)}.ms-date{font-size:.6rem;color:var(--text3);font-family:var(--mono);margin-top:3px}
+.add-row{display:flex;gap:8px;margin-top:12px}
+.add-input,.add-date,textarea,input[type="date"],input[type="text"],input[type="number"],select{
+  background:linear-gradient(180deg, rgba(255,255,255,.94), rgba(246,249,253,.88));
+  border:1px solid var(--border2);
+  border-radius:15px;
+  padding:11px 13px;
+  color:var(--text);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75)
+}
+body.dark .add-input,
+body.dark .add-date,
+body.dark textarea,
+body.dark input[type="date"],
+body.dark input[type="text"],
+body.dark input[type="number"],
+body.dark select{
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)), var(--bg3)
+}
+textarea:focus,input:focus,select:focus{
+  outline:none;
+  border-color:rgba(79,87,217,.46);
+  box-shadow:0 0 0 4px rgba(79,87,217,.14), inset 0 1px 0 rgba(255,255,255,.7)
+}
+.add-input{flex:1}.add-date{width:140px}
+.add-btn,.pri-btn{
+  background:linear-gradient(135deg,var(--accent),var(--accent-strong));
+  color:#fff;
+  border:none;
+  border-radius:15px;
+  padding:11px 17px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 16px 28px rgba(79,87,217,.24)
+}
+.sec-btn{
+  background:rgba(79,87,217,.08);
+  color:var(--text);
+  border:1px solid rgba(79,87,217,.16);
+  border-radius:14px;
+  padding:10px 14px;
+  font-weight:800;
+  cursor:pointer
+}
+.danger-btn{
+  background:linear-gradient(135deg,#ca6b80,#bb5870);
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  padding:8px 12px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 12px 22px rgba(187,88,112,.2)
+}
+.plan-help{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.6;margin-bottom:12px}
+#playbookPlan{width:100%;min-height:320px;display:block}
+.bnav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(255,255,255,.84);
+  border-top:1px solid var(--border);
+  z-index:30;
+  overflow-x:auto;
+  backdrop-filter:blur(16px)
+}
+body.dark .bnav{background:rgba(9,17,28,.84)}
+.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}
+.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px;text-decoration:none;color:inherit}
+.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,87,217,.12)}
+.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
+.proj-card,.goal-box,.stat-card,.entry-card{
+  background:linear-gradient(180deg, rgba(79,87,217,.05), rgba(255,255,255,.74));
+  border:1px solid var(--border);
+  border-radius:22px;
+  box-shadow:0 14px 26px rgba(18,32,51,.04), inset 0 1px 0 rgba(255,255,255,.6)
+}
+body.dark .proj-card, body.dark .goal-box, body.dark .stat-card, body.dark .entry-card{
+  background:linear-gradient(180deg, rgba(125,132,255,.05), rgba(255,255,255,.02)), var(--bg3)
+}
+.proj-card{padding:14px;margin-top:12px}
+.proj-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.proj-tag{padding:6px 10px;border-radius:999px;background:rgba(79,87,217,.10);font-size:.6rem;font-weight:800;font-family:var(--mono);color:var(--accent)}
+.proj-title{font-size:.94rem;font-weight:800;margin:0}
+.proj-sub{font-size:.75rem;color:var(--text2);font-weight:600;line-height:1.58;margin-top:4px}
+.proj-prog{display:flex;justify-content:space-between;align-items:center;margin:10px 0 8px}
+.proj-pct{font-size:.7rem;font-family:var(--mono);font-weight:800;color:var(--accent)}
+.proj-bar{height:8px;background:rgba(79,87,217,.10);border-radius:999px;overflow:hidden;margin-bottom:10px}
+.proj-fill{height:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:999px;transition:width .3s ease}
+.proj-list{display:grid;gap:8px}
+.proj-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.76);cursor:pointer;border:1px solid rgba(79,87,217,.08)}
+body.dark .proj-item{background:rgba(16,26,41,.74)}
+.proj-item input{margin-top:2px}
+.proj-item span{font-size:.76rem;color:var(--text2);font-weight:700;line-height:1.45}
+.proj-item.done span{text-decoration:line-through;color:var(--text3)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.stat-card{padding:14px}
+.stat-k{font-size:.58rem;font-family:var(--mono);font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3)}
+.stat-v{font-size:1.18rem;font-weight:800;margin-top:6px;color:var(--text)}
+.tech-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:12px}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.form-grid.two{grid-template-columns:repeat(2,1fr)}
+.stack{display:grid;gap:10px}
+.entry-list{display:grid;gap:10px;margin-top:12px}
+.entry-card{padding:14px}
+.entry-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.entry-date{font-size:.7rem;font-family:var(--mono);font-weight:800;color:var(--accent)}
+.entry-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.entry-chip{padding:6px 8px;border-radius:999px;background:rgba(79,87,217,.09);font-size:.64rem;font-weight:800;color:var(--text)}
+.entry-notes{font-size:.76rem;color:var(--text2);line-height:1.55;margin-top:8px}
+.goal-box{padding:14px}
+.status-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:.62rem;font-weight:800;font-family:var(--mono)}
+.status-green{background:rgba(19,149,111,.14);color:var(--green)}
+.status-yellow{background:rgba(196,135,40,.16);color:var(--yellow)}
+.status-red{background:rgba(201,91,114,.14);color:var(--red)}
+.small{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.hidden{display:none}
+@media (max-width:700px){
+  .add-row,.form-grid,.form-grid.two,.stats-grid,.tech-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header><button class="back" onclick="history.back()">←</button><div class="htxt"><h1>📘 Playbook</h1><p>Goals + plan in one place</p></div><button class="theme-btn" id="themeBtn">🌙</button></header>
+<div class="wrap">
+  <div class="goal-card" id="gcCard"><div class="gc-lbl" id="gcLbl">Current Month</div><div class="gc-title" id="gcTitle">Monthly focus</div><div class="gc-sub" id="gcSub">Your milestones and written plan live together here.</div></div>
+  <div class="play-tabs"><button class="play-tab active" data-target="goalsPanel">Goals</button><button class="play-tab" data-target="planPanel">Plan</button><button class="play-tab" data-target="buildPanel">Build</button><button class="play-tab" data-target="techGoalPanel">Tech Goal</button></div>
+  <section class="play-panel active" id="goalsPanel"><div class="sec-lbl">Monthly Milestones</div><div id="monthsHost"></div></section>
+  <section class="play-panel" id="planPanel"><div class="card"><div class="sec-lbl">Execution Plan</div><p class="plan-help">Use this for your monthly focus, weekly commitments, exam targets, and notes.</p><textarea id="playbookPlan" placeholder="Write your execution plan here..."></textarea></div></section>
+  <section class="play-panel" id="buildPanel"><div class="card"><div class="sec-lbl">Build Mode</div><p class="plan-help">These are your output projects.</p><div id="buildProjectsHost"></div></div></section>
+  <section class="play-panel" id="techGoalPanel"><div class="card"><div class="sec-lbl">Tech/Career OS</div><p class="plan-help">This section is your working cockpit for Tech/Career only. Health/Fitness stays separate by design.</p><div class="stats-grid"><div class="stat-card"><div class="stat-k">Current Week</div><div class="stat-v" id="tgWeek">1</div></div><div class="stat-card"><div class="stat-k">Deep Work</div><div class="stat-v" id="tgDeepWork">0h</div></div><div class="stat-card"><div class="stat-k">Features</div><div class="stat-v" id="tgFeatures">0</div></div><div class="stat-card"><div class="stat-k">Outreach</div><div class="stat-v" id="tgOutreach">0</div></div></div><div class="tech-grid"><div class="goal-box"><div class="sec-lbl">Current Goal</div><div class="stack"><input id="techGoalTitle" type="text" placeholder="Main tech goal"/><div class="form-grid two"><input id="techGoalDeadline" type="date"/><select id="techGoalStatus"><option>Not Started</option><option selected>In Progress</option><option>Done</option><option>Blocked</option></select></div><input id="techGoalProgress" type="number" min="0" max="100" placeholder="Progress %"/><textarea id="techGoalFocus" placeholder="Weekly focus"></textarea><textarea id="techGoalDeliverable" placeholder="Current build deliverable"></textarea><textarea id="techGoalProof" placeholder="Sales / proof target"></textarea><div class="actions"><button class="pri-btn" id="saveTechGoalBtn">Save Goal</button></div></div></div><div class="goal-box"><div class="sec-lbl">Goal Snapshot</div><div id="techGoalSnapshot"></div></div></div></div><div class="card" style="margin-top:12px"><div class="sec-lbl">Daily Entry</div><div class="form-grid"><input id="entryDate" type="date"/><input id="entryDeepWork" type="number" step="0.5" placeholder="Deep work hours"/><input id="entryPython" type="number" step="0.5" placeholder="Python hours"/></div><div class="form-grid"><input id="entryLinux" type="number" step="0.5" placeholder="Linux/API hours"/><input id="entryAIRAG" type="number" step="0.5" placeholder="AI/RAG hours"/><input id="entryN8N" type="number" step="0.5" placeholder="n8n hours"/></div><div class="form-grid"><input id="entryFastAPI" type="number" step="0.5" placeholder="FastAPI/Web App hours"/><input id="entrySales" type="number" step="0.5" placeholder="Sales/Portfolio hours"/><input id="entryOutreach" type="number" step="1" placeholder="Outreach count"/></div><div class="form-grid"><input id="entryFeatures" type="number" step="1" placeholder="Features shipped"/><input id="entryWin" type="text" placeholder="Main win"/><input id="entryBlocker" type="text" placeholder="Main blocker"/></div><textarea id="entryNotes" placeholder="Notes"></textarea><input id="editingEntryId" type="hidden"/><div class="actions"><button class="pri-btn" id="saveEntryBtn">Save Entry</button><button class="sec-btn hidden" id="cancelEditBtn">Cancel Edit</button></div></div><div class="card" style="margin-top:12px"><div class="sec-lbl">Recent Entries</div><div id="techEntriesHost" class="entry-list"></div></div></section>
+</div>
+<nav class="bnav"><div class="bnav-inner"><a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a><a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a><a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a><a class="ni" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a><a class="ni" href="devops.html"><span>⚙️</span><span class="ni-lbl">DevOps</span></a><a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a><a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a><a class="ni active" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a></div></nav>
+<script src="assets/js/app-core.js"></script>
+<script>
+(function(){
+  const MONTHS=[['apr','April 2026','#8b5cf6'],['may','May 2026','#3b82f6'],['jun','June 2026','#10b981'],['jul','July 2026','#f59e0b'],['aug','August 2026','#f97316'],['sep','September 2026','#ef4444']];
+  const monthsHost=document.getElementById('monthsHost');
+  function getGoals(){try{return JSON.parse(localStorage.getItem('goals_v1')||'{}')||{};}catch(e){return {};}}
+  function setGoals(g){localStorage.setItem('goals_v1',JSON.stringify(g));}
+  function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function updateSnapshot(){const now=new Date(); const map={3:'apr',4:'may',5:'jun',6:'jul',7:'aug',8:'sep'}; const nameMap={apr:'April 2026',may:'May 2026',jun:'June 2026',jul:'July 2026',aug:'August 2026',sep:'September 2026'}; const currentKey=map[now.getMonth()]||'apr'; const items=(getGoals()[currentKey]||[]); const done=items.filter(x=>x.done).length; const total=items.length; const upcoming=items.filter(x=>!x.done).slice(0,2).map(x=>x.text); localStorage.setItem('goals_snapshot',JSON.stringify({month:nameMap[currentKey],done,total,upcoming,updated:new Date().toISOString()})); document.getElementById('gcLbl').textContent=`${done} of ${total} milestones complete`; document.getElementById('gcTitle').textContent=nameMap[currentKey]; document.getElementById('gcSub').textContent=upcoming[0]?`Next: ${upcoming[0]}`:'Add your milestones below, then write the plan on the next tab.';}
+  function renderMonths(){const goals=getGoals(); monthsHost.innerHTML=MONTHS.map(([key,name,color],idx)=>{const items=goals[key]||[]; const rows=items.length?items.map(item=>`<div class="ms-row"><button class="ms-check ${item.done?'done':''}" data-action="toggle-goal" data-key="${key}" data-id="${item.id}">${item.done?'✓':''}</button><div class="ms-copy"><div class="ms-title ${item.done?'done':''}">${esc(item.text)}</div>${item.date?`<div class="ms-date">Target: ${esc(item.date)}</div>`:''}</div></div>`).join(''):`<div class="ms-row"><div class="ms-copy"><div class="ms-title">No milestones yet</div></div></div>`; return `<div class="month-card"><div class="month-hdr" data-action="toggle-month" data-key="${key}"><div class="month-dot" style="background:${color}"></div><span>${name}</span></div><div class="month-body ${idx===0?'open':''}" id="body-${key}">${rows}<div class="add-row"><input class="add-input" id="in-${key}" placeholder="Add a milestone…"><input class="add-date" id="dt-${key}" type="date"><button class="add-btn" data-action="add-goal" data-key="${key}">Add</button></div></div></div>`;}).join(''); updateSnapshot();}
+  monthsHost.addEventListener('click', function(e){const target=e.target.closest('[data-action]'); if(!target) return; const action=target.dataset.action; const key=target.dataset.key; if(action==='toggle-month'){const el=document.getElementById(`body-${key}`); if(el) el.classList.toggle('open'); return;} if(action==='add-goal'){const goals=getGoals(); goals[key]=goals[key]||[]; const text=document.getElementById(`in-${key}`).value.trim(); const date=document.getElementById(`dt-${key}`).value; if(!text) return; goals[key].push({id:String(Date.now()),text,date,done:false}); setGoals(goals); renderMonths(); return;} if(action==='toggle-goal'){const id=target.dataset.id; const goals=getGoals(); goals[key]=(goals[key]||[]).map(x=>x.id===id?{...x,done:!x.done}:x); setGoals(goals); renderMonths();}});
+  document.querySelectorAll('.play-tab').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.play-tab').forEach(x=>x.classList.remove('active')); document.querySelectorAll('.play-panel').forEach(x=>x.classList.remove('active')); btn.classList.add('active'); document.getElementById(btn.dataset.target).classList.add('active');});});
+  const textarea=document.getElementById('playbookPlan'); textarea.value=localStorage.getItem('playbook_plan')||''; textarea.addEventListener('input',()=>localStorage.setItem('playbook_plan',textarea.value));
+  function applyTheme(){const t=localStorage.getItem('theme')||'light'; document.body.classList.toggle('dark',t==='dark'); document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';}
+  document.getElementById('themeBtn').addEventListener('click',()=>{localStorage.setItem('theme',document.body.classList.contains('dark')?'light':'dark'); applyTheme();});
+  applyTheme(); renderMonths();
+})();
+</script>
+<script>
+(function(){const PROJECT_KEY='build_mode_projects_v1'; const PROJECTS=[{id:'p1',title:'Logistics + Car Sales Copilot',tag:'Dallas → Lagos',sub:'Track vehicles, shipment documents, status changes, and customer updates for the Dallas-to-Lagos workflow.',items:[{id:'p1_1',label:'Define vehicle lifecycle: purchased → shipped → arrived → delivered'},{id:'p1_2',label:'Create sample records with VIN, customer, and status'},{id:'p1_3',label:'Add document intake for invoice, title, and shipping papers'},{id:'p1_4',label:'Extract key fields from uploaded documents'},{id:'p1_5',label:'Build delayed / missing-document dashboard'},{id:'p1_6',label:'Generate customer status-update messages'}]},{id:'p2',title:'SoftTouch Repair + Parts Intelligence',tag:'Industrial boards',sub:'Build a document-grounded assistant for obsolete boards, repair notes, manuals, and quote-support work.',items:[{id:'p2_1',label:'Collect manuals, datasheets, and repair notes'},{id:'p2_2',label:'Build upload + text extraction pipeline'},{id:'p2_3',label:'Store chunks and enable grounded search'},{id:'p2_4',label:'Answer part / board questions from uploaded material'},{id:'p2_5',label:'Add repair-vs-source recommendation support'},{id:'p2_6',label:'Generate quote-support or intake summaries'}]},{id:'p3',title:'Malaria Consortium Ops Intelligence',tag:'Professional track',sub:'Prepare an operations intelligence concept for report summaries, data-quality checks, and management briefs after the first two proof projects.',items:[{id:'p3_1',label:'Define safe non-clinical scope'},{id:'p3_2',label:'List sample report and spreadsheet inputs needed'},{id:'p3_3',label:'Design summary and anomaly-detection workflow'},{id:'p3_4',label:'Draft management brief output format'},{id:'p3_5',label:'Prepare professional proposal brief'}]}]; function getState(){try{return JSON.parse(localStorage.getItem(PROJECT_KEY)||'{}')||{};}catch(e){return {};}} function setState(s){localStorage.setItem(PROJECT_KEY,JSON.stringify(s));} function projPct(project){const s=getState(); const done=project.items.filter(x=>s[x.id]).length; return project.items.length?Math.round(done/project.items.length*100):0;} function syncBuildSnapshot(){const snap={}; PROJECTS.forEach(p=>snap[p.id]=projPct(p)); localStorage.setItem('build_mode_snapshot', JSON.stringify(snap));} function renderProjects(){const host=document.getElementById('buildProjectsHost'); if(!host) return; const s=getState(); host.innerHTML=PROJECTS.map(project=>{const pct=projPct(project); return `<article class="proj-card"><div class="proj-top"><div><h3 class="proj-title">${project.title}</h3><div class="proj-sub">${project.sub}</div></div><div class="proj-tag">${project.tag}</div></div><div class="proj-prog"><div class="sec-lbl" style="margin:0">Project progress</div><div class="proj-pct">${pct}%</div></div><div class="proj-bar"><div class="proj-fill" style="width:${pct}%"></div></div><div class="proj-list">${project.items.map(item=>`<label class="proj-item ${s[item.id]?'done':''}"><input type="checkbox" data-project-item="${item.id}" ${s[item.id]?'checked':''}><span>${item.label}</span></label>`).join('')}</div></article>`;}).join(''); syncBuildSnapshot(); if(window.renderTechGoalSnapshot) window.renderTechGoalSnapshot();} document.addEventListener('change',function(e){const t=e.target; if(!(t instanceof HTMLInputElement)) return; if(!t.matches('input[type="checkbox"][data-project-item]')) return; const s=getState(); s[t.dataset.projectItem]=t.checked; setState(s); renderProjects();}); renderProjects();})();
+</script>
+<script>
+(function(){const GOAL_KEY='tech_goal_v1'; const LOG_KEY='tech_daily_logs_v1'; const START=new Date('2026-04-20T00:00:00'); function getGoal(){try{return JSON.parse(localStorage.getItem(GOAL_KEY))||{title:'Build 2 working AI automation demos and launch portfolio',deadline:'2026-07-31',status:'In Progress',progress:10,weeklyFocus:'Foundation: Python, Linux, APIs, FastAPI, n8n',deliverable:'FastAPI hello world + webhook receiver + first intake flow',salesProof:'Draft first offer and capture first demo screenshots'};}catch(e){return {title:'Build 2 working AI automation demos and launch portfolio',deadline:'2026-07-31',status:'In Progress',progress:10,weeklyFocus:'Foundation: Python, Linux, APIs, FastAPI, n8n',deliverable:'FastAPI hello world + webhook receiver + first intake flow',salesProof:'Draft first offer and capture first demo screenshots'};}} function setGoal(goal){localStorage.setItem(GOAL_KEY,JSON.stringify(goal));} function getLogs(){try{return JSON.parse(localStorage.getItem(LOG_KEY)||'[]')||[];}catch(e){return [];}} function setLogs(logs){localStorage.setItem(LOG_KEY,JSON.stringify(logs));} function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));} function currentWeek(){const today=new Date(); const diff=Math.floor((today-START)/(1000*60*60*24)); return Math.max(1,Math.min(12,Math.floor(diff/7)+1));} function statusClass(status){if(status==='Done') return 'status-green'; if(status==='Blocked') return 'status-red'; return 'status-yellow';} function loadGoalIntoForm(){const g=getGoal(); document.getElementById('techGoalTitle').value=g.title||''; document.getElementById('techGoalDeadline').value=g.deadline||''; document.getElementById('techGoalStatus').value=g.status||'In Progress'; document.getElementById('techGoalProgress').value=g.progress||0; document.getElementById('techGoalFocus').value=g.weeklyFocus||''; document.getElementById('techGoalDeliverable').value=g.deliverable||''; document.getElementById('techGoalProof').value=g.salesProof||'';} function saveGoal(){const g={title:document.getElementById('techGoalTitle').value.trim(),deadline:document.getElementById('techGoalDeadline').value,status:document.getElementById('techGoalStatus').value,progress:Number(document.getElementById('techGoalProgress').value||0),weeklyFocus:document.getElementById('techGoalFocus').value.trim(),deliverable:document.getElementById('techGoalDeliverable').value.trim(),salesProof:document.getElementById('techGoalProof').value.trim()}; setGoal(g); renderTechGoalSnapshot();} window.renderTechGoalSnapshot=function(){const g=getGoal(); const logs=getLogs(); const totals=logs.reduce((acc,x)=>{acc.deep+=Number(x.deepWork||0); acc.features+=Number(x.features||0); acc.outreach+=Number(x.outreach||0); return acc;},{deep:0,features:0,outreach:0}); document.getElementById('tgWeek').textContent=currentWeek(); document.getElementById('tgDeepWork').textContent=totals.deep.toFixed(1)+'h'; document.getElementById('tgFeatures').textContent=totals.features; document.getElementById('tgOutreach').textContent=totals.outreach; const buildSnap=JSON.parse(localStorage.getItem('build_mode_snapshot')||'{}'); const projTexts=Object.keys(buildSnap).length?Object.entries(buildSnap).map(([k,v])=>`${k.toUpperCase()}: ${v}%`).join(' · '):'No build project progress yet'; document.getElementById('techGoalSnapshot').innerHTML=`<div class="small">Main tech goal</div><h3 style="margin:6px 0 10px">${esc(g.title)}</h3><div class="status-pill ${statusClass(g.status)}">${esc(g.status)}</div><div class="entry-meta" style="margin-top:12px"><div class="entry-chip">Deadline: ${esc(g.deadline||'-')}</div><div class="entry-chip">Progress: ${Number(g.progress||0)}%</div></div><div class="entry-notes"><strong>Weekly focus:</strong> ${esc(g.weeklyFocus||'-')}</div><div class="entry-notes"><strong>Build deliverable:</strong> ${esc(g.deliverable||'-')}</div><div class="entry-notes"><strong>Sales / proof:</strong> ${esc(g.salesProof||'-')}</div><div class="entry-notes"><strong>Build mode snapshot:</strong> ${esc(projTexts)}</div>`;}; function resetEntryForm(){['entryDate','entryDeepWork','entryPython','entryLinux','entryAIRAG','entryN8N','entryFastAPI','entrySales','entryOutreach','entryFeatures','entryWin','entryBlocker','entryNotes','editingEntryId'].forEach(id=>document.getElementById(id).value=''); document.getElementById('cancelEditBtn').classList.add('hidden');} function saveEntry(){const idField=document.getElementById('editingEntryId'); const logs=getLogs(); const entry={id:idField.value||String(Date.now()),date:document.getElementById('entryDate').value,deepWork:Number(document.getElementById('entryDeepWork').value||0),python:Number(document.getElementById('entryPython').value||0),linux:Number(document.getElementById('entryLinux').value||0),aiRag:Number(document.getElementById('entryAIRAG').value||0),n8n:Number(document.getElementById('entryN8N').value||0),fastapi:Number(document.getElementById('entryFastAPI').value||0),sales:Number(document.getElementById('entrySales').value||0),outreach:Number(document.getElementById('entryOutreach').value||0),features:Number(document.getElementById('entryFeatures').value||0),win:document.getElementById('entryWin').value.trim(),blocker:document.getElementById('entryBlocker').value.trim(),notes:document.getElementById('entryNotes').value.trim()}; if(!entry.date){alert('Date is required'); return;} const idx=logs.findIndex(x=>x.id===entry.id); if(idx>=0) logs[idx]=entry; else logs.unshift(entry); logs.sort((a,b)=>String(b.date).localeCompare(String(a.date))); setLogs(logs); resetEntryForm(); renderEntries(); renderTechGoalSnapshot();} window.editTechEntry=function(id){const entry=getLogs().find(x=>x.id===id); if(!entry) return; document.getElementById('editingEntryId').value=entry.id; document.getElementById('entryDate').value=entry.date||''; document.getElementById('entryDeepWork').value=entry.deepWork||0; document.getElementById('entryPython').value=entry.python||0; document.getElementById('entryLinux').value=entry.linux||0; document.getElementById('entryAIRAG').value=entry.aiRag||0; document.getElementById('entryN8N').value=entry.n8n||0; document.getElementById('entryFastAPI').value=entry.fastapi||0; document.getElementById('entrySales').value=entry.sales||0; document.getElementById('entryOutreach').value=entry.outreach||0; document.getElementById('entryFeatures').value=entry.features||0; document.getElementById('entryWin').value=entry.win||''; document.getElementById('entryBlocker').value=entry.blocker||''; document.getElementById('entryNotes').value=entry.notes||''; document.getElementById('cancelEditBtn').classList.remove('hidden'); window.scrollTo({top:document.getElementById('techGoalPanel').offsetTop-80,behavior:'smooth'});} ; window.deleteTechEntry=function(id){setLogs(getLogs().filter(x=>x.id!==id)); renderEntries(); renderTechGoalSnapshot();}; function renderEntries(){const host=document.getElementById('techEntriesHost'); const logs=getLogs(); if(!logs.length){host.innerHTML='<div class="small">No tech entries yet. Add the first one above.</div>'; return;} host.innerHTML=logs.slice(0,12).map(log=>`<article class="entry-card"><div class="entry-top"><div><div class="entry-date">${esc(log.date)}</div><div class="entry-meta"><div class="entry-chip">Deep Work ${Number(log.deepWork||0)}h</div><div class="entry-chip">Python ${Number(log.python||0)}h</div><div class="entry-chip">AI/RAG ${Number(log.aiRag||0)}h</div><div class="entry-chip">n8n ${Number(log.n8n||0)}h</div><div class="entry-chip">FastAPI/Web ${Number(log.fastapi||0)}h</div><div class="entry-chip">Outreach ${Number(log.outreach||0)}</div><div class="entry-chip">Features ${Number(log.features||0)}</div></div></div><div class="actions"><button class="sec-btn" onclick="editTechEntry('${log.id}')">Edit</button><button class="danger-btn" onclick="deleteTechEntry('${log.id}')">Delete</button></div></div>${log.win?`<div class="entry-notes"><strong>Win:</strong> ${esc(log.win)}</div>`:''}${log.blocker?`<div class="entry-notes"><strong>Blocker:</strong> ${esc(log.blocker)}</div>`:''}${log.notes?`<div class="entry-notes">${esc(log.notes)}</div>`:''}</article>`).join('');} document.getElementById('saveTechGoalBtn').addEventListener('click',saveGoal); document.getElementById('saveEntryBtn').addEventListener('click',saveEntry); document.getElementById('cancelEditBtn').addEventListener('click',resetEntryForm); loadGoalIntoForm(); renderTechGoalSnapshot(); renderEntries();})();
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#0f172a" name="theme-color"/>
+<link href="manifest.json" rel="manifest"/>
+<title>Jideatom Learning Path</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#f0f2f7;--bg2:#ffffff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,.08);--border2:rgba(15,23,42,.14);--shadow:0 10px 30px rgba(15,23,42,.08);--radius:18px;--accent:#4f46e5;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif}
+body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.10)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans)}
+a{text-decoration:none;color:inherit}button{font-family:var(--sans);cursor:pointer}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+body.dark header{background:rgba(8,12,20,.82)}
+.logo-kicker{font-size:.58rem;text-transform:uppercase;letter-spacing:1.6px;color:var(--accent);font-family:var(--mono);font-weight:700}
+.logo-title{font-weight:800;font-size:1rem}.logo-sub{font-size:.72rem;color:var(--text2);font-weight:600}
+.hdr-right{display:flex;gap:8px}.hdr-btn{min-width:40px;min-height:40px;border-radius:12px;border:1px solid var(--border2);background:var(--bg2);color:var(--text)}
+.wrap{max-width:820px;margin:0 auto;padding:16px 16px 92px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}.section-title h2{margin:0;font-size:1rem;font-weight:800}.section-title span{font-size:.68rem;color:var(--text2);font-family:var(--mono)}
+.goal-banner{background:linear-gradient(135deg,#4c1d95,#7c3aed);border-radius:14px;padding:13px 15px;margin-bottom:14px;display:none;align-items:center;gap:12px;box-shadow:var(--shadow)}
+.gb-ico{font-size:1.4rem}.gb-body{flex:1}.gb-month,.focus-tag{font-size:.58rem;color:rgba(255,255,255,.76);text-transform:uppercase;letter-spacing:1px;font-family:var(--mono);font-weight:700}
+.gb-title{font-size:.9rem;font-weight:800;color:#fff;margin-top:1px}.gb-sub{font-size:.66rem;color:rgba(255,255,255,.7);margin-top:2px;font-family:var(--mono)}.gb-pct{font-size:1.2rem;font-weight:800;color:#fff;font-family:var(--mono)}
+.gb-bar-wrap{margin-top:7px;height:4px;background:rgba(255,255,255,.2);border-radius:99px;overflow:hidden}.gb-bar-fill{height:100%;background:#fff;border-radius:99px;transition:width .3s}
+.streak-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}.sk-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:12px 8px;text-align:center;box-shadow:var(--shadow)}.sk-num{font-size:1.55rem;font-weight:800;font-family:var(--mono);line-height:1;color:var(--accent)}.sk-lbl{font-size:.52rem;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.focus-wrap{background:linear-gradient(135deg,#1e3a8a,#312e81,#1e1b4b);border-radius:20px;padding:16px 18px;margin-bottom:14px;position:relative;overflow:hidden}.focus-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(129,140,248,.25) 0%,transparent 60%)}.focus-title{position:relative;color:#fff;font-size:1.04rem;font-weight:800;margin-bottom:4px;line-height:1.28}.focus-sub{position:relative;color:rgba(255,255,255,.72);font-size:.72rem;margin-bottom:12px;font-family:var(--mono)}
+.focus-row{position:relative;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.focus-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#1e3a8a;font-size:.78rem;font-weight:800;padding:10px 18px;border-radius:10px;border:none;position:relative;z-index:5}.focus-studied{display:none;align-items:center;gap:5px;background:rgba(16,185,129,.2);color:#34d399;font-size:.7rem;font-weight:800;padding:6px 12px;border-radius:10px;font-family:var(--mono)}
+.prog-overview,.heatmap-wrap,.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.pov-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)}.pov-row:last-child{border-bottom:none}.pov-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}.pov-name{flex:1;font-size:.78rem;font-weight:700}.pov-bar-bg{width:72px;height:5px;background:var(--bg3);border-radius:99px;overflow:hidden}.pov-bar-fill{height:100%;border-radius:99px;transition:width .4s ease}.pov-pct{font-size:.62rem;font-weight:800;font-family:var(--mono);min-width:28px;text-align:right}
+.quick-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}.ql{display:block;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:14px;box-shadow:var(--shadow)}.ql-title{font-size:.92rem;font-weight:800}.ql-sub{font-size:.74rem;color:var(--text2);margin-top:4px;line-height:1.5;font-weight:600}
+.hm-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.hm-title{font-size:.8rem;font-weight:800}.hm-legend{display:flex;align-items:center;gap:4px;font-size:.55rem;color:var(--text3)}.hm-demo{width:9px;height:9px;border-radius:2px}.hm-grid{display:flex;gap:3px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.hm-grid::-webkit-scrollbar{display:none}.hm-col{display:flex;flex-direction:column;gap:3px;flex-shrink:0}.hm-cell{width:12px;height:12px;border-radius:2px;background:var(--bg3)}.hm-cell.l1{background:rgba(79,70,229,.22)}.hm-cell.l2{background:rgba(79,70,229,.45)}.hm-cell.l3{background:rgba(79,70,229,.7)}.hm-cell.l4{background:#4f46e5}.hm-cell.today{outline:2px solid var(--accent);outline-offset:1px;cursor:pointer}
+.ach-card{background:linear-gradient(135deg,#111827,#312e81 55%, #4f46e5);color:#fff;border-radius:22px;padding:18px;box-shadow:0 14px 38px rgba(38,71,200,.22)}.ach-card h3{margin:0 0 6px;font-size:1rem;font-weight:800}.ach-sub{color:rgba(255,255,255,.82);font-size:.78rem;margin-bottom:14px;font-weight:600}.ach-row{display:flex;flex-wrap:wrap;gap:8px}.ach-pill{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.12);font-weight:800;font-size:.74rem}.ach-pill.on{background:#fff;color:#243aa7}
+.next-actions-list{display:grid;gap:10px}.next-act{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:14px;background:var(--bg3);border:1px solid var(--border)}.next-num{width:26px;height:26px;border-radius:999px;display:grid;place-items:center;background:#4f46e5;color:#fff;font-size:.72rem;font-weight:800;flex-shrink:0}.next-act strong{display:block;font-size:.86rem;margin-bottom:2px;font-weight:800}.next-act span{font-size:.74rem;color:var(--text2);line-height:1.45;font-weight:600}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:30;overflow-x:auto}.bnav-inner{display:flex;min-width:max-content;padding:6px 8px;margin:0 auto;justify-content:center}.ni{min-width:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;gap:4px}.ni>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(79,70,229,.12)}.ni-lbl{font-size:.5rem;color:var(--text3);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.ni.active .ni-lbl{color:var(--accent)}
+.search-overlay{position:fixed;inset:0;background:rgba(8,12,20,.76);backdrop-filter:blur(8px);display:none;z-index:1000;padding:12px}.search-overlay.open{display:flex}.search-card{margin:auto;width:min(760px,100%);height:min(80vh,760px);background:var(--bg2);border:1px solid var(--border2);border-radius:22px;box-shadow:0 28px 90px rgba(0,0,0,.36);display:flex;flex-direction:column;overflow:hidden}.search-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border)}.search-head input{flex:1;background:var(--bg3);color:var(--text);border:1px solid var(--border2);border-radius:12px;padding:12px 14px;font-size:.94rem}.search-results{padding:14px 16px;overflow:auto}.search-item{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--border);border-radius:14px;background:var(--bg2);margin-bottom:8px}
+
+.build-summary{display:grid;gap:12px}
+.build-item{padding:12px;border-radius:16px;background:var(--bg3);border:1px solid var(--border)}
+.build-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.build-title{font-size:.84rem;font-weight:800}
+.build-tag{padding:6px 10px;border-radius:999px;background:var(--bg2);font-size:.58rem;font-family:var(--mono);font-weight:800}
+.build-sub{font-size:.72rem;color:var(--text2);font-weight:600;line-height:1.45;margin-bottom:8px}
+.build-bar{height:8px;background:var(--bg2);border-radius:999px;overflow:hidden}
+.build-fill{height:100%;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:999px}
+.build-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:.68rem;color:var(--text2);font-family:var(--mono);font-weight:700}
+
+@media (max-width:700px){.quick-links{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div><div class="logo-kicker">Jideatom Learning Path</div><div class="logo-title">Focused learning system</div><div class="logo-sub">AI · Linux · Python · Cloud · Claude</div></div><div class="hdr-right"><button class="hdr-btn" id="searchBtn" title="Search">🔍</button><button class="hdr-btn" id="themeBtn" title="Theme">🌙</button></div></header>
+<div class="wrap">
+<a class="goal-banner" href="playbook.html" id="goalBanner"><div class="gb-ico">🎯</div><div class="gb-body"><div class="gb-month" id="gbMonth">This Month</div><div class="gb-title" id="gbTitle">No goals set yet</div><div class="gb-sub" id="gbSub">Tap to set your monthly milestones →</div><div class="gb-bar-wrap"><div class="gb-bar-fill" id="gbFill"></div></div></div><div class="gb-pct" id="gbPct">-</div></a>
+<div class="streak-bar"><div class="sk-card"><div class="sk-num" id="skCurrent">0</div><div class="sk-lbl">Day Streak</div></div><div class="sk-card"><div class="sk-num" id="skBest">0</div><div class="sk-lbl">Best</div></div><div class="sk-card"><div class="sk-num" id="skHours">0m</div><div class="sk-lbl">Study Time</div></div></div>
+<div class="focus-wrap" id="todaySessionCard"><div class="focus-tag" id="focusPhase">Today's Session</div><div class="focus-title" id="focusTitle">Loading today's task…</div><div class="focus-sub" id="focusSub">Tap Start to begin</div><div class="focus-row"><button class="focus-btn" id="focusStartBtn" type="button">▶ Start Session</button><button class="focus-btn" id="resetStudyBtn" style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.18)" type="button">↺ Reset Study Data</button><span class="focus-studied" id="focusStudied">✓ Studied today</span></div></div>
+<div class="section-title"><h2>Live Progress</h2><span id="overallPct">0% overall</span></div>
+<div class="prog-overview">
+<div class="pov-row"><div class="pov-dot" style="background:#f97316"></div><span class="pov-name">Claude Sprint</span><div class="pov-bar-bg"><div class="pov-bar-fill" id="pb-claude" style="background:#f97316;width:0%"></div></div><span class="pov-pct" id="pp-claude" style="color:#f97316">0%</span></div>
+<div class="pov-row"><div class="pov-dot" style="background:#3b82f6"></div><span class="pov-name">Linux RHCSA</span><div class="pov-bar-bg"><div class="pov-bar-fill" id="pb-linux" style="background:#3b82f6;width:0%"></div></div><span class="pov-pct" id="pp-linux" style="color:#3b82f6">0%</span></div>
+<div class="pov-row"><div class="pov-dot" style="background:#10b981"></div><span class="pov-name">Python</span><div class="pov-bar-bg"><div class="pov-bar-fill" id="pb-python" style="background:#10b981;width:0%"></div></div><span class="pov-pct" id="pp-python" style="color:#10b981">0%</span></div>
+<div class="pov-row"><div class="pov-dot" style="background:#8b5cf6"></div><span class="pov-name">AI Roadmap</span><div class="pov-bar-bg"><div class="pov-bar-fill" id="pb-ai" style="background:#8b5cf6;width:0%"></div></div><span class="pov-pct" id="pp-ai" style="color:#8b5cf6">0%</span></div>
+<div class="pov-row"><div class="pov-dot" style="background:#0ea5e9"></div><span class="pov-name">Cloud Certs</span><div class="pov-bar-bg"><div class="pov-bar-fill" id="pb-cloud" style="background:#0ea5e9;width:0%"></div></div><span class="pov-pct" id="pp-cloud" style="color:#0ea5e9">0%</span></div>
+</div>
+<div class="section-title"><h2>Quick Links</h2><span>direct entry points</span></div>
+<div class="quick-links">
+<a class="ql" href="linux.html"><div class="ql-title">🐧 Linux</div><div class="ql-sub">RHCSA foundation, bash, and admin skills</div></a>
+<a class="ql" href="python.html"><div class="ql-title">🐍 Python</div><div class="ql-sub">Automation, APIs, and AI engineering prep</div></a>
+<a class="ql" href="ai.html"><div class="ql-title">🧠 AI</div><div class="ql-sub">Main roadmap, phases, and recommended AI courses</div></a>
+<a class="ql" href="claude.html"><div class="ql-title">🟠 Claude</div><div class="ql-sub">Claude workflows, tools, and MCP track</div></a>
+<a class="ql" href="cloud.html"><div class="ql-title">☁️ Cloud</div><div class="ql-sub">AWS and Azure certification path</div></a>
+<a class="ql" href="playbook.html"><div class="ql-title">📘 Playbook</div><div class="ql-sub">Goals at the top, plan at the bottom</div></a>
+</div>
+<div class="section-title"><h2>Study Activity</h2><span>tap today to mark activity</span></div>
+<div class="heatmap-wrap"><div class="hm-hdr"><span class="hm-title">Consistency heatmap</span><div class="hm-legend"><span>Less</span><div class="hm-demo" style="background:var(--bg3)"></div><div class="hm-demo" style="background:rgba(79,70,229,.22)"></div><div class="hm-demo" style="background:rgba(79,70,229,.55)"></div><div class="hm-demo" style="background:#4f46e5"></div><span>More</span></div></div><div class="hm-grid" id="hmGrid"></div></div>
+<div class="section-title"><h2>Build Mode</h2><span>project momentum</span></div>
+<div class="card" id="buildSummaryCard"></div>
+<div class="section-title"><h2>Achievements</h2><span>now tied to real study state</span></div><section id="achievementsCard"></section>
+<div class="section-title"><h2>Recommended Next Actions</h2><span>based on your actual state</span></div><div class="card" id="nextActionsCard"></div>
+</div>
+<div class="search-overlay" id="searchOverlay"><div class="search-card"><div class="search-head"><input autocomplete="off" id="searchInput" placeholder="Search topics, pages, courses..." type="search"/><button class="hdr-btn" id="searchCloseBtn">✕</button></div><div class="search-results" id="searchResults"></div></div></div>
+<nav class="bnav"><div class="bnav-inner"><a class="ni active" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a><a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a><a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a><a class="ni" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a><a class="ni" href="devops.html"><span>⚙️</span><span class="ni-lbl">DevOps</span></a><a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a><a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a><a class="ni" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a></div></nav>
+<script src="assets/js/app-core.js"></script>
+<script>
+(function(){
+const SEARCH_ITEMS=[{title:'Linux',sub:'RHCSA and Linux foundation',href:'linux.html',icon:'🐧',tags:'linux rhcsa bash selinux lvm'},{title:'Python',sub:'Automation and AI prep',href:'python.html',icon:'🐍',tags:'python automation api anthropic sdk paramiko netmiko'},{title:'AI',sub:'Main AI roadmap',href:'ai.html',icon:'🧠',tags:'ai roadmap llm rag agents prompt'},{title:'Claude',sub:'Claude workflows and MCP',href:'claude.html',icon:'🟠',tags:'claude mcp claude code agents'},{title:'Cloud',sub:'AWS and Azure path',href:'cloud.html',icon:'☁️',tags:'cloud aws azure az-700 ans-c01'},{title:'Playbook',sub:'Goals and plan',href:'playbook.html',icon:'📘',tags:'goals plan milestones'},{title:'Courses',sub:'Curated course library',href:'courses.html',icon:'📚',tags:'courses library ebooks'}];
+function $(id){return document.getElementById(id);} function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function applyTheme(){const t=localStorage.getItem('theme')||'light';document.body.classList.toggle('dark',t==='dark');$('themeBtn').textContent=t==='dark'?'☀️':'🌙';}
+function toggleTheme(){const next=document.body.classList.contains('dark')?'light':'dark';localStorage.setItem('theme',next);applyTheme();}
+function renderSearch(q){q=(q||'').toLowerCase().trim();const items=SEARCH_ITEMS.filter(x=>!q||(x.title+' '+x.sub+' '+x.tags).toLowerCase().includes(q));$('searchResults').innerHTML=items.map(x=>'<a class="search-item" href="'+x.href+'"><div style="font-size:1.1rem">'+x.icon+'</div><div><div style="font-size:.84rem;font-weight:800">'+esc(x.title)+'</div><div style="font-size:.7rem;color:var(--text2);margin-top:3px">'+esc(x.sub)+'</div></div></a>').join('')||'<div style="padding:8px 2px;color:var(--text2)">No results found</div>';}
+$('themeBtn').onclick=toggleTheme;$('searchBtn').onclick=function(){$('searchOverlay').classList.add('open');$('searchInput').focus();renderSearch($('searchInput').value||'');};$('searchCloseBtn').onclick=function(){$('searchOverlay').classList.remove('open');};$('searchOverlay').onclick=function(e){if(e.target===this)this.classList.remove('open');};$('searchInput').addEventListener('input',function(){renderSearch(this.value);});document.addEventListener('keydown',function(e){if(e.key==='Escape')$('searchOverlay').classList.remove('open');});
+applyTheme();renderSearch('');
+})();
+</script>
+<script src="assets/js/elite-system.js"></script>
+</body></html>
