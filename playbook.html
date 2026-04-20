@@ -408,7 +408,322 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
 (function(){const PROJECT_KEY='build_mode_projects_v1'; const PROJECTS=[{id:'p1',title:'Logistics + Car Sales Copilot',tag:'Dallas → Lagos',sub:'Track vehicles, shipment documents, status changes, and customer updates for the Dallas-to-Lagos workflow.',items:[{id:'p1_1',label:'Define vehicle lifecycle: purchased → shipped → arrived → delivered'},{id:'p1_2',label:'Create sample records with VIN, customer, and status'},{id:'p1_3',label:'Add document intake for invoice, title, and shipping papers'},{id:'p1_4',label:'Extract key fields from uploaded documents'},{id:'p1_5',label:'Build delayed / missing-document dashboard'},{id:'p1_6',label:'Generate customer status-update messages'}]},{id:'p2',title:'SoftTouch Repair + Parts Intelligence',tag:'Industrial boards',sub:'Build a document-grounded assistant for obsolete boards, repair notes, manuals, and quote-support work.',items:[{id:'p2_1',label:'Collect manuals, datasheets, and repair notes'},{id:'p2_2',label:'Build upload + text extraction pipeline'},{id:'p2_3',label:'Store chunks and enable grounded search'},{id:'p2_4',label:'Answer part / board questions from uploaded material'},{id:'p2_5',label:'Add repair-vs-source recommendation support'},{id:'p2_6',label:'Generate quote-support or intake summaries'}]},{id:'p3',title:'Malaria Consortium Ops Intelligence',tag:'Professional track',sub:'Prepare an operations intelligence concept for report summaries, data-quality checks, and management briefs after the first two proof projects.',items:[{id:'p3_1',label:'Define safe non-clinical scope'},{id:'p3_2',label:'List sample report and spreadsheet inputs needed'},{id:'p3_3',label:'Design summary and anomaly-detection workflow'},{id:'p3_4',label:'Draft management brief output format'},{id:'p3_5',label:'Prepare professional proposal brief'}]}]; function getState(){try{return JSON.parse(localStorage.getItem(PROJECT_KEY)||'{}')||{};}catch(e){return {};}} function setState(s){localStorage.setItem(PROJECT_KEY,JSON.stringify(s));} function projPct(project){const s=getState(); const done=project.items.filter(x=>s[x.id]).length; return project.items.length?Math.round(done/project.items.length*100):0;} function syncBuildSnapshot(){const snap={}; PROJECTS.forEach(p=>snap[p.id]=projPct(p)); localStorage.setItem('build_mode_snapshot', JSON.stringify(snap));} function renderProjects(){const host=document.getElementById('buildProjectsHost'); if(!host) return; const s=getState(); host.innerHTML=PROJECTS.map(project=>{const pct=projPct(project); return `<article class="proj-card"><div class="proj-top"><div><h3 class="proj-title">${project.title}</h3><div class="proj-sub">${project.sub}</div></div><div class="proj-tag">${project.tag}</div></div><div class="proj-prog"><div class="sec-lbl" style="margin:0">Project progress</div><div class="proj-pct">${pct}%</div></div><div class="proj-bar"><div class="proj-fill" style="width:${pct}%"></div></div><div class="proj-list">${project.items.map(item=>`<label class="proj-item ${s[item.id]?'done':''}"><input type="checkbox" data-project-item="${item.id}" ${s[item.id]?'checked':''}><span>${item.label}</span></label>`).join('')}</div></article>`;}).join(''); syncBuildSnapshot(); if(window.renderTechGoalSnapshot) window.renderTechGoalSnapshot();} document.addEventListener('change',function(e){const t=e.target; if(!(t instanceof HTMLInputElement)) return; if(!t.matches('input[type="checkbox"][data-project-item]')) return; const s=getState(); s[t.dataset.projectItem]=t.checked; setState(s); renderProjects();}); renderProjects();})();
 </script>
 <script>
-(function(){const GOAL_KEY='tech_goal_v1'; const LOG_KEY='tech_daily_logs_v1'; const START=new Date('2026-04-20T00:00:00'); const MAKE_WEBHOOK_URL='PASTE_YOUR_MAKE_WEBHOOK_URL_HERE'; async function syncToMake(payload){ if(!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.includes('PASTE_YOUR_MAKE_WEBHOOK_URL_HERE')){ console.warn('Make webhook URL not set'); return; } try { const res = await fetch(MAKE_WEBHOOK_URL,{ method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(payload) }); if(!res.ok) throw new Error(`Webhook failed: ${res.status}`); } catch(err){ console.error('Make sync failed', err); } } function getGoal(){try{return JSON.parse(localStorage.getItem(GOAL_KEY))||{title:'Build 2 working AI automation demos and launch portfolio',deadline:'2026-07-31',status:'In Progress',progress:10,weeklyFocus:'Foundation: Python, Linux, APIs, FastAPI, n8n',deliverable:'FastAPI hello world + webhook receiver + first intake flow',salesProof:'Draft first offer and capture first demo screenshots'};}catch(e){return {title:'Build 2 working AI automation demos and launch portfolio',deadline:'2026-07-31',status:'In Progress',progress:10,weeklyFocus:'Foundation: Python, Linux, APIs, FastAPI, n8n',deliverable:'FastAPI hello world + webhook receiver + first intake flow',salesProof:'Draft first offer and capture first demo screenshots'};}} function setGoal(goal){localStorage.setItem(GOAL_KEY,JSON.stringify(goal));} function getLogs(){try{return JSON.parse(localStorage.getItem(LOG_KEY)||'[]')||[];}catch(e){return [];}} function setLogs(logs){localStorage.setItem(LOG_KEY,JSON.stringify(logs));} function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));} function currentWeek(){const today=new Date(); const diff=Math.floor((today-START)/(1000*60*60*24)); return Math.max(1,Math.min(12,Math.floor(diff/7)+1));} function statusClass(status){if(status==='Done') return 'status-green'; if(status==='Blocked') return 'status-red'; return 'status-yellow';} function loadGoalIntoForm(){const g=getGoal(); document.getElementById('techGoalTitle').value=g.title||''; document.getElementById('techGoalDeadline').value=g.deadline||''; document.getElementById('techGoalStatus').value=g.status||'In Progress'; document.getElementById('techGoalProgress').value=g.progress||0; document.getElementById('techGoalFocus').value=g.weeklyFocus||''; document.getElementById('techGoalDeliverable').value=g.deliverable||''; document.getElementById('techGoalProof').value=g.salesProof||'';} function saveGoal(){const g={title:document.getElementById('techGoalTitle').value.trim(),deadline:document.getElementById('techGoalDeadline').value,status:document.getElementById('techGoalStatus').value,progress:Number(document.getElementById('techGoalProgress').value||0),weeklyFocus:document.getElementById('techGoalFocus').value.trim(),deliverable:document.getElementById('techGoalDeliverable').value.trim(),salesProof:document.getElementById('techGoalProof').value.trim()}; setGoal(g); syncToMake({type:'tech_goal',goal:g.title,status:g.status,deadline:g.deadline,progress:g.progress,weekly_focus:g.weeklyFocus,build_deliverable:g.deliverable,sales_proof:g.salesProof,area:'Tech/Career'}); renderTechGoalSnapshot();} window.renderTechGoalSnapshot=function(){const g=getGoal(); const logs=getLogs(); const totals=logs.reduce((acc,x)=>{acc.deep+=Number(x.deepWork||0); acc.features+=Number(x.features||0); acc.outreach+=Number(x.outreach||0); return acc;},{deep:0,features:0,outreach:0}); document.getElementById('tgWeek').textContent=currentWeek(); document.getElementById('tgDeepWork').textContent=totals.deep.toFixed(1)+'h'; document.getElementById('tgFeatures').textContent=totals.features; document.getElementById('tgOutreach').textContent=totals.outreach; const buildSnap=JSON.parse(localStorage.getItem('build_mode_snapshot')||'{}'); const projTexts=Object.keys(buildSnap).length?Object.entries(buildSnap).map(([k,v])=>`${k.toUpperCase()}: ${v}%`).join(' · '):'No build project progress yet'; document.getElementById('techGoalSnapshot').innerHTML=`<div class="small">Main tech goal</div><h3 style="margin:6px 0 10px">${esc(g.title)}</h3><div class="status-pill ${statusClass(g.status)}">${esc(g.status)}</div><div class="entry-meta" style="margin-top:12px"><div class="entry-chip">Deadline: ${esc(g.deadline||'-')}</div><div class="entry-chip">Progress: ${Number(g.progress||0)}%</div></div><div class="entry-notes"><strong>Weekly focus:</strong> ${esc(g.weeklyFocus||'-')}</div><div class="entry-notes"><strong>Build deliverable:</strong> ${esc(g.deliverable||'-')}</div><div class="entry-notes"><strong>Sales / proof:</strong> ${esc(g.salesProof||'-')}</div><div class="entry-notes"><strong>Build mode snapshot:</strong> ${esc(projTexts)}</div>`;}; function resetEntryForm(){['entryDate','entryDeepWork','entryPython','entryLinux','entryAIRAG','entryN8N','entryFastAPI','entrySales','entryOutreach','entryFeatures','entryWin','entryBlocker','entryNotes','editingEntryId'].forEach(id=>document.getElementById(id).value=''); document.getElementById('cancelEditBtn').classList.add('hidden');} function saveEntry(){const idField=document.getElementById('editingEntryId'); const logs=getLogs(); const entry={id:idField.value||String(Date.now()),date:document.getElementById('entryDate').value,deepWork:Number(document.getElementById('entryDeepWork').value||0),python:Number(document.getElementById('entryPython').value||0),linux:Number(document.getElementById('entryLinux').value||0),aiRag:Number(document.getElementById('entryAIRAG').value||0),n8n:Number(document.getElementById('entryN8N').value||0),fastapi:Number(document.getElementById('entryFastAPI').value||0),sales:Number(document.getElementById('entrySales').value||0),outreach:Number(document.getElementById('entryOutreach').value||0),features:Number(document.getElementById('entryFeatures').value||0),win:document.getElementById('entryWin').value.trim(),blocker:document.getElementById('entryBlocker').value.trim(),notes:document.getElementById('entryNotes').value.trim()}; if(!entry.date){alert('Date is required'); return;} const idx=logs.findIndex(x=>x.id===entry.id); if(idx>=0) logs[idx]=entry; else logs.unshift(entry); logs.sort((a,b)=>String(b.date).localeCompare(String(a.date))); setLogs(logs); syncToMake({type:'daily_tech_log',date:entry.date,deep_work:entry.deepWork,python:entry.python,linux_api:entry.linux,ai_rag:entry.aiRag,n8n:entry.n8n,fastapi_web:entry.fastapi,sales_portfolio:entry.sales,outreach:entry.outreach,features_shipped:entry.features,win:entry.win,blocker:entry.blocker,notes:entry.notes}); resetEntryForm(); renderEntries(); renderTechGoalSnapshot();} window.editTechEntry=function(id){const entry=getLogs().find(x=>x.id===id); if(!entry) return; document.getElementById('editingEntryId').value=entry.id; document.getElementById('entryDate').value=entry.date||''; document.getElementById('entryDeepWork').value=entry.deepWork||0; document.getElementById('entryPython').value=entry.python||0; document.getElementById('entryLinux').value=entry.linux||0; document.getElementById('entryAIRAG').value=entry.aiRag||0; document.getElementById('entryN8N').value=entry.n8n||0; document.getElementById('entryFastAPI').value=entry.fastapi||0; document.getElementById('entrySales').value=entry.sales||0; document.getElementById('entryOutreach').value=entry.outreach||0; document.getElementById('entryFeatures').value=entry.features||0; document.getElementById('entryWin').value=entry.win||''; document.getElementById('entryBlocker').value=entry.blocker||''; document.getElementById('entryNotes').value=entry.notes||''; document.getElementById('cancelEditBtn').classList.remove('hidden'); window.scrollTo({top:document.getElementById('techGoalPanel').offsetTop-80,behavior:'smooth'});} ; window.deleteTechEntry=function(id){setLogs(getLogs().filter(x=>x.id!==id)); renderEntries(); renderTechGoalSnapshot();}; function renderEntries(){const host=document.getElementById('techEntriesHost'); const logs=getLogs(); if(!logs.length){host.innerHTML='<div class="small">No tech entries yet. Add the first one above.</div>'; return;} host.innerHTML=logs.slice(0,12).map(log=>`<article class="entry-card"><div class="entry-top"><div><div class="entry-date">${esc(log.date)}</div><div class="entry-meta"><div class="entry-chip">Deep Work ${Number(log.deepWork||0)}h</div><div class="entry-chip">Python ${Number(log.python||0)}h</div><div class="entry-chip">AI/RAG ${Number(log.aiRag||0)}h</div><div class="entry-chip">n8n ${Number(log.n8n||0)}h</div><div class="entry-chip">FastAPI/Web ${Number(log.fastapi||0)}h</div><div class="entry-chip">Outreach ${Number(log.outreach||0)}</div><div class="entry-chip">Features ${Number(log.features||0)}</div></div></div><div class="actions"><button class="sec-btn" onclick="editTechEntry('${log.id}')">Edit</button><button class="danger-btn" onclick="deleteTechEntry('${log.id}')">Delete</button></div></div>${log.win?`<div class="entry-notes"><strong>Win:</strong> ${esc(log.win)}</div>`:''}${log.blocker?`<div class="entry-notes"><strong>Blocker:</strong> ${esc(log.blocker)}</div>`:''}${log.notes?`<div class="entry-notes">${esc(log.notes)}</div>`:''}</article>`).join('');} document.getElementById('saveTechGoalBtn').addEventListener('click',saveGoal); document.getElementById('saveEntryBtn').addEventListener('click',saveEntry); document.getElementById('cancelEditBtn').addEventListener('click',resetEntryForm); loadGoalIntoForm(); renderTechGoalSnapshot(); renderEntries();})();
+(function () {
+  const GOAL_KEY = 'tech_goal_v1';
+  const LOG_KEY = 'tech_daily_logs_v1';
+  const START = new Date('2026-04-20T00:00:00');
+  const MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/5tg9k1t93aw75eqgaku1d17tg2wfw3hv';
+
+  async function syncToMake(payload) {
+    if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.includes('PASTE_YOUR_MAKE_WEBHOOK_URL_HERE')) {
+      console.warn('Make webhook URL not set');
+      return;
+    }
+
+    try {
+      const res = await fetch(MAKE_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) throw new Error(`Webhook failed: ${res.status}`);
+    } catch (err) {
+      console.error('Make sync failed', err);
+    }
+  }
+
+  function getGoal() {
+    try {
+      return JSON.parse(localStorage.getItem(GOAL_KEY)) || {
+        title: 'Build 2 working AI automation demos and launch portfolio',
+        deadline: '2026-07-31',
+        status: 'In Progress',
+        progress: 10,
+        weeklyFocus: 'Foundation: Python, Linux, APIs, FastAPI, n8n',
+        deliverable: 'FastAPI hello world + webhook receiver + first intake flow',
+        salesProof: 'Draft first offer and capture first demo screenshots'
+      };
+    } catch (e) {
+      return {
+        title: 'Build 2 working AI automation demos and launch portfolio',
+        deadline: '2026-07-31',
+        status: 'In Progress',
+        progress: 10,
+        weeklyFocus: 'Foundation: Python, Linux, APIs, FastAPI, n8n',
+        deliverable: 'FastAPI hello world + webhook receiver + first intake flow',
+        salesProof: 'Draft first offer and capture first demo screenshots'
+      };
+    }
+  }
+
+  function setGoal(goal) {
+    localStorage.setItem(GOAL_KEY, JSON.stringify(goal));
+  }
+
+  function getLogs() {
+    try {
+      return JSON.parse(localStorage.getItem(LOG_KEY) || '[]') || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function setLogs(logs) {
+    localStorage.setItem(LOG_KEY, JSON.stringify(logs));
+  }
+
+  function esc(s) {
+    return String(s || '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[c]));
+  }
+
+  function currentWeek() {
+    const today = new Date();
+    const diff = Math.floor((today - START) / (1000 * 60 * 60 * 24));
+    return Math.max(1, Math.min(12, Math.floor(diff / 7) + 1));
+  }
+
+  function statusClass(status) {
+    if (status === 'Done') return 'status-green';
+    if (status === 'Blocked') return 'status-red';
+    return 'status-yellow';
+  }
+
+  function loadGoalIntoForm() {
+    const g = getGoal();
+    document.getElementById('techGoalTitle').value = g.title || '';
+    document.getElementById('techGoalDeadline').value = g.deadline || '';
+    document.getElementById('techGoalStatus').value = g.status || 'In Progress';
+    document.getElementById('techGoalProgress').value = g.progress || 0;
+    document.getElementById('techGoalFocus').value = g.weeklyFocus || '';
+    document.getElementById('techGoalDeliverable').value = g.deliverable || '';
+    document.getElementById('techGoalProof').value = g.salesProof || '';
+  }
+
+  function saveGoal() {
+    const g = {
+      title: document.getElementById('techGoalTitle').value.trim(),
+      deadline: document.getElementById('techGoalDeadline').value,
+      status: document.getElementById('techGoalStatus').value,
+      progress: Number(document.getElementById('techGoalProgress').value || 0),
+      weeklyFocus: document.getElementById('techGoalFocus').value.trim(),
+      deliverable: document.getElementById('techGoalDeliverable').value.trim(),
+      salesProof: document.getElementById('techGoalProof').value.trim()
+    };
+
+    setGoal(g);
+
+    syncToMake({
+      type: 'tech_goal',
+      goal: g.title,
+      status: g.status,
+      deadline: g.deadline,
+      progress: g.progress,
+      weekly_focus: g.weeklyFocus,
+      build_deliverable: g.deliverable,
+      sales_proof: g.salesProof,
+      area: 'Tech/Career'
+    });
+
+    renderTechGoalSnapshot();
+  }
+
+  window.renderTechGoalSnapshot = function () {
+    const g = getGoal();
+    const logs = getLogs();
+
+    const totals = logs.reduce((acc, x) => {
+      acc.deep += Number(x.deepWork || 0);
+      acc.features += Number(x.features || 0);
+      acc.outreach += Number(x.outreach || 0);
+      return acc;
+    }, { deep: 0, features: 0, outreach: 0 });
+
+    document.getElementById('tgWeek').textContent = currentWeek();
+    document.getElementById('tgDeepWork').textContent = totals.deep.toFixed(1) + 'h';
+    document.getElementById('tgFeatures').textContent = totals.features;
+    document.getElementById('tgOutreach').textContent = totals.outreach;
+
+    const buildSnap = JSON.parse(localStorage.getItem('build_mode_snapshot') || '{}');
+    const projTexts = Object.keys(buildSnap).length
+      ? Object.entries(buildSnap).map(([k, v]) => `${k.toUpperCase()}: ${v}%`).join(' · ')
+      : 'No build project progress yet';
+
+    document.getElementById('techGoalSnapshot').innerHTML = `
+      <div class="small">Main tech goal</div>
+      <h3 style="margin:6px 0 10px">${esc(g.title)}</h3>
+      <div class="status-pill ${statusClass(g.status)}">${esc(g.status)}</div>
+      <div class="entry-meta" style="margin-top:12px">
+        <div class="entry-chip">Deadline: ${esc(g.deadline || '-')}</div>
+        <div class="entry-chip">Progress: ${Number(g.progress || 0)}%</div>
+      </div>
+      <div class="entry-notes"><strong>Weekly focus:</strong> ${esc(g.weeklyFocus || '-')}</div>
+      <div class="entry-notes"><strong>Build deliverable:</strong> ${esc(g.deliverable || '-')}</div>
+      <div class="entry-notes"><strong>Sales / proof:</strong> ${esc(g.salesProof || '-')}</div>
+      <div class="entry-notes"><strong>Build mode snapshot:</strong> ${esc(projTexts)}</div>
+    `;
+  };
+
+  function resetEntryForm() {
+    [
+      'entryDate',
+      'entryDeepWork',
+      'entryPython',
+      'entryLinux',
+      'entryAIRAG',
+      'entryN8N',
+      'entryFastAPI',
+      'entrySales',
+      'entryOutreach',
+      'entryFeatures',
+      'entryWin',
+      'entryBlocker',
+      'entryNotes',
+      'editingEntryId'
+    ].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+
+    document.getElementById('cancelEditBtn').classList.add('hidden');
+  }
+
+  function saveEntry() {
+    const idField = document.getElementById('editingEntryId');
+    const logs = getLogs();
+
+    const entry = {
+      id: idField.value || String(Date.now()),
+      date: document.getElementById('entryDate').value,
+      deepWork: Number(document.getElementById('entryDeepWork').value || 0),
+      python: Number(document.getElementById('entryPython').value || 0),
+      linux: Number(document.getElementById('entryLinux').value || 0),
+      aiRag: Number(document.getElementById('entryAIRAG').value || 0),
+      n8n: Number(document.getElementById('entryN8N').value || 0),
+      fastapi: Number(document.getElementById('entryFastAPI').value || 0),
+      sales: Number(document.getElementById('entrySales').value || 0),
+      outreach: Number(document.getElementById('entryOutreach').value || 0),
+      features: Number(document.getElementById('entryFeatures').value || 0),
+      win: document.getElementById('entryWin').value.trim(),
+      blocker: document.getElementById('entryBlocker').value.trim(),
+      notes: document.getElementById('entryNotes').value.trim()
+    };
+
+    if (!entry.date) {
+      alert('Date is required');
+      return;
+    }
+
+    const idx = logs.findIndex(x => x.id === entry.id);
+    if (idx >= 0) logs[idx] = entry;
+    else logs.unshift(entry);
+
+    logs.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    setLogs(logs);
+
+    syncToMake({
+      type: 'daily_tech_log',
+      date: entry.date,
+      deep_work: entry.deepWork,
+      python: entry.python,
+      linux_api: entry.linux,
+      ai_rag: entry.aiRag,
+      n8n: entry.n8n,
+      fastapi_web: entry.fastapi,
+      sales_portfolio: entry.sales,
+      outreach: entry.outreach,
+      features_shipped: entry.features,
+      win: entry.win,
+      blocker: entry.blocker,
+      notes: entry.notes
+    });
+
+    resetEntryForm();
+    renderEntries();
+    renderTechGoalSnapshot();
+  }
+
+  window.editTechEntry = function (id) {
+    const entry = getLogs().find(x => x.id === id);
+    if (!entry) return;
+
+    document.getElementById('editingEntryId').value = entry.id;
+    document.getElementById('entryDate').value = entry.date || '';
+    document.getElementById('entryDeepWork').value = entry.deepWork || 0;
+    document.getElementById('entryPython').value = entry.python || 0;
+    document.getElementById('entryLinux').value = entry.linux || 0;
+    document.getElementById('entryAIRAG').value = entry.aiRag || 0;
+    document.getElementById('entryN8N').value = entry.n8n || 0;
+    document.getElementById('entryFastAPI').value = entry.fastapi || 0;
+    document.getElementById('entrySales').value = entry.sales || 0;
+    document.getElementById('entryOutreach').value = entry.outreach || 0;
+    document.getElementById('entryFeatures').value = entry.features || 0;
+    document.getElementById('entryWin').value = entry.win || '';
+    document.getElementById('entryBlocker').value = entry.blocker || '';
+    document.getElementById('entryNotes').value = entry.notes || '';
+    document.getElementById('cancelEditBtn').classList.remove('hidden');
+
+    window.scrollTo({
+      top: document.getElementById('techGoalPanel').offsetTop - 80,
+      behavior: 'smooth'
+    });
+  };
+
+  window.deleteTechEntry = function (id) {
+    setLogs(getLogs().filter(x => x.id !== id));
+    renderEntries();
+    renderTechGoalSnapshot();
+  };
+
+  function renderEntries() {
+    const host = document.getElementById('techEntriesHost');
+    const logs = getLogs();
+
+    if (!logs.length) {
+      host.innerHTML = '<div class="small">No tech entries yet. Add the first one above.</div>';
+      return;
+    }
+
+    host.innerHTML = logs.slice(0, 12).map(log => `
+      <article class="entry-card">
+        <div class="entry-top">
+          <div>
+            <div class="entry-date">${esc(log.date)}</div>
+            <div class="entry-meta">
+              <div class="entry-chip">Deep Work ${Number(log.deepWork || 0)}h</div>
+              <div class="entry-chip">Python ${Number(log.python || 0)}h</div>
+              <div class="entry-chip">AI/RAG ${Number(log.aiRag || 0)}h</div>
+              <div class="entry-chip">n8n ${Number(log.n8n || 0)}h</div>
+              <div class="entry-chip">FastAPI/Web ${Number(log.fastapi || 0)}h</div>
+              <div class="entry-chip">Outreach ${Number(log.outreach || 0)}</div>
+              <div class="entry-chip">Features ${Number(log.features || 0)}</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="sec-btn" onclick="editTechEntry('${log.id}')">Edit</button>
+            <button class="danger-btn" onclick="deleteTechEntry('${log.id}')">Delete</button>
+          </div>
+        </div>
+        ${log.win ? `<div class="entry-notes"><strong>Win:</strong> ${esc(log.win)}</div>` : ''}
+        ${log.blocker ? `<div class="entry-notes"><strong>Blocker:</strong> ${esc(log.blocker)}</div>` : ''}
+        ${log.notes ? `<div class="entry-notes">${esc(log.notes)}</div>` : ''}
+      </article>
+    `).join('');
+  }
+
+  document.getElementById('saveTechGoalBtn').addEventListener('click', saveGoal);
+  document.getElementById('saveEntryBtn').addEventListener('click', saveEntry);
+  document.getElementById('cancelEditBtn').addEventListener('click', resetEntryForm);
+
+  loadGoalIntoForm();
+  renderTechGoalSnapshot();
+  renderEntries();
+})();
 </script>
 </body>
 </html>
