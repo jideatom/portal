@@ -140,6 +140,16 @@
     return getMap(keys.link)[keyFor(card)] || card.dataset.link || '';
   }
 
+  function getResourceThumb(card){
+    const keys = resourceKeys();
+    return getMap(keys.thumb)[keyFor(card)] || card.dataset.thumb || '';
+  }
+
+  function getResourceAppLink(card){
+    const keys = resourceKeys();
+    return getMap(keys.app)[keyFor(card)] || card.dataset.app || '';
+  }
+
   function setResourceValue(card, mapKey, value){
     const map = getMap(mapKey);
     map[keyFor(card)] = value;
@@ -183,7 +193,7 @@
       renderResourceChrome(card);
       const actions = document.createElement('div');
       actions.className = 'portal-resource-actions';
-      actions.innerHTML = '<button type="button" data-portal-action="open">Open</button><button type="button" data-portal-action="edit">Link</button><button type="button" data-portal-action="reader">Reader</button><button type="button" data-portal-action="cover">Cover</button>';
+      actions.innerHTML = '<button type="button" data-portal-action="open">Open</button><button type="button" data-portal-action="quick-edit">Edit</button><button type="button" data-portal-action="reader">Reader</button>';
       const body = card.querySelector('.resource-body') || card.querySelector('.body') || card;
       body.appendChild(actions);
       actions.addEventListener('click', function(e){
@@ -203,6 +213,9 @@
           const val = prompt('Paste resource link for:\n' + title, link || 'https://');
           if(val) setResourceValue(card, keys.link, val.trim());
         }
+        if(action === 'quick-edit'){
+          openResourceEditor(card);
+        }
         if(action === 'reader'){
           const appMap = getMap(keys.app);
           const finalUrl = appMap[keyFor(card)] || link;
@@ -220,23 +233,134 @@
     });
   }
 
+  function ensureResourceEditor(){
+    let overlay = document.getElementById('portalResourceEditor');
+    if(overlay) return overlay;
+    overlay = document.createElement('div');
+    overlay.id = 'portalResourceEditor';
+    overlay.className = 'portal-editor-overlay';
+    overlay.innerHTML = '<div class="portal-editor"><div class="portal-editor-head"><div><strong id="portalEditorTitle">Edit resource</strong><span id="portalEditorSub">URL, reader link, and thumbnail</span></div><button type="button" data-editor-action="close">Close</button></div><div class="portal-editor-preview"><div class="portal-editor-thumb" id="portalEditorThumb">📘</div><div><div class="portal-editor-name" id="portalEditorName"></div><div class="portal-editor-note">Paste direct image URLs for covers. Paste PDF/EPUB URLs into Reader URL.</div></div></div><div class="portal-editor-grid"><label>Resource URL<input id="portalEditorUrl" type="url" placeholder="https://..."></label><label>Reader URL<input id="portalEditorReaderUrl" type="url" placeholder="Direct PDF/EPUB URL"></label><label>Thumbnail URL<input id="portalEditorThumbUrl" type="url" placeholder="https://...jpg"></label><label data-editor-course-meta>Status<select id="portalEditorStatus"><option>Not started</option><option>Active</option><option>Done</option><option>Later</option></select></label><label data-editor-course-meta>Priority<select id="portalEditorPriority"><option>Primary</option><option>Companion</option><option>Reference</option></select></label></div><div class="portal-editor-actions"><button type="button" class="primary" data-editor-action="save">Save</button><button type="button" data-editor-action="open">Open URL</button><button type="button" data-editor-action="reader">Open Reader</button><button type="button" data-editor-action="clear-thumb">Clear Thumbnail</button></div><div class="portal-editor-status" id="portalEditorStatusText"></div></div>';
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', function(e){
+      if(e.target === overlay) closeResourceEditor();
+      const btn = e.target.closest('[data-editor-action]');
+      if(!btn) return;
+      const card = overlay._resourceCard;
+      const action = btn.dataset.editorAction;
+      if(action === 'close') closeResourceEditor();
+      if(action === 'save' && card) saveResourceEditor(card);
+      if(action === 'open' && card){
+        const link = document.getElementById('portalEditorUrl').value.trim() || getResourceLink(card);
+        if(link) window.open(link, '_blank', 'noopener,noreferrer');
+      }
+      if(action === 'reader' && card){
+        const title = resourceTitle(card);
+        const reader = document.getElementById('portalEditorReaderUrl').value.trim() || document.getElementById('portalEditorUrl').value.trim();
+        if(reader) window.open('reader.html?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(reader), '_blank', 'noopener,noreferrer');
+      }
+      if(action === 'clear-thumb' && card){
+        clearResourceValue(card, resourceKeys().thumb);
+        document.getElementById('portalEditorThumbUrl').value = '';
+        paintEditorThumb('');
+        renderResourceChrome(card);
+      }
+    });
+    overlay.querySelector('#portalEditorThumbUrl').addEventListener('input', function(){
+      paintEditorThumb(this.value.trim());
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && overlay.classList.contains('open')) closeResourceEditor();
+    });
+    return overlay;
+  }
+
+  function paintEditorThumb(src){
+    const thumb = document.getElementById('portalEditorThumb');
+    if(!thumb) return;
+    thumb.classList.toggle('has-image', !!src);
+    thumb.style.backgroundImage = src ? 'url("' + src + '")' : '';
+    thumb.textContent = src ? '' : '📘';
+  }
+
+  function openResourceEditor(card){
+    const overlay = ensureResourceEditor();
+    const title = resourceTitle(card);
+    const meta = getCourseMeta()[keyFor(card)] || {};
+    overlay._resourceCard = card;
+    document.getElementById('portalEditorTitle').textContent = 'Edit resource';
+    document.getElementById('portalEditorName').textContent = title;
+    document.getElementById('portalEditorUrl').value = getResourceLink(card);
+    document.getElementById('portalEditorReaderUrl').value = getResourceAppLink(card);
+    document.getElementById('portalEditorThumbUrl').value = getResourceThumb(card);
+    document.getElementById('portalEditorStatus').value = card.dataset.filterStatus || meta.status || 'Not started';
+    document.getElementById('portalEditorPriority').value = card.dataset.filterPriority || meta.priority || 'Companion';
+    document.querySelectorAll('[data-editor-course-meta]').forEach(function(el){
+      el.style.display = location.pathname.endsWith('courses.html') ? 'grid' : 'none';
+    });
+    document.getElementById('portalEditorStatusText').textContent = '';
+    paintEditorThumb(getResourceThumb(card));
+    overlay.classList.add('open');
+  }
+
+  function closeResourceEditor(){
+    const overlay = document.getElementById('portalResourceEditor');
+    if(overlay) overlay.classList.remove('open');
+  }
+
+  function saveResourceEditor(card){
+    const keys = resourceKeys();
+    const url = document.getElementById('portalEditorUrl').value.trim();
+    const reader = document.getElementById('portalEditorReaderUrl').value.trim();
+    const thumb = document.getElementById('portalEditorThumbUrl').value.trim();
+    const status = document.getElementById('portalEditorStatus').value;
+    const priority = document.getElementById('portalEditorPriority').value;
+    if(url) setResourceValue(card, keys.link, url); else clearResourceValue(card, keys.link);
+    if(reader) setResourceValue(card, keys.app, reader); else clearResourceValue(card, keys.app);
+    if(thumb) setResourceValue(card, keys.thumb, thumb); else clearResourceValue(card, keys.thumb);
+    if(location.pathname.endsWith('courses.html')){
+      updateCourseMeta(card, {status:status, priority:priority});
+      card.dataset.filterStatus = status;
+      card.dataset.filterPriority = priority;
+      const statusSelect = card.querySelector('[data-course-meta="status"]');
+      const prioritySelect = card.querySelector('[data-course-meta="priority"]');
+      if(statusSelect) statusSelect.value = status;
+      if(prioritySelect) prioritySelect.value = priority;
+      applyCourseFilters();
+    }
+    renderResourceChrome(card);
+    document.getElementById('portalEditorStatusText').textContent = 'Saved.';
+  }
+
+  function currentPage(){
+    return location.pathname.split('/').pop() || 'index.html';
+  }
+
+  function activeNavFor(href){
+    const page = currentPage();
+    if(href === 'index.html') return page === 'index.html' || page === '';
+    if(href === 'tracks.html') return /^(ai|python|linux|devops|cloud|tracks)\.html$/.test(page);
+    return page === href;
+  }
+
   function addSettingsNav(){
-    const label = '<span>⚙️</span><span class="ni-lbl">Settings</span>';
+    const items = [
+      {href:'index.html', icon:'🏠', label:'Home'},
+      {href:'tracks.html', icon:'🧭', label:'Tracks'},
+      {href:'courses.html', icon:'📚', label:'Courses'},
+      {href:'playbook.html', icon:'📘', label:'Playbook'},
+      {href:'settings.html', icon:'⚙️', label:'Settings'}
+    ];
     const bnavInner = document.querySelector('.bnav-inner');
-    if(bnavInner && !bnavInner.querySelector('a[href="settings.html"]')){
-      const a = document.createElement('a');
-      a.className = 'ni' + (location.pathname.endsWith('settings.html') ? ' active' : '');
-      a.href = 'settings.html';
-      a.innerHTML = label;
-      bnavInner.appendChild(a);
+    if(bnavInner){
+      bnavInner.innerHTML = items.map(function(item){
+        return '<a class="ni' + (activeNavFor(item.href) ? ' active' : '') + '" href="' + item.href + '"><span>' + item.icon + '</span><span class="ni-lbl">' + item.label + '</span></a>';
+      }).join('');
     }
     const bottom = document.querySelector('.bottom-nav');
-    if(bottom && !bottom.querySelector('a[href="settings.html"]')){
-      const a = document.createElement('a');
-      a.href = 'settings.html';
-      a.textContent = 'Settings';
-      if(location.pathname.endsWith('settings.html')) a.className = 'active';
-      bottom.appendChild(a);
+    if(bottom){
+      bottom.innerHTML = items.map(function(item){
+        return '<a class="' + (activeNavFor(item.href) ? 'active' : '') + '" href="' + item.href + '"><span>' + item.icon + '</span><span>' + item.label + '</span></a>';
+      }).join('');
     }
   }
 
@@ -430,7 +554,7 @@
     if(document.getElementById('portalProductStyles')) return;
     const style = document.createElement('style');
     style.id = 'portalProductStyles';
-    style.textContent = '.portal-resource-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.portal-resource-actions button{border:1px solid rgba(15,23,42,.1);background:#fff;color:#312e81;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer}.portal-resource-actions button:hover{border-color:#7c3aed}.bottom-nav{grid-template-columns:repeat(auto-fit,minmax(74px,1fr)) !important}.course-filter-panel{background:var(--card,#fff);border:1px solid var(--line,rgba(15,23,42,.12));border-radius:20px;padding:14px 16px;box-shadow:var(--shadow,0 10px 30px rgba(15,23,42,.08));margin:-4px 0 16px}.course-filter-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.course-filter-top strong{font-size:15px}.course-filter-top span{font-size:12px;font-weight:800;color:var(--muted,#64748b)}.course-filter-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:end}.course-filter-grid label,.course-meta-controls label{display:grid;gap:5px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--muted,#64748b)}.course-filter-grid select,.course-meta-controls select{width:100%;border:1px solid var(--line,rgba(15,23,42,.12));border-radius:12px;background:#fff;color:var(--text,#0f172a);padding:9px 10px;font-size:12px;font-weight:800;text-transform:none;letter-spacing:0}.course-filter-grid button{border:0;border-radius:12px;background:linear-gradient(135deg,var(--accent,#ec4899),var(--accent2,#7c3aed));color:#fff;padding:10px 12px;font-size:12px;font-weight:900;cursor:pointer}.course-meta-controls{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.course-filter-hidden,.course-section-hidden{display:none !important}@media(max-width:760px){.course-filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.course-filter-grid button{grid-column:1 / -1}.course-meta-controls{grid-template-columns:1fr}}';
+    style.textContent = '.portal-resource-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.portal-resource-actions button{border:1px solid rgba(15,23,42,.1);background:#fff;color:#312e81;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer}.portal-resource-actions button:hover{border-color:#7c3aed}.portal-editor-overlay{position:fixed;inset:0;background:rgba(8,12,20,.62);backdrop-filter:blur(8px);z-index:10000;display:none;align-items:center;justify-content:center;padding:16px}.portal-editor-overlay.open{display:flex}.portal-editor{width:min(620px,100%);max-height:90vh;overflow:auto;background:#fff;color:#0f172a;border-radius:20px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.32)}.portal-editor-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.portal-editor-head strong{display:block;font-size:18px}.portal-editor-head span{display:block;font-size:12px;color:#64748b;margin-top:2px}.portal-editor-head button,.portal-editor-actions button{border:0;border-radius:12px;padding:10px 12px;font-weight:900;cursor:pointer}.portal-editor-preview{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center;padding:12px;background:#f1f5f9;border-radius:16px;margin-bottom:14px}.portal-editor-thumb{width:76px;height:76px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#dbeafe,#c7d2fe);font-size:28px;background-size:cover;background-position:center}.portal-editor-thumb.has-image{color:transparent}.portal-editor-name{font-weight:900;line-height:1.25}.portal-editor-note{font-size:12px;color:#64748b;margin-top:4px;line-height:1.4}.portal-editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.portal-editor-grid label{display:grid;gap:5px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:#64748b}.portal-editor-grid input,.portal-editor-grid select{width:100%;border:1px solid #d9deea;border-radius:12px;padding:11px 12px;font-size:13px;font-weight:700}.portal-editor-grid label:nth-child(1),.portal-editor-grid label:nth-child(2),.portal-editor-grid label:nth-child(3){grid-column:1 / -1}.portal-editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.portal-editor-actions .primary{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}.portal-editor-status{min-height:20px;margin-top:8px;font-size:13px;font-weight:800;color:#64748b}.bottom-nav{grid-template-columns:repeat(5,minmax(0,1fr)) !important}.bottom-nav a{display:flex !important;flex-direction:column;align-items:center;justify-content:center;gap:3px}.bottom-nav a span:first-child{font-size:16px}.bottom-nav a span:last-child{font-size:11px}.bnav-inner{min-width:0 !important;width:min(620px,100%) !important}.ni{min-width:0 !important;flex:1}.course-filter-panel{background:var(--card,#fff);border:1px solid var(--line,rgba(15,23,42,.12));border-radius:20px;padding:14px 16px;box-shadow:var(--shadow,0 10px 30px rgba(15,23,42,.08));margin:-4px 0 16px}.course-filter-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.course-filter-top strong{font-size:15px}.course-filter-top span{font-size:12px;font-weight:800;color:var(--muted,#64748b)}.course-filter-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:end}.course-filter-grid label,.course-meta-controls label{display:grid;gap:5px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--muted,#64748b)}.course-filter-grid select,.course-meta-controls select{width:100%;border:1px solid var(--line,rgba(15,23,42,.12));border-radius:12px;background:#fff;color:var(--text,#0f172a);padding:9px 10px;font-size:12px;font-weight:800;text-transform:none;letter-spacing:0}.course-filter-grid button{border:0;border-radius:12px;background:linear-gradient(135deg,var(--accent,#ec4899),var(--accent2,#7c3aed));color:#fff;padding:10px 12px;font-size:12px;font-weight:900;cursor:pointer}.course-meta-controls{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.course-filter-hidden,.course-section-hidden{display:none !important}@media(max-width:760px){.portal-editor-grid{grid-template-columns:1fr}.course-filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.course-filter-grid button{grid-column:1 / -1}.course-meta-controls{grid-template-columns:1fr}}';
     document.head.appendChild(style);
   }
 
