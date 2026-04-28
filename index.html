@@ -70,7 +70,7 @@ body.dark header{background:rgba(8,12,20,.82)}
 <a class="ql" href="linux.html"><div class="ql-title">🐧 Linux</div><div class="ql-sub">RHCSA foundation, bash, and admin skills</div></a>
 <a class="ql" href="python.html"><div class="ql-title">🐍 Python</div><div class="ql-sub">Automation, APIs, and AI engineering prep</div></a>
 <a class="ql" href="ai.html"><div class="ql-title">🧠 AI</div><div class="ql-sub">Main roadmap, phases, and recommended AI courses</div></a>
-<a class="ql" href="claude.html"><div class="ql-title">🟠 Claude</div><div class="ql-sub">Claude workflows, tools, and MCP track</div></a>
+<a class="ql" href="settings.html"><div class="ql-title">⚙️ Settings</div><div class="ql-sub">Make webhook, Notion target, backup, and cache</div></a>
 <a class="ql" href="cloud.html"><div class="ql-title">☁️ Cloud</div><div class="ql-sub">AWS and Azure certification path</div></a>
 <a class="ql" href="playbook.html"><div class="ql-title">📘 Playbook</div><div class="ql-sub">Goals at the top, plan at the bottom</div></a>
 </div>
@@ -86,7 +86,7 @@ body.dark header{background:rgba(8,12,20,.82)}
 <script src="assets/js/app-core.js"></script>
 <script>
 (function(){
-const SEARCH_ITEMS=[{title:'Linux',sub:'RHCSA and Linux foundation',href:'linux.html',icon:'🐧',tags:'linux rhcsa bash selinux lvm'},{title:'Python',sub:'Automation and AI prep',href:'python.html',icon:'🐍',tags:'python automation api anthropic sdk paramiko netmiko'},{title:'AI',sub:'Main AI roadmap',href:'ai.html',icon:'🧠',tags:'ai roadmap llm rag agents prompt'},{title:'Claude',sub:'Claude workflows and MCP',href:'claude.html',icon:'🟠',tags:'claude mcp claude code agents'},{title:'Cloud',sub:'AWS and Azure path',href:'cloud.html',icon:'☁️',tags:'cloud aws azure az-700 ans-c01'},{title:'Playbook',sub:'Goals and plan',href:'playbook.html',icon:'📘',tags:'goals plan milestones'},{title:'Courses',sub:'Curated course library',href:'courses.html',icon:'📚',tags:'courses library ebooks'}];
+const SEARCH_ITEMS=[{title:'Linux',sub:'RHCSA and Linux foundation',href:'linux.html',icon:'🐧',tags:'linux rhcsa bash selinux lvm'},{title:'Python',sub:'Automation and AI prep',href:'python.html',icon:'🐍',tags:'python automation api anthropic sdk paramiko netmiko'},{title:'AI',sub:'Main AI roadmap',href:'ai.html',icon:'🧠',tags:'ai roadmap llm rag agents prompt claude mcp'},{title:'Cloud',sub:'AWS and Azure path',href:'cloud.html',icon:'☁️',tags:'cloud aws azure az-700 ans-c01'},{title:'Playbook',sub:'Goals and plan',href:'playbook.html',icon:'📘',tags:'goals plan milestones notion make webhook'},{title:'Courses',sub:'Curated course library',href:'courses.html',icon:'📚',tags:'courses library ebooks'},{title:'Settings',sub:'Webhook, Notion target, backup, and cache',href:'settings.html',icon:'⚙️',tags:'settings make notion backup export import cache'}];
 function $(id){return document.getElementById(id);} function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function applyTheme(){const t=localStorage.getItem('theme')||'light';document.body.classList.toggle('dark',t==='dark');$('themeBtn').textContent=t==='dark'?'☀️':'🌙';}
 function toggleTheme(){const next=document.body.classList.contains('dark')?'light':'dark';localStorage.setItem('theme',next);applyTheme();}
@@ -96,4 +96,5 @@ applyTheme();renderSearch('');
 })();
 </script>
 <script src="assets/js/elite-system.js"></script>
+<script src="assets/js/portal-product.js"></script>
 </body></html>

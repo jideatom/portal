@@ -369,6 +369,15 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
 .status-red{background:rgba(207,91,107,.12);color:var(--red)}
 .small{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
+.notion-card{
+  background:linear-gradient(135deg,rgba(91,91,214,.1),rgba(76,125,136,.08));
+  border:1px solid var(--border2);
+  border-radius:18px;
+  padding:14px;
+  margin:14px 0
+}
+.sync-status{font-size:.72rem;color:var(--text2);font-weight:800;min-height:20px}
+.link-btn{text-decoration:none;display:inline-flex;align-items:center}
 .hidden{display:none}
 @media (max-width:700px){
   .add-row,.form-grid,.form-grid.two,.stats-grid,.tech-grid{grid-template-columns:1fr}
@@ -383,10 +392,11 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
   <section class="play-panel active" id="goalsPanel"><div class="sec-lbl">Monthly Milestones</div><div id="monthsHost"></div></section>
   <section class="play-panel" id="planPanel"><div class="card"><div class="sec-lbl">Execution Plan</div><p class="plan-help">Use this for your monthly focus, weekly commitments, exam targets, and notes.</p><textarea id="playbookPlan" placeholder="Write your execution plan here..."></textarea></div></section>
   <section class="play-panel" id="buildPanel"><div class="card"><div class="sec-lbl">Build Mode</div><p class="plan-help">These are your output projects.</p><div id="buildProjectsHost"></div></div></section>
-  <section class="play-panel" id="techGoalPanel"><div class="card"><div class="sec-lbl">Tech/Career OS</div><p class="plan-help">This section is your working cockpit for Tech/Career only. Health/Fitness stays separate by design.</p><div class="stats-grid"><div class="stat-card"><div class="stat-k">Current Week</div><div class="stat-v" id="tgWeek">1</div></div><div class="stat-card"><div class="stat-k">Deep Work</div><div class="stat-v" id="tgDeepWork">0h</div></div><div class="stat-card"><div class="stat-k">Features</div><div class="stat-v" id="tgFeatures">0</div></div><div class="stat-card"><div class="stat-k">Outreach</div><div class="stat-v" id="tgOutreach">0</div></div></div><div class="tech-grid"><div class="goal-box"><div class="sec-lbl">Current Goal</div><div class="stack"><input id="techGoalTitle" type="text" placeholder="Main tech goal"/><div class="form-grid two"><input id="techGoalDeadline" type="date"/><select id="techGoalStatus"><option>Not Started</option><option selected>In Progress</option><option>Done</option><option>Blocked</option></select></div><input id="techGoalProgress" type="number" min="0" max="100" placeholder="Progress %"/><textarea id="techGoalFocus" placeholder="Weekly focus"></textarea><textarea id="techGoalDeliverable" placeholder="Current build deliverable"></textarea><textarea id="techGoalProof" placeholder="Sales / proof target"></textarea><div class="actions"><button class="pri-btn" id="saveTechGoalBtn">Save Goal</button></div></div></div><div class="goal-box"><div class="sec-lbl">Goal Snapshot</div><div id="techGoalSnapshot"></div></div></div></div><div class="card" style="margin-top:12px"><div class="sec-lbl">Daily Entry</div><div class="form-grid"><input id="entryDate" type="date"/><input id="entryDeepWork" type="number" step="0.5" placeholder="Deep work hours"/><input id="entryPython" type="number" step="0.5" placeholder="Python hours"/></div><div class="form-grid"><input id="entryLinux" type="number" step="0.5" placeholder="Linux/API hours"/><input id="entryAIRAG" type="number" step="0.5" placeholder="AI/RAG hours"/><input id="entryN8N" type="number" step="0.5" placeholder="n8n hours"/></div><div class="form-grid"><input id="entryFastAPI" type="number" step="0.5" placeholder="FastAPI/Web App hours"/><input id="entrySales" type="number" step="0.5" placeholder="Sales/Portfolio hours"/><input id="entryOutreach" type="number" step="1" placeholder="Outreach count"/></div><div class="form-grid"><input id="entryFeatures" type="number" step="1" placeholder="Features shipped"/><input id="entryWin" type="text" placeholder="Main win"/><input id="entryBlocker" type="text" placeholder="Main blocker"/></div><textarea id="entryNotes" placeholder="Notes"></textarea><input id="editingEntryId" type="hidden"/><div class="actions"><button class="pri-btn" id="saveEntryBtn">Save Entry</button><button class="sec-btn hidden" id="cancelEditBtn">Cancel Edit</button></div></div><div class="card" style="margin-top:12px"><div class="sec-lbl">Recent Entries</div><div id="techEntriesHost" class="entry-list"></div></div></section>
+  <section class="play-panel" id="techGoalPanel"><div class="card"><div class="sec-lbl">Tech/Career OS</div><p class="plan-help">This section is your working cockpit for Tech/Career only. Health/Fitness stays separate by design.</p><div class="notion-card"><div class="sec-lbl">Notion Sync via Make</div><p class="plan-help">Save your Make webhook once, then Tech Goal updates and daily logs can flow into your Notion goals database.</p><div class="form-grid two"><input id="makeWebhookUrl" type="url" placeholder="Make webhook URL"/><input id="notionGoalTarget" type="text" placeholder="Notion target, e.g. Tech Goals"/></div><div class="actions"><button class="sec-btn" id="saveSyncSettingsBtn">Save Sync</button><button class="sec-btn" id="testSyncBtn">Send Test</button><button class="pri-btn" id="sendGoalToNotionBtn">Send Goal to Notion</button><a class="sec-btn link-btn" href="settings.html">Settings</a></div><div class="sync-status" id="syncStatus">Not connected yet.</div></div><div class="stats-grid"><div class="stat-card"><div class="stat-k">Current Week</div><div class="stat-v" id="tgWeek">1</div></div><div class="stat-card"><div class="stat-k">Deep Work</div><div class="stat-v" id="tgDeepWork">0h</div></div><div class="stat-card"><div class="stat-k">Features</div><div class="stat-v" id="tgFeatures">0</div></div><div class="stat-card"><div class="stat-k">Outreach</div><div class="stat-v" id="tgOutreach">0</div></div></div><div class="tech-grid"><div class="goal-box"><div class="sec-lbl">Current Goal</div><div class="stack"><input id="techGoalTitle" type="text" placeholder="Main tech goal"/><div class="form-grid two"><input id="techGoalDeadline" type="date"/><select id="techGoalStatus"><option>Not Started</option><option selected>In Progress</option><option>Done</option><option>Blocked</option></select></div><input id="techGoalProgress" type="number" min="0" max="100" placeholder="Progress %"/><textarea id="techGoalFocus" placeholder="Weekly focus"></textarea><textarea id="techGoalDeliverable" placeholder="Current build deliverable"></textarea><textarea id="techGoalProof" placeholder="Sales / proof target"></textarea><div class="actions"><button class="pri-btn" id="saveTechGoalBtn">Save Goal</button></div></div></div><div class="goal-box"><div class="sec-lbl">Goal Snapshot</div><div id="techGoalSnapshot"></div></div></div></div><div class="card" style="margin-top:12px"><div class="sec-lbl">Daily Entry</div><div class="form-grid"><input id="entryDate" type="date"/><input id="entryDeepWork" type="number" step="0.5" placeholder="Deep work hours"/><input id="entryPython" type="number" step="0.5" placeholder="Python hours"/></div><div class="form-grid"><input id="entryLinux" type="number" step="0.5" placeholder="Linux/API hours"/><input id="entryAIRAG" type="number" step="0.5" placeholder="AI/RAG hours"/><input id="entryN8N" type="number" step="0.5" placeholder="n8n hours"/></div><div class="form-grid"><input id="entryFastAPI" type="number" step="0.5" placeholder="FastAPI/Web App hours"/><input id="entrySales" type="number" step="0.5" placeholder="Sales/Portfolio hours"/><input id="entryOutreach" type="number" step="1" placeholder="Outreach count"/></div><div class="form-grid"><input id="entryFeatures" type="number" step="1" placeholder="Features shipped"/><input id="entryWin" type="text" placeholder="Main win"/><input id="entryBlocker" type="text" placeholder="Main blocker"/></div><textarea id="entryNotes" placeholder="Notes"></textarea><input id="editingEntryId" type="hidden"/><div class="actions"><button class="pri-btn" id="saveEntryBtn">Save Entry</button><button class="sec-btn hidden" id="cancelEditBtn">Cancel Edit</button></div></div><div class="card" style="margin-top:12px"><div class="sec-lbl">Recent Entries</div><div id="techEntriesHost" class="entry-list"></div></div></section>
 </div>
 <nav class="bnav"><div class="bnav-inner"><a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a><a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a><a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a><a class="ni" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a><a class="ni" href="devops.html"><span>⚙️</span><span class="ni-lbl">DevOps</span></a><a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a><a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a><a class="ni active" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a></div></nav>
 <script src="assets/js/app-core.js"></script>
+<script src="assets/js/portal-product.js"></script>
 <script>
 (function(){
   const MONTHS=[['apr','April 2026','#8b5cf6'],['may','May 2026','#3b82f6'],['jun','June 2026','#10b981'],['jul','July 2026','#f59e0b'],['aug','August 2026','#f97316'],['sep','September 2026','#ef4444']];
@@ -413,9 +423,33 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
   const LOG_KEY = 'tech_daily_logs_v1';
   const START = new Date('2026-04-20T00:00:00');
   const MAKE_WEBHOOK_KEY = 'make_webhook_url_v1';
+  const NOTION_TARGET_KEY = 'notion_goal_target_v1';
 
   function getMakeWebhookUrl() {
     return (localStorage.getItem(MAKE_WEBHOOK_KEY) || '').trim();
+  }
+
+  function getNotionTarget() {
+    return (localStorage.getItem(NOTION_TARGET_KEY) || '').trim();
+  }
+
+  function setSyncStatus(message) {
+    const el = document.getElementById('syncStatus');
+    if (el) el.textContent = message;
+  }
+
+  function loadSyncSettings() {
+    const webhook = document.getElementById('makeWebhookUrl');
+    const target = document.getElementById('notionGoalTarget');
+    if (webhook) webhook.value = getMakeWebhookUrl();
+    if (target) target.value = getNotionTarget();
+    setSyncStatus(getMakeWebhookUrl() ? 'Connected: Make webhook saved for Notion sync.' : 'Not connected yet.');
+  }
+
+  function saveSyncSettings() {
+    localStorage.setItem(MAKE_WEBHOOK_KEY, document.getElementById('makeWebhookUrl').value.trim());
+    localStorage.setItem(NOTION_TARGET_KEY, document.getElementById('notionGoalTarget').value.trim());
+    setSyncStatus('Sync settings saved.');
   }
 
   async function syncToMake(payload) {
@@ -429,11 +463,19 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
       const res = await fetch(makeWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          source: 'jideatom-portal',
+          destination: 'notion',
+          notion_target: getNotionTarget(),
+          sent_at: new Date().toISOString(),
+          ...payload
+        })
       });
 
       if (!res.ok) throw new Error(`Webhook failed: ${res.status}`);
+      setSyncStatus('Last sync sent to Make.');
     } catch (err) {
+      setSyncStatus(err.message || 'Make sync failed');
       console.error('Make sync failed', err);
     }
   }
@@ -511,6 +553,22 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
     document.getElementById('techGoalProof').value = g.salesProof || '';
   }
 
+  function techGoalPayload(g) {
+    const buildSnap = JSON.parse(localStorage.getItem('build_mode_snapshot') || '{}');
+    return {
+      title: g.title,
+      status: g.status,
+      deadline: g.deadline,
+      progress: g.progress,
+      weekly_focus: g.weeklyFocus,
+      build_deliverable: g.deliverable,
+      sales_proof: g.salesProof,
+      area: 'Tech/Career',
+      current_week: currentWeek(),
+      build_snapshot: buildSnap
+    };
+  }
+
   function saveGoal() {
     const g = {
       title: document.getElementById('techGoalTitle').value.trim(),
@@ -525,15 +583,8 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
     setGoal(g);
 
     syncToMake({
-      type: 'tech_goal',
-      goal: g.title,
-      status: g.status,
-      deadline: g.deadline,
-      progress: g.progress,
-      weekly_focus: g.weeklyFocus,
-      build_deliverable: g.deliverable,
-      sales_proof: g.salesProof,
-      area: 'Tech/Career'
+      type: 'notion_goal_upsert',
+      payload: techGoalPayload(g)
     });
 
     renderTechGoalSnapshot();
@@ -632,20 +683,23 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
     setLogs(logs);
 
     syncToMake({
-      type: 'daily_tech_log',
-      date: entry.date,
-      deep_work: entry.deepWork,
-      python: entry.python,
-      linux_api: entry.linux,
-      ai_rag: entry.aiRag,
-      n8n: entry.n8n,
-      fastapi_web: entry.fastapi,
-      sales_portfolio: entry.sales,
-      outreach: entry.outreach,
-      features_shipped: entry.features,
-      win: entry.win,
-      blocker: entry.blocker,
-      notes: entry.notes
+      type: 'notion_daily_tech_log',
+      payload: {
+        date: entry.date,
+        deep_work: entry.deepWork,
+        python: entry.python,
+        linux_api: entry.linux,
+        ai_rag: entry.aiRag,
+        n8n: entry.n8n,
+        fastapi_web: entry.fastapi,
+        sales_portfolio: entry.sales,
+        outreach: entry.outreach,
+        features_shipped: entry.features,
+        win: entry.win,
+        blocker: entry.blocker,
+        notes: entry.notes,
+        goal: getGoal().title
+      }
     });
 
     resetEntryForm();
@@ -721,10 +775,31 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
     `).join('');
   }
 
+  document.getElementById('saveSyncSettingsBtn').addEventListener('click', saveSyncSettings);
+  document.getElementById('testSyncBtn').addEventListener('click', function () {
+    saveSyncSettings();
+    setSyncStatus('Sending test event...');
+    syncToMake({
+      type: 'portal_connection_test',
+      payload: {
+        message: 'Playbook Tech Goal Make webhook test',
+        goal: getGoal().title
+      }
+    });
+  });
+  document.getElementById('sendGoalToNotionBtn').addEventListener('click', function () {
+    saveSyncSettings();
+    setSyncStatus('Sending current goal to Make...');
+    syncToMake({
+      type: 'notion_goal_upsert',
+      payload: techGoalPayload(getGoal())
+    });
+  });
   document.getElementById('saveTechGoalBtn').addEventListener('click', saveGoal);
   document.getElementById('saveEntryBtn').addEventListener('click', saveEntry);
   document.getElementById('cancelEditBtn').addEventListener('click', resetEntryForm);
 
+  loadSyncSettings();
   loadGoalIntoForm();
   renderTechGoalSnapshot();
   renderEntries();
