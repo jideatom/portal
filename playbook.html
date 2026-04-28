@@ -412,16 +412,21 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
   const GOAL_KEY = 'tech_goal_v1';
   const LOG_KEY = 'tech_daily_logs_v1';
   const START = new Date('2026-04-20T00:00:00');
-  const MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/rllml47qp9ykbqd6l12o5zsankjx3d23';
+  const MAKE_WEBHOOK_KEY = 'make_webhook_url_v1';
+
+  function getMakeWebhookUrl() {
+    return (localStorage.getItem(MAKE_WEBHOOK_KEY) || '').trim();
+  }
 
   async function syncToMake(payload) {
-    if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.includes('PASTE_YOUR_MAKE_WEBHOOK_URL_HERE')) {
+    const makeWebhookUrl = getMakeWebhookUrl();
+    if (!makeWebhookUrl) {
       console.warn('Make webhook URL not set');
       return;
     }
 
     try {
-      const res = await fetch(MAKE_WEBHOOK_URL, {
+      const res = await fetch(makeWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

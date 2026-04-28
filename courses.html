@@ -173,8 +173,7 @@ if(action==='open'){
 const href=getLink(currentResource);
 if(href) window.open(href,'_blank','noopener,noreferrer');
 } else if(action==='edit'){
-const val = prompt('Paste link for:
-' + currentResource.dataset.title, getLink(currentResource)||'https://');
+const val = prompt('Paste link for:\n' + (currentResource.dataset.title || ''), getLink(currentResource)||'https://');
 if(val) setLink(currentResource, val.trim());
 } else if(action==='open-app'){
 const appLink=getAppLink(currentResource);
@@ -185,12 +184,10 @@ const readerUrl='reader.html?title='+encodeURIComponent(currentResource.dataset.
 window.open(readerUrl,'_blank','noopener,noreferrer');
 }
 } else if(action==='set-app-link'){
-const val = prompt('Paste direct PDF/EPUB URL for:
-' + currentResource.dataset.title, getAppLink(currentResource)||'https://');
+const val = prompt('Paste direct PDF/EPUB URL for:\n' + (currentResource.dataset.title || ''), getAppLink(currentResource)||'https://');
 if(val) setAppLink(currentResource, val.trim());
 } else if(action==='thumb-url'){
-const val = prompt('Paste image URL for:
-' + currentResource.dataset.title, getThumb(currentResource)||'https://');
+const val = prompt('Paste image URL for:\n' + (currentResource.dataset.title || ''), getThumb(currentResource)||'https://');
 if(val) setThumb(currentResource, val.trim());
 } else if(action==='clear-thumb'){
 clearThumb(currentResource);
