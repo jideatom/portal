@@ -99,12 +99,28 @@
       page:location.pathname.split('/').pop() || 'index.html',
       payload:payload || {}
     };
-    const res = await fetch(url, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(body)
-    });
-    if(!res.ok) throw new Error('Make webhook failed: ' + res.status);
+    try{
+      const res = await fetch(url, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(body)
+      });
+      if(!res.ok) throw new Error('Make webhook failed: ' + res.status);
+    }catch(err){
+      const form = new URLSearchParams();
+      form.set('type', body.type || '');
+      form.set('source', body.source);
+      form.set('destination', body.destination);
+      form.set('notion_target', body.notion_target);
+      form.set('sent_at', body.sent_at);
+      form.set('payload_json', JSON.stringify(body.payload || {}));
+      form.set('body_json', JSON.stringify(body));
+      await fetch(url, {
+        method:'POST',
+        mode:'no-cors',
+        body:form
+      });
+    }
     return body;
   }
 

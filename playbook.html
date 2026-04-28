@@ -456,27 +456,47 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
     const makeWebhookUrl = getMakeWebhookUrl();
     if (!makeWebhookUrl) {
       console.warn('Make webhook URL not set');
+      setSyncStatus('Make webhook URL is not set.');
       return;
     }
+
+    const body = {
+      source: 'jideatom-portal',
+      destination: 'notion',
+      notion_target: getNotionTarget(),
+      sent_at: new Date().toISOString(),
+      ...payload
+    };
 
     try {
       const res = await fetch(makeWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          source: 'jideatom-portal',
-          destination: 'notion',
-          notion_target: getNotionTarget(),
-          sent_at: new Date().toISOString(),
-          ...payload
-        })
+        body: JSON.stringify(body)
       });
 
       if (!res.ok) throw new Error(`Webhook failed: ${res.status}`);
       setSyncStatus('Last sync sent to Make.');
     } catch (err) {
-      setSyncStatus(err.message || 'Make sync failed');
-      console.error('Make sync failed', err);
+      try {
+        const form = new URLSearchParams();
+        form.set('type', body.type || '');
+        form.set('source', body.source);
+        form.set('destination', body.destination);
+        form.set('notion_target', body.notion_target);
+        form.set('sent_at', body.sent_at);
+        form.set('payload_json', JSON.stringify(body.payload || {}));
+        form.set('body_json', JSON.stringify(body));
+        await fetch(makeWebhookUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: form
+        });
+        setSyncStatus('Sent to Make. If Make is on Run once, it should capture this request.');
+      } catch (fallbackErr) {
+        setSyncStatus(fallbackErr.message || err.message || 'Make sync failed');
+        console.error('Make sync failed', fallbackErr);
+      }
     }
   }
 
@@ -553,6 +573,18 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
     document.getElementById('techGoalProof').value = g.salesProof || '';
   }
 
+  function goalFromForm() {
+    return {
+      title: document.getElementById('techGoalTitle').value.trim(),
+      deadline: document.getElementById('techGoalDeadline').value,
+      status: document.getElementById('techGoalStatus').value,
+      progress: Number(document.getElementById('techGoalProgress').value || 0),
+      weeklyFocus: document.getElementById('techGoalFocus').value.trim(),
+      deliverable: document.getElementById('techGoalDeliverable').value.trim(),
+      salesProof: document.getElementById('techGoalProof').value.trim()
+    };
+  }
+
   function techGoalPayload(g) {
     const buildSnap = JSON.parse(localStorage.getItem('build_mode_snapshot') || '{}');
     return {
@@ -570,17 +602,10 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
   }
 
   function saveGoal() {
-    const g = {
-      title: document.getElementById('techGoalTitle').value.trim(),
-      deadline: document.getElementById('techGoalDeadline').value,
-      status: document.getElementById('techGoalStatus').value,
-      progress: Number(document.getElementById('techGoalProgress').value || 0),
-      weeklyFocus: document.getElementById('techGoalFocus').value.trim(),
-      deliverable: document.getElementById('techGoalDeliverable').value.trim(),
-      salesProof: document.getElementById('techGoalProof').value.trim()
-    };
+    const g = goalFromForm();
 
     setGoal(g);
+    setSyncStatus('Saving goal and sending to Make...');
 
     syncToMake({
       type: 'notion_goal_upsert',
@@ -789,10 +814,13 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
   });
   document.getElementById('sendGoalToNotionBtn').addEventListener('click', function () {
     saveSyncSettings();
+    const g = goalFromForm();
+    setGoal(g);
+    renderTechGoalSnapshot();
     setSyncStatus('Sending current goal to Make...');
     syncToMake({
       type: 'notion_goal_upsert',
-      payload: techGoalPayload(getGoal())
+      payload: techGoalPayload(g)
     });
   });
   document.getElementById('saveTechGoalBtn').addEventListener('click', saveGoal);
