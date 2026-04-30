@@ -20,6 +20,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
 .execution-card{border-color:rgba(124,58,237,.28);background:linear-gradient(180deg,#ffffff,#f8f7ff)}
 .execution-card .section-title h2{color:#312e81}
 .execution-note{margin:-2px 0 12px;color:#475569;font-size:13px;line-height:1.5;font-weight:700}
+.library-note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:0 0 14px;box-shadow:var(--shadow);color:#475569;font-size:13px;line-height:1.5;font-weight:800}
 .section-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:20px 2px 10px}
 .section-title h2{margin:0;font-size:22px}
 .section-title span{font-size:12px;color:var(--muted);text-transform:lowercase;letter-spacing:.06em;font-weight:800}
@@ -47,12 +48,6 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
 <p>This page is the buying and study list for the three Build projects: Logistics Copilot, SoftTouch document intelligence, and Malaria Consortium operations workflow intelligence. Active courses must help ship one of those systems.</p>
 </section>
 
-<section class="focus-strip">
-<article class="focus-card"><strong>Logistics Copilot</strong><span>CRUD, document intake, status dashboards, customer updates, and workflow automation.</span></article>
-<article class="focus-card"><strong>SoftTouch Intelligence</strong><span>Manual ingestion, grounded search, quote-support summaries, and repair knowledge retrieval.</span></article>
-<article class="focus-card"><strong>Malaria Ops Intelligence</strong><span>Non-clinical reporting workflow, spreadsheet quality checks, delivery bottlenecks, and management briefs.</span></article>
-</section>
-
 <section class="stack-card execution-card" data-track="Execution">
 <div class="section-title"><h2>Recommended Execution Order</h2><span>finish one to unlock next</span></div>
 <p class="execution-note">Because you are already strong in networking, this path fills the beginner gaps first: Linux, Git, Python, APIs, testing, automation, deployment, then LLM systems.</p>
@@ -69,6 +64,14 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
 <div class="stack-item" data-title="DataTalksClub – LLM Zoomcamp" data-link="https://datatalks.club/courses/llm-zoomcamp/" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>10 · DataTalksClub – LLM Zoomcamp</strong><span>Bring in AI engineering last: RAG, vector search, evals, monitoring, and a real LLM project.</span></div></div>
 </div>
 </section>
+
+<section class="focus-strip">
+<article class="focus-card"><strong>Logistics Copilot</strong><span>CRUD, document intake, status dashboards, customer updates, and workflow automation.</span></article>
+<article class="focus-card"><strong>SoftTouch Intelligence</strong><span>Manual ingestion, grounded search, quote-support summaries, and repair knowledge retrieval.</span></article>
+<article class="focus-card"><strong>Malaria Ops Intelligence</strong><span>Non-clinical reporting workflow, spreadsheet quality checks, delivery bottlenecks, and management briefs.</span></article>
+</section>
+
+<section class="library-note">Resource library below. Do not treat these category blocks as the study order. Follow the locked Recommended Execution Order above first.</section>
 
 <section class="stack-card" data-track="AI"><div class="section-title"><h2>AI Ops + Agent Engineering</h2><span>primary money lane</span></div><div class="stack-row">
 <div class="stack-item" data-title="Claude Code for Real Engineers" data-link="https://www.aihero.dev/cohorts/claude-code-for-real-engineers-2026-04" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>Claude Code for Real Engineers</strong><span>Production-grade AI coding workflow: planning, PRDs, agent loops, repo discipline, and shipping process.</span></div></div>

@@ -940,6 +940,8 @@
       });
       section.classList.toggle('course-section-hidden', sectionVisible === 0);
     });
+    const libraryNote = document.querySelector('.library-note');
+    if(libraryNote) libraryNote.classList.toggle('course-section-hidden', filters.track === 'Execution');
     const count = document.getElementById('courseFilterCount');
     if(count) count.textContent = visible + ' shown';
   }
@@ -960,8 +962,11 @@
       });
     });
     panel.addEventListener('change', applyCourseFilters);
+    const trackSelect = panel.querySelector('[data-course-filter="track"]');
+    if(trackSelect) trackSelect.value = 'Execution';
     document.getElementById('courseFilterReset').addEventListener('click', function(){
       panel.querySelectorAll('select').forEach(function(select){ select.value = 'All'; });
+      if(trackSelect) trackSelect.value = 'Execution';
       applyCourseFilters();
     });
     applyCourseFilters();
