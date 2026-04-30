@@ -510,6 +510,7 @@
 
   function normalizeTrack(text){
     text = (text || '').toLowerCase();
+    if(text.indexOf('parked') >= 0 || text.indexOf('not now') >= 0 || text.indexOf('irrelevant') >= 0) return 'Parked';
     if(text.indexOf('ai') >= 0 || text.indexOf('claude') >= 0) return 'AI';
     if(text.indexOf('python') >= 0) return 'Python';
     if(text.indexOf('linux') >= 0) return 'Linux';
@@ -519,6 +520,7 @@
   }
 
   function inferCourseType(card){
+    if(card.dataset.type) return card.dataset.type;
     const title = resourceTitle(card);
     const link = getResourceLink(card);
     const text = (title + ' ' + link).toLowerCase();
@@ -528,6 +530,7 @@
   }
 
   function inferPriority(card, type, index){
+    if(card.dataset.priority) return card.dataset.priority;
     if(index === 0) return 'Primary';
     if(type === 'Book' || type === 'Docs') return 'Reference';
     return 'Companion';
@@ -558,19 +561,19 @@
   function decorateCourseFilterMeta(card, index){
     const section = card.closest('.stack-card');
     const heading = section ? section.querySelector('.section-title h2') : null;
-    const track = normalizeTrack(heading ? heading.textContent : '');
+    const track = card.dataset.track || (section && section.dataset.track) || normalizeTrack(heading ? heading.textContent : '');
     const type = inferCourseType(card);
     const defaults = {
       track:track,
       type:type,
-      status:'Not started',
+      status:card.dataset.status || 'Not started',
       priority:inferPriority(card, type, index)
     };
     const meta = courseMetaFor(card, defaults);
-    card.dataset.filterTrack = meta.track || track;
-    card.dataset.filterType = meta.type || type;
-    card.dataset.filterStatus = meta.status || 'Not started';
-    card.dataset.filterPriority = meta.priority || defaults.priority;
+    card.dataset.filterTrack = card.dataset.track || (section && section.dataset.track) || meta.track || track;
+    card.dataset.filterType = card.dataset.type || meta.type || type;
+    card.dataset.filterStatus = card.dataset.status || meta.status || 'Not started';
+    card.dataset.filterPriority = card.dataset.priority || meta.priority || defaults.priority;
 
     if(card.querySelector('.course-meta-controls')) return;
     const controls = document.createElement('div');
@@ -638,7 +641,7 @@
     const panel = document.createElement('section');
     panel.id = 'courseFilterPanel';
     panel.className = 'course-filter-panel';
-    panel.innerHTML = '<div class="course-filter-top"><strong>Filter resources</strong><span id="courseFilterCount">0 shown</span></div><div class="course-filter-grid"><label>Track<select data-course-filter="track"><option>All</option><option>AI</option><option>Python</option><option>Linux</option><option>DevOps</option><option>Cloud</option></select></label><label>Type<select data-course-filter="type"><option>All</option><option>Course</option><option>Book</option><option>Docs</option></select></label><label>Status<select data-course-filter="status"><option>All</option><option>Not started</option><option>Active</option><option>Done</option><option>Later</option></select></label><label>Priority<select data-course-filter="priority"><option>All</option><option>Primary</option><option>Companion</option><option>Reference</option></select></label><button type="button" id="courseFilterReset">Reset</button></div>';
+    panel.innerHTML = '<div class="course-filter-top"><strong>Filter resources</strong><span id="courseFilterCount">0 shown</span></div><div class="course-filter-grid"><label>Track<select data-course-filter="track"><option>All</option><option>AI</option><option>Python</option><option>Linux</option><option>DevOps</option><option>Cloud</option><option>Parked</option></select></label><label>Type<select data-course-filter="type"><option>All</option><option>Course</option><option>Book</option><option>Docs</option></select></label><label>Status<select data-course-filter="status"><option>All</option><option>Not started</option><option>Active</option><option>Done</option><option>Later</option></select></label><label>Priority<select data-course-filter="priority"><option>All</option><option>Primary</option><option>Companion</option><option>Reference</option></select></label><button type="button" id="courseFilterReset">Reset</button></div>';
     hero.insertAdjacentElement('afterend', panel);
     document.querySelectorAll('.stack-card').forEach(function(section){
       section.querySelectorAll('.stack-item').forEach(function(card, index){
