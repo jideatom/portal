@@ -331,6 +331,7 @@
     if(!card || card.classList.contains('book')) return false;
     if(card.dataset.status === 'Later') return false;
     if(card.dataset.priority === 'Reference') return false;
+    if(inferCourseType(card) !== 'Course') return false;
     const section = card.closest('.stack-card');
     if(section && section.dataset.track === 'Parked') return false;
     return card.matches('.course,.stack-item');
@@ -421,6 +422,79 @@
         if(doneBtn) doneBtn.textContent = done ? 'Done ✓' : locked ? 'Locked' : 'Mark done';
       });
     });
+  }
+
+  const COURSE_TOPICS = {
+    'claude-code-for-real-engineers':['Repo orientation and rules','Planning before coding','Prompting Claude Code with context','Multi-step implementation loops','Reviews, fixes, and shipping discipline'],
+    'code-with-mosh-claude-code-for-professional-developers':['Claude Code workflow setup','Full-stack feature planning','Backend and database changes','Testing and debugging loops','Deployment-ready project polish'],
+    'maven-the-ai-engineering-bootcamp':['LLM app foundations','Retrieval and RAG architecture','Evaluations and quality checks','Agents and tool use','Production patterns and project delivery'],
+    'datatalksclub-llm-zoomcamp':['Embeddings and search','Vector databases','RAG pipelines','Evaluation and monitoring','Capstone document intelligence project'],
+    'hugging-face-ai-agents-course':['Agent fundamentals','Tools and actions','Framework-based agents','Multi-step reasoning','Final agent project'],
+    'deeplearning-ai-langchain-for-llm-application-development':['Chains and prompts','Memory and retrieval','Document loaders','RAG application flow','LLM app integration'],
+    'code-with-mosh-complete-python-mastery':['Python syntax refresh','Functions and modules','Classes and OOP','Files and exceptions','Practical scripts'],
+    'testdriven-io-test-driven-development-with-fastapi-and-docker':['FastAPI project setup','Postgres and models','Dockerized development','Pytest and TDD','CI/CD and deployment flow'],
+    'arjancodes-next-level-python':['Clean function design','Data models and typing','Composition over complexity','Testing and maintainability','Refactoring habits'],
+    'talkpython-modern-apis-with-fastapi':['API routing and schemas','Async endpoints','Database integration','Authentication basics','Production API polish'],
+    'code-with-mosh-complete-sql-mastery':['Relational data model','Select, joins, and aggregation','Data modification','Indexes and performance basics','Reporting queries'],
+    'orhanergun-python-for-network-engineers':['Python network automation setup','SSH and device access','Parsing command output','Config backup/change workflows','Network automation project'],
+    'bret-fisher-docker-mastery':['Container fundamentals','Images and Dockerfiles','Compose workflows','Volumes and networking','Production container habits'],
+    'bret-fisher-kubernetes-and-cloud-native-courses':['Kubernetes core objects','Services and ingress','Config and secrets','Deployments and scaling','Cloud-native operations'],
+    'techworldnana-gitlab-ci-cd':['Pipeline basics','Build and test stages','Variables and environments','Artifacts and deployments','Pipeline troubleshooting'],
+    'adrian-cantrill-aws-solutions-architect-associate':['AWS account and IAM foundation','Compute and storage','VPC networking','Databases and integration','Architecture patterns'],
+    'ud-aws-networking-deep-dive-vpc-essentials':['VPC fundamentals','Subnets and route tables','Internet and NAT gateways','Security groups and NACLs','Hybrid connectivity thinking'],
+    'tutorials-dojo-aws-saa-practice-exams':['Domain review','Timed practice exams','Wrong-answer analysis','Weak-area repair','Final readiness pass'],
+    'pikuma-linux-command-line-bash':['Shell navigation','Files and permissions','Text processing','Bash scripting basics','Automation exercises'],
+    'sander-van-vugt-rhcsa-rhel-9':['RHEL installation and tools','Users, groups, and permissions','Storage and filesystems','Services and systemd','RHCSA practice labs'],
+    'pearsons-linux-networking-basics-and-beyond':['Linux network commands','IP addressing and routing','DNS and name resolution','Firewalls and troubleshooting','Server networking labs']
+  };
+
+  function topicsForCard(card){
+    const keys = resourceKeyList(card);
+    let topics = [];
+    keys.some(function(key){
+      if(COURSE_TOPICS[key]){
+        topics = COURSE_TOPICS[key];
+        return true;
+      }
+      return false;
+    });
+    return topics;
+  }
+
+  function addCourseTopics(){
+    if(!location.pathname.endsWith('courses.html')) return;
+    document.querySelectorAll('.stack-item').forEach(function(card){
+      if(card.querySelector('.course-topic-list')) return;
+      if(inferCourseType(card) !== 'Course') return;
+      const topics = topicsForCard(card);
+      if(!topics.length) return;
+      const body = card.querySelector('.body') || card.querySelector('.resource-body') || card;
+      const list = document.createElement('div');
+      list.className = 'course-topic-list';
+      list.innerHTML = '<div class="course-topic-title">Topics to finish</div>' + topics.map(function(topic){
+        return '<div class="course-topic">• ' + esc(topic) + '</div>';
+      }).join('');
+      body.appendChild(list);
+    });
+  }
+
+  function initParkedCollapse(){
+    if(!location.pathname.endsWith('courses.html')) return;
+    const section = document.querySelector('.stack-card[data-track="Parked"]');
+    if(!section || section.dataset.collapseReady === '1') return;
+    section.dataset.collapseReady = '1';
+    section.classList.add('parked-collapsed');
+    const title = section.querySelector('.section-title');
+    if(!title) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'parked-toggle';
+    btn.textContent = 'Expand';
+    btn.addEventListener('click', function(){
+      const collapsed = section.classList.toggle('parked-collapsed');
+      btn.textContent = collapsed ? 'Expand' : 'Collapse';
+    });
+    title.appendChild(btn);
   }
 
   function renderResourceChrome(card){
@@ -911,7 +985,7 @@
     if(document.getElementById('portalLockStyles')) return;
     const style = document.createElement('style');
     style.id = 'portalLockStyles';
-    style.textContent = '.portal-lock-toggle{border:1px solid rgba(15,23,42,.12);background:#0f172a;color:#fff;border-radius:999px;padding:10px 13px;font-size:12px;font-weight:900;box-shadow:0 12px 30px rgba(15,23,42,.18);cursor:pointer;white-space:nowrap}.portal-lock-toggle.in-header{min-height:40px;box-shadow:none;background:linear-gradient(135deg,#0f172a,#312e81)}.portal-lock-toggle.floating{position:fixed;right:14px;top:14px;z-index:10001}.portal-unlocked .portal-lock-toggle{background:linear-gradient(135deg,#16a34a,#0f766e);color:#fff}.portal-locked .portal-resource-actions [data-portal-action="quick-edit"],.portal-locked .portal-resource-actions [data-portal-action="cover"],.portal-locked .course-meta-controls{display:none!important}.portal-locked .portal-resource-actions::after{content:"edit locked";display:inline-flex;align-items:center;border:1px solid rgba(15,23,42,.1);background:#f8fafc;color:#64748b;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900}.portal-locked .ctx-menu button[data-action="edit"],.portal-locked .ctx-menu button[data-action="set-app-link"],.portal-locked .ctx-menu button[data-action="thumb-url"],.portal-locked .ctx-menu button[data-action="clear-thumb"]{display:none}.portal-progress-locked{opacity:.58;filter:grayscale(.15)}.portal-progress-locked .thumb{background:linear-gradient(135deg,#e5e7eb,#cbd5e1)!important}.portal-progress-locked .portal-resource-actions [data-portal-action="open"],.portal-progress-locked .portal-resource-actions [data-portal-action="reader"]{opacity:.45}.portal-progress-done{outline:2px solid rgba(34,197,94,.22);outline-offset:2px}.portal-progress-badge{position:absolute;top:10px;left:10px;font-size:10px;font-weight:900;text-transform:uppercase;border:1px solid rgba(15,23,42,.1);border-radius:999px;background:#fff;color:#64748b;padding:4px 8px;z-index:2}.portal-progress-done .portal-progress-badge{background:#dcfce7;color:#166534;border-color:#bbf7d0}.portal-progress-locked .portal-progress-badge{background:#f1f5f9;color:#64748b}.portal-lock-toast{position:fixed;left:50%;top:72px;transform:translate(-50%,-8px);z-index:10002;max-width:min(520px,calc(100vw - 24px));background:#0f172a;color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px 14px;box-shadow:0 18px 50px rgba(2,6,23,.32);font-size:13px;font-weight:800;line-height:1.35;opacity:0;transition:opacity .18s ease,transform .18s ease}.portal-lock-toast.show{opacity:1;transform:translate(-50%,0)}@media(max-width:700px){.portal-lock-toggle.floating{top:auto;right:12px;bottom:92px}.portal-lock-toast{top:14px;font-size:12px}}';
+    style.textContent = '.portal-lock-toggle{border:1px solid rgba(15,23,42,.12);background:#0f172a;color:#fff;border-radius:999px;padding:10px 13px;font-size:12px;font-weight:900;box-shadow:0 12px 30px rgba(15,23,42,.18);cursor:pointer;white-space:nowrap}.portal-lock-toggle.in-header{min-height:40px;box-shadow:none;background:linear-gradient(135deg,#0f172a,#312e81)}.portal-lock-toggle.floating{position:fixed;right:14px;top:14px;z-index:10001}.portal-unlocked .portal-lock-toggle{background:linear-gradient(135deg,#16a34a,#0f766e);color:#fff}.portal-locked .portal-resource-actions [data-portal-action="quick-edit"],.portal-locked .portal-resource-actions [data-portal-action="cover"],.portal-locked .course-meta-controls{display:none!important}.portal-locked .portal-resource-actions::after{content:"edit locked";display:inline-flex;align-items:center;border:1px solid rgba(15,23,42,.1);background:#f8fafc;color:#64748b;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900}.portal-locked .ctx-menu button[data-action="edit"],.portal-locked .ctx-menu button[data-action="set-app-link"],.portal-locked .ctx-menu button[data-action="thumb-url"],.portal-locked .ctx-menu button[data-action="clear-thumb"]{display:none}.portal-progress-locked{opacity:.58;filter:grayscale(.15)}.portal-progress-locked .thumb{background:linear-gradient(135deg,#e5e7eb,#cbd5e1)!important}.portal-progress-locked .portal-resource-actions [data-portal-action="open"],.portal-progress-locked .portal-resource-actions [data-portal-action="reader"]{opacity:.45}.portal-progress-done{outline:2px solid rgba(34,197,94,.22);outline-offset:2px}.portal-progress-badge{position:absolute;top:10px;left:10px;font-size:10px;font-weight:900;text-transform:uppercase;border:1px solid rgba(15,23,42,.1);border-radius:999px;background:#fff;color:#64748b;padding:4px 8px;z-index:2}.portal-progress-done .portal-progress-badge{background:#dcfce7;color:#166534;border-color:#bbf7d0}.portal-progress-locked .portal-progress-badge{background:#f1f5f9;color:#64748b}.course-topic-list{grid-column:1/-1;margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.62);border:1px solid rgba(15,23,42,.08)}.course-topic-title{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#7c3aed;margin-bottom:6px}.course-topic{font-size:12px;line-height:1.45;color:#475569;font-weight:700;margin-top:3px}.parked-toggle{margin-left:auto;border:1px solid rgba(15,23,42,.12);background:#0f172a;color:#fff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:900;cursor:pointer}.stack-card[data-track="Parked"].parked-collapsed .stack-row{display:none}.stack-card[data-track="Parked"].parked-collapsed{padding-bottom:12px}.portal-lock-toast{position:fixed;left:50%;top:72px;transform:translate(-50%,-8px);z-index:10002;max-width:min(520px,calc(100vw - 24px));background:#0f172a;color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px 14px;box-shadow:0 18px 50px rgba(2,6,23,.32);font-size:13px;font-weight:800;line-height:1.35;opacity:0;transition:opacity .18s ease,transform .18s ease}.portal-lock-toast.show{opacity:1;transform:translate(-50%,0)}@media(max-width:700px){.portal-lock-toggle.floating{top:auto;right:12px;bottom:92px}.portal-lock-toast{top:14px;font-size:12px}}';
     document.head.appendChild(style);
   }
 
@@ -921,6 +995,8 @@
     ensureLockToggle();
     applyLockMode();
     addSettingsNav();
+    addCourseTopics();
+    initParkedCollapse();
     addResourceActions();
     initCourseFilters();
     applyProgressLocks();
