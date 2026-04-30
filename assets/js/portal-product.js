@@ -2,6 +2,7 @@
   const WEBHOOK_KEY = 'make_webhook_url_v1';
   const NOTION_TARGET_KEY = 'notion_goal_target_v1';
   const COURSE_META_KEY = 'course_resource_meta_v1';
+  const LOCK_KEY = 'portal_resource_lock_v1';
   const CANONICAL_RESOURCE_KEYS = {
     link:'courses_links_v1',
     thumb:'courses_thumbs_v1',
@@ -193,6 +194,72 @@
     localStorage.setItem(name, JSON.stringify(value));
   }
 
+  function isLocked(){
+    return localStorage.getItem(LOCK_KEY) !== 'unlocked';
+  }
+
+  function setLocked(locked){
+    localStorage.setItem(LOCK_KEY, locked ? 'locked' : 'unlocked');
+    applyLockMode();
+  }
+
+  function lockStatusText(){
+    return isLocked() ? 'Locked: study mode' : 'Unlocked: edit mode';
+  }
+
+  function showLockNotice(){
+    const existing = document.getElementById('portalLockToast');
+    if(existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.id = 'portalLockToast';
+    toast.className = 'portal-lock-toast';
+    toast.textContent = 'Locked mode is on. Tap Unlock to edit links, thumbnails, or course status.';
+    document.body.appendChild(toast);
+    setTimeout(function(){ toast.classList.add('show'); }, 10);
+    setTimeout(function(){
+      toast.classList.remove('show');
+      setTimeout(function(){ toast.remove(); }, 220);
+    }, 2600);
+  }
+
+  function ensureLockToggle(){
+    if(document.getElementById('portalLockToggle')) return;
+    const btn = document.createElement('button');
+    btn.id = 'portalLockToggle';
+    btn.type = 'button';
+    btn.className = 'portal-lock-toggle';
+    btn.addEventListener('click', function(){
+      if(isLocked()){
+        const ok = window.confirm('Unlock edit mode? You will be able to change links, thumbnails, reader URLs, and course status.');
+        if(!ok) return;
+        setLocked(false);
+      }else{
+        setLocked(true);
+      }
+    });
+    const headerActions = document.querySelector('.hdr-right');
+    if(headerActions){
+      btn.classList.add('in-header');
+      headerActions.prepend(btn);
+    }else{
+      btn.classList.add('floating');
+      document.body.appendChild(btn);
+    }
+  }
+
+  function applyLockMode(){
+    const locked = isLocked();
+    document.body.classList.toggle('portal-locked', locked);
+    document.body.classList.toggle('portal-unlocked', !locked);
+    document.querySelectorAll('#portalLockToggle').forEach(function(btn){
+      btn.textContent = locked ? '🔒 Locked' : '🔓 Unlocked';
+      btn.setAttribute('aria-pressed', locked ? 'true' : 'false');
+      btn.title = locked ? 'Study mode: editing is disabled' : 'Edit mode: resource maintenance is enabled';
+    });
+    const overlay = document.getElementById('portalResourceEditor');
+    if(locked && overlay) closeResourceEditor();
+  }
+
   function resourceKeys(){
     return {
       link:document.body.dataset.linkKey || 'courses_links_v1',
@@ -302,6 +369,10 @@
       card.addEventListener('contextmenu', function(e){
         e.preventDefault();
         e.stopImmediatePropagation();
+        if(isLocked()){
+          showLockNotice();
+          return;
+        }
         openResourceEditor(card);
       }, true);
       const actions = document.createElement('div');
@@ -323,10 +394,18 @@
           else alert('No link set yet.');
         }
         if(action === 'edit'){
+          if(isLocked()){
+            showLockNotice();
+            return;
+          }
           const val = prompt('Paste resource link for:\n' + title, link || 'https://');
           if(val) setResourceValue(card, keys.link, val.trim());
         }
         if(action === 'quick-edit'){
+          if(isLocked()){
+            showLockNotice();
+            return;
+          }
           openResourceEditor(card);
         }
         if(action === 'reader'){
@@ -335,6 +414,10 @@
           else alert('Set a direct PDF/EPUB URL or normal link first.');
         }
         if(action === 'cover'){
+          if(isLocked()){
+            showLockNotice();
+            return;
+          }
           const current = getResourceThumb(card);
           const val = prompt('Paste thumbnail image URL for:\n' + title, current || 'https://');
           if(val) setResourceValue(card, keys.thumb, val.trim());
@@ -360,7 +443,14 @@
       const card = overlay._resourceCard;
       const action = btn.dataset.editorAction;
       if(action === 'close') closeResourceEditor();
-      if(action === 'save' && card) saveResourceEditor(card);
+      if(action === 'save' && card){
+        if(isLocked()){
+          showLockNotice();
+          closeResourceEditor();
+          return;
+        }
+        saveResourceEditor(card);
+      }
       if(action === 'open' && card){
         const link = document.getElementById('portalEditorUrl').value.trim() || getResourceLink(card);
         if(link) window.open(link, '_blank', 'noopener,noreferrer');
@@ -371,6 +461,11 @@
         if(reader) window.open('reader.html?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(reader), '_blank', 'noopener,noreferrer');
       }
       if(action === 'clear-thumb' && card){
+        if(isLocked()){
+          showLockNotice();
+          closeResourceEditor();
+          return;
+        }
         clearResourceValue(card, resourceKeys().thumb);
         document.getElementById('portalEditorThumbUrl').value = '';
         paintEditorThumb('');
@@ -395,6 +490,10 @@
   }
 
   function openResourceEditor(card){
+    if(isLocked()){
+      showLockNotice();
+      return;
+    }
     const overlay = ensureResourceEditor();
     const title = resourceTitle(card);
     const meta = getCourseMeta()[keyFor(card)] || {};
@@ -420,6 +519,10 @@
   }
 
   function saveResourceEditor(card){
+    if(isLocked()){
+      showLockNotice();
+      return;
+    }
     const keys = resourceKeys();
     const url = document.getElementById('portalEditorUrl').value.trim();
     const reader = document.getElementById('portalEditorReaderUrl').value.trim();
