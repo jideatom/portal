@@ -376,6 +376,13 @@
     alert('Course locked. Finish this first:\n\n' + needed);
   }
 
+  function openReaderPage(title, url){
+    const target = 'reader.html?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(url);
+    const mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '');
+    if(mobile) location.href = target;
+    else window.open(target, '_blank', 'noopener,noreferrer');
+  }
+
   function setProgressStatus(card, status){
     updateCourseMeta(card, {status:status});
     card.dataset.filterStatus = status;
@@ -602,8 +609,8 @@
             return;
           }
           const finalUrl = getResourceAppLink(card) || link;
-          if(finalUrl) window.open('reader.html?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(finalUrl), '_blank', 'noopener,noreferrer');
-          else alert('Set a direct PDF/EPUB URL or normal link first.');
+          if(finalUrl) openReaderPage(title, finalUrl);
+          else alert('Set a Google Drive share link, direct PDF/EPUB URL, or normal link first.');
         }
         if(action === 'cover'){
           if(isLocked()){
@@ -626,7 +633,7 @@
     overlay = document.createElement('div');
     overlay.id = 'portalResourceEditor';
     overlay.className = 'portal-editor-overlay';
-    overlay.innerHTML = '<div class="portal-editor"><div class="portal-editor-head"><div><strong id="portalEditorTitle">Edit resource</strong><span id="portalEditorSub">URL, reader link, and thumbnail</span></div><button type="button" data-editor-action="close">Close</button></div><div class="portal-editor-preview"><div class="portal-editor-thumb" id="portalEditorThumb">📘</div><div><div class="portal-editor-name" id="portalEditorName"></div><div class="portal-editor-note">Paste direct image URLs for covers. Paste PDF/EPUB URLs into Reader URL.</div></div></div><div class="portal-editor-grid"><label>Resource URL<input id="portalEditorUrl" type="url" placeholder="https://..."></label><label>Reader URL<input id="portalEditorReaderUrl" type="url" placeholder="Direct PDF/EPUB URL"></label><label>Thumbnail URL<input id="portalEditorThumbUrl" type="url" placeholder="https://...jpg"></label><label data-editor-course-meta>Status<select id="portalEditorStatus"><option>Not started</option><option>Active</option><option>Done</option><option>Later</option></select></label><label data-editor-course-meta>Priority<select id="portalEditorPriority"><option>Primary</option><option>Companion</option><option>Reference</option></select></label></div><div class="portal-editor-actions"><button type="button" class="primary" data-editor-action="save">Save</button><button type="button" data-editor-action="open">Open URL</button><button type="button" data-editor-action="reader">Open Reader</button><button type="button" data-editor-action="clear-thumb">Clear Thumbnail</button></div><div class="portal-editor-status" id="portalEditorStatusText"></div></div>';
+    overlay.innerHTML = '<div class="portal-editor"><div class="portal-editor-head"><div><strong id="portalEditorTitle">Edit resource</strong><span id="portalEditorSub">URL, reader link, and thumbnail</span></div><button type="button" data-editor-action="close">Close</button></div><div class="portal-editor-preview"><div class="portal-editor-thumb" id="portalEditorThumb">📘</div><div><div class="portal-editor-name" id="portalEditorName"></div><div class="portal-editor-note">Reader URL can be a Google Drive share link or a direct PDF/EPUB link. Drive files hand off to your device reader.</div></div></div><div class="portal-editor-grid"><label>Resource URL<input id="portalEditorUrl" type="url" placeholder="https://..."></label><label>Reader URL<input id="portalEditorReaderUrl" type="url" placeholder="Google Drive share link or direct PDF/EPUB URL"></label><label>Thumbnail URL<input id="portalEditorThumbUrl" type="url" placeholder="https://...jpg"></label><label data-editor-course-meta>Status<select id="portalEditorStatus"><option>Not started</option><option>Active</option><option>Done</option><option>Later</option></select></label><label data-editor-course-meta>Priority<select id="portalEditorPriority"><option>Primary</option><option>Companion</option><option>Reference</option></select></label></div><div class="portal-editor-actions"><button type="button" class="primary" data-editor-action="save">Save</button><button type="button" data-editor-action="open">Open URL</button><button type="button" data-editor-action="reader">Open Reader</button><button type="button" data-editor-action="clear-thumb">Clear Thumbnail</button></div><div class="portal-editor-status" id="portalEditorStatusText"></div></div>';
     document.body.appendChild(overlay);
     overlay.addEventListener('click', function(e){
       if(e.target === overlay) closeResourceEditor();
@@ -658,7 +665,7 @@
         }
         const title = resourceTitle(card);
         const reader = document.getElementById('portalEditorReaderUrl').value.trim() || document.getElementById('portalEditorUrl').value.trim();
-        if(reader) window.open('reader.html?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(reader), '_blank', 'noopener,noreferrer');
+        if(reader) openReaderPage(title, reader);
       }
       if(action === 'clear-thumb' && card){
         if(isLocked()){
