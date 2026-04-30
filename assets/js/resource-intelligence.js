@@ -24,7 +24,7 @@
   }
 
   function pageForTrack(track){
-    return ({python:'python.html', linux:'linux.html', cloud:'cloud.html', claude:'claude.html', ai:'ai.html'})[track] || 'index.html';
+    return ({python:'python.html', linux:'linux.html', cloud:'cloud.html', claude:'ai.html', ai:'ai.html'})[track] || 'index.html';
   }
 
   function getThumbMap(){ return getJSON(THUMB_KEY, {}); }
