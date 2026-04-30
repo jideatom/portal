@@ -431,14 +431,18 @@
     'datatalksclub-llm-zoomcamp':['Embeddings and search','Vector databases','RAG pipelines','Evaluation and monitoring','Capstone document intelligence project'],
     'hugging-face-ai-agents-course':['Agent fundamentals','Tools and actions','Framework-based agents','Multi-step reasoning','Final agent project'],
     'deeplearning-ai-langchain-for-llm-application-development':['Chains and prompts','Memory and retrieval','Document loaders','RAG application flow','LLM app integration'],
+    'academind-git-github-the-practical-guide':['Git mental model','Commits and history','Branches and merges','GitHub remotes','Pull request workflow'],
     'code-with-mosh-complete-python-mastery':['Python syntax refresh','Functions and modules','Classes and OOP','Files and exceptions','Practical scripts'],
+    'fastapi-beginner-course':['API routes','Path and query parameters','Pydantic models','Request and response validation','First working API'],
     'testdriven-io-test-driven-development-with-fastapi-and-docker':['FastAPI project setup','Postgres and models','Dockerized development','Pytest and TDD','CI/CD and deployment flow'],
     'arjancodes-next-level-python':['Clean function design','Data models and typing','Composition over complexity','Testing and maintainability','Refactoring habits'],
     'talkpython-modern-apis-with-fastapi':['API routing and schemas','Async endpoints','Database integration','Authentication basics','Production API polish'],
     'code-with-mosh-complete-sql-mastery':['Relational data model','Select, joins, and aggregation','Data modification','Indexes and performance basics','Reporting queries'],
     'orhanergun-python-for-network-engineers':['Python network automation setup','SSH and device access','Parsing command output','Config backup/change workflows','Network automation project'],
+    'master-python-network-automation-for-network-engineers':['Netmiko or SSH setup','Device inventory','Run show commands','Parse and save outputs','Backup or audit configs'],
     'bret-fisher-docker-mastery':['Container fundamentals','Images and Dockerfiles','Compose workflows','Volumes and networking','Production container habits'],
     'bret-fisher-kubernetes-and-cloud-native-courses':['Kubernetes core objects','Services and ingress','Config and secrets','Deployments and scaling','Cloud-native operations'],
+    'devops-directive-github-actions':['Workflow files','Triggers and jobs','Secrets and variables','Test automation','Deploy automation'],
     'techworldnana-gitlab-ci-cd':['Pipeline basics','Build and test stages','Variables and environments','Artifacts and deployments','Pipeline troubleshooting'],
     'adrian-cantrill-aws-solutions-architect-associate':['AWS account and IAM foundation','Compute and storage','VPC networking','Databases and integration','Architecture patterns'],
     'ud-aws-networking-deep-dive-vpc-essentials':['VPC fundamentals','Subnets and route tables','Internet and NAT gateways','Security groups and NACLs','Hybrid connectivity thinking'],
@@ -809,6 +813,7 @@
 
   function normalizeTrack(text){
     text = (text || '').toLowerCase();
+    if(text.indexOf('execution') >= 0 || text.indexOf('recommended order') >= 0) return 'Execution';
     if(text.indexOf('parked') >= 0 || text.indexOf('not now') >= 0 || text.indexOf('irrelevant') >= 0) return 'Parked';
     if(text.indexOf('ai') >= 0 || text.indexOf('claude') >= 0) return 'AI';
     if(text.indexOf('python') >= 0) return 'Python';
@@ -947,7 +952,7 @@
     const panel = document.createElement('section');
     panel.id = 'courseFilterPanel';
     panel.className = 'course-filter-panel';
-    panel.innerHTML = '<div class="course-filter-top"><strong>Filter resources</strong><span id="courseFilterCount">0 shown</span></div><div class="course-filter-grid"><label>Track<select data-course-filter="track"><option>All</option><option>AI</option><option>Python</option><option>Linux</option><option>DevOps</option><option>Cloud</option><option>Parked</option></select></label><label>Type<select data-course-filter="type"><option>All</option><option>Course</option><option>Book</option><option>Docs</option></select></label><label>Status<select data-course-filter="status"><option>All</option><option>Not started</option><option>Active</option><option>Done</option><option>Later</option></select></label><label>Priority<select data-course-filter="priority"><option>All</option><option>Primary</option><option>Companion</option><option>Reference</option></select></label><button type="button" id="courseFilterReset">Reset</button></div>';
+    panel.innerHTML = '<div class="course-filter-top"><strong>Filter resources</strong><span id="courseFilterCount">0 shown</span></div><div class="course-filter-grid"><label>Track<select data-course-filter="track"><option>All</option><option>Execution</option><option>AI</option><option>Python</option><option>Linux</option><option>DevOps</option><option>Cloud</option><option>Parked</option></select></label><label>Type<select data-course-filter="type"><option>All</option><option>Course</option><option>Book</option><option>Docs</option></select></label><label>Status<select data-course-filter="status"><option>All</option><option>Not started</option><option>Active</option><option>Done</option><option>Later</option></select></label><label>Priority<select data-course-filter="priority"><option>All</option><option>Primary</option><option>Companion</option><option>Reference</option></select></label><button type="button" id="courseFilterReset">Reset</button></div>';
     hero.insertAdjacentElement('afterend', panel);
     document.querySelectorAll('.stack-card').forEach(function(section){
       section.querySelectorAll('.stack-item').forEach(function(card, index){

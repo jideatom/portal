@@ -17,6 +17,9 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
 .focus-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
 .focus-card strong{display:block;font-size:15px;margin-bottom:5px}
 .focus-card span{display:block;color:var(--muted);font-size:13px;line-height:1.45;font-weight:600}
+.execution-card{border-color:rgba(124,58,237,.28);background:linear-gradient(180deg,#ffffff,#f8f7ff)}
+.execution-card .section-title h2{color:#312e81}
+.execution-note{margin:-2px 0 12px;color:#475569;font-size:13px;line-height:1.5;font-weight:700}
 .section-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:20px 2px 10px}
 .section-title h2{margin:0;font-size:22px}
 .section-title span{font-size:12px;color:var(--muted);text-transform:lowercase;letter-spacing:.06em;font-weight:800}
@@ -48,6 +51,23 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
 <article class="focus-card"><strong>Logistics Copilot</strong><span>CRUD, document intake, status dashboards, customer updates, and workflow automation.</span></article>
 <article class="focus-card"><strong>SoftTouch Intelligence</strong><span>Manual ingestion, grounded search, quote-support summaries, and repair knowledge retrieval.</span></article>
 <article class="focus-card"><strong>Malaria Ops Intelligence</strong><span>Non-clinical reporting workflow, spreadsheet quality checks, delivery bottlenecks, and management briefs.</span></article>
+</section>
+
+<section class="stack-card execution-card" data-track="Execution">
+<div class="section-title"><h2>Recommended Execution Order</h2><span>finish one to unlock next</span></div>
+<p class="execution-note">Because you are already strong in networking, this path fills the beginner gaps first: Linux, Git, Python, APIs, testing, automation, deployment, then LLM systems.</p>
+<div class="stack-row">
+<div class="stack-item" data-title="PIKUMA – Linux Command-Line & Bash" data-link="https://pikuma.com/courses/linux-unix-command-line-bash-shell" data-thumb="https://pikuma.com/favicon.ico" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>01 · PIKUMA – Linux Command-Line & Bash</strong><span>Start here. Build command-line confidence, file navigation, permissions, text processing, and Bash habits.</span></div></div>
+<div class="stack-item" data-title="Academind – Git & GitHub: The Practical Guide" data-link="https://pro.academind.com/courses/1155917" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>02 · Academind – Git & GitHub: The Practical Guide</strong><span>Learn version control before serious builds. Every project, deployment, and client fix depends on this.</span></div></div>
+<div class="stack-item" data-title="Code with Mosh – Complete Python Mastery" data-link="https://codewithmosh.com/p/python-programming-course-beginners" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>03 · Code with Mosh – Complete Python Mastery</strong><span>Beginner Python foundation: syntax, functions, modules, classes, files, errors, and practical scripts.</span></div></div>
+<div class="stack-item" data-title="ArjanCodes – Next-Level Python" data-link="https://www.arjancodes.com/courses" data-thumb="https://www.arjancodes.com/favicon.ico" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>04 · ArjanCodes – Next-Level Python</strong><span>Move from “it works” to clean, maintainable Python you can use in client projects.</span></div></div>
+<div class="stack-item" data-title="FastAPI Beginner Course" data-link="https://fastapi.tiangolo.com/tutorial/" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>05 · FastAPI Beginner Course</strong><span>Learn routes, request bodies, response models, validation, and API basics before Docker/TDD complexity.</span></div></div>
+<div class="stack-item" data-title="TestDriven.io – Test-Driven Development with FastAPI and Docker" data-link="https://testdriven.io/courses/tdd-fastapi/" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>06 · TestDriven.io – FastAPI + Docker + TDD</strong><span>Turn API basics into production habits: tests, Docker, database flow, CI, and deployment discipline.</span></div></div>
+<div class="stack-item" data-title="Master Python Network Automation for Network Engineers" data-link="https://www.udemy.com/course/master-python-network-automation-for-network-engineers/" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>07 · Master Python Network Automation for Network Engineers</strong><span>Now use your CCNP edge: SSH, parsing outputs, config backup, and practical network automation.</span></div></div>
+<div class="stack-item" data-title="Bret Fisher – Docker Mastery" data-link="https://www.bretfisher.com/docker-mastery/" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>08 · Bret Fisher – Docker Mastery</strong><span>Containerize your apps properly after Python and FastAPI are no longer mysterious.</span></div></div>
+<div class="stack-item" data-title="DevOps Directive – GitHub Actions" data-link="https://www.youtube.com/watch?v=Xwpi0ITkL3U" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>09 · DevOps Directive – GitHub Actions</strong><span>Automate test/build/deploy flow so your repos start behaving like real delivery systems.</span></div></div>
+<div class="stack-item" data-title="DataTalksClub – LLM Zoomcamp" data-link="https://datatalks.club/courses/llm-zoomcamp/" data-type="Course" data-priority="Primary"><div class="thumb">📘</div><div class="body"><strong>10 · DataTalksClub – LLM Zoomcamp</strong><span>Bring in AI engineering last: RAG, vector search, evals, monitoring, and a real LLM project.</span></div></div>
+</div>
 </section>
 
 <section class="stack-card" data-track="AI"><div class="section-title"><h2>AI Ops + Agent Engineering</h2><span>primary money lane</span></div><div class="stack-row">
