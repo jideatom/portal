@@ -2,6 +2,21 @@
   const WEBHOOK_KEY = 'make_webhook_url_v1';
   const NOTION_TARGET_KEY = 'notion_goal_target_v1';
   const COURSE_META_KEY = 'course_resource_meta_v1';
+  const CANONICAL_RESOURCE_KEYS = {
+    link:'courses_links_v1',
+    thumb:'courses_thumbs_v1',
+    app:'courses_app_links_v1'
+  };
+  const RESOURCE_ALIAS_KEYS = {
+    'ud-mastering-claude-ai-build-ai-apps-agents-mcp-systems':['ud-mastering-claude-ai'],
+    'mastering-claude-ai':['ud-mastering-claude-ai'],
+    'ud-ai-engineer-core-track-llm-engineering-rag-qlora-agents':['ud-ai-engineer-core-track'],
+    'adrian-cantrill-aws-solutions-architect-associate-saa-c03':['adrian-cantrill-aws-solutions-architect-associate'],
+    'ud-aws-networking-deep-dive-crash-course-vpc-essentials':['ud-aws-networking-deep-dive-vpc-essentials'],
+    'pikuma-master-the-linux-command-line-bash-scripting':['pikuma-linux-command-line-bash'],
+    'cbtnuggets-red-hat-certified-system-administrator-rhcsa-exam-ex200':['cbtnuggets-rhcsa-ex200'],
+    'techworldnana-gitlab-ci-cd-from-zero-to-hero':['techworldnana-gitlab-ci-cd']
+  };
   const BACKUP_PREFIX = 'portal-backup-';
 
   function esc(s){
@@ -97,7 +112,8 @@
       notion_target:localStorage.getItem(NOTION_TARGET_KEY) || '',
       sent_at:new Date().toISOString(),
       page:location.pathname.split('/').pop() || 'index.html',
-      payload:payload || {}
+      payload:payload || {},
+      ...(payload || {})
     };
     try{
       const res = await fetch(url, {
@@ -113,6 +129,10 @@
       form.set('destination', body.destination);
       form.set('notion_target', body.notion_target);
       form.set('sent_at', body.sent_at);
+      Object.keys(payload || {}).forEach(function(key){
+        const value = payload[key];
+        form.set(key, typeof value === 'object' ? JSON.stringify(value) : String(value ?? ''));
+      });
       form.set('payload_json', JSON.stringify(body.payload || {}));
       form.set('body_json', JSON.stringify(body));
       await fetch(url, {
@@ -135,6 +155,36 @@
     return (resourceTitle(card) || 'resource').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,90);
   }
 
+  function resourceKeyList(card){
+    const key = keyFor(card);
+    const aliases = RESOURCE_ALIAS_KEYS[key] || [];
+    const reverseAliases = Object.keys(RESOURCE_ALIAS_KEYS).filter(function(candidate){
+      return RESOURCE_ALIAS_KEYS[candidate].indexOf(key) >= 0;
+    });
+    return [key].concat(aliases, reverseAliases).filter(function(value, index, list){
+      return value && list.indexOf(value) === index;
+    });
+  }
+
+  function mapLookup(map, keys){
+    let found = '';
+    keys.some(function(key){
+      if(map[key]){
+        found = map[key];
+        return true;
+      }
+      const looseKey = Object.keys(map).find(function(candidate){
+        return candidate.length > 8 && key.length > 8 && (candidate.indexOf(key) >= 0 || key.indexOf(candidate) >= 0);
+      });
+      if(looseKey && map[looseKey]){
+        found = map[looseKey];
+        return true;
+      }
+      return false;
+    });
+    return found;
+  }
+
   function getMap(name){
     return getJSON(name, {});
   }
@@ -151,37 +201,68 @@
     };
   }
 
+  function resourceMapType(mapKey){
+    if(/_app_links_v1$/.test(mapKey)) return 'app';
+    if(/_thumbs_v1$/.test(mapKey)) return 'thumb';
+    if(/_links_v1$/.test(mapKey)) return 'link';
+    return '';
+  }
+
   function getResourceLink(card){
     const keys = resourceKeys();
-    return getMap(keys.link)[keyFor(card)] || card.dataset.link || '';
+    const resourceKeysToTry = resourceKeyList(card);
+    return mapLookup(getMap(CANONICAL_RESOURCE_KEYS.link), resourceKeysToTry) ||
+      mapLookup(getMap(keys.link), resourceKeysToTry) ||
+      card.dataset.link || '';
   }
 
   function getResourceThumb(card){
     const keys = resourceKeys();
-    return getMap(keys.thumb)[keyFor(card)] || card.dataset.thumb || '';
+    const resourceKeysToTry = resourceKeyList(card);
+    return mapLookup(getMap(CANONICAL_RESOURCE_KEYS.thumb), resourceKeysToTry) ||
+      mapLookup(getMap(keys.thumb), resourceKeysToTry) ||
+      card.dataset.thumb || '';
   }
 
   function getResourceAppLink(card){
     const keys = resourceKeys();
-    return getMap(keys.app)[keyFor(card)] || card.dataset.app || '';
+    const resourceKeysToTry = resourceKeyList(card);
+    return mapLookup(getMap(CANONICAL_RESOURCE_KEYS.app), resourceKeysToTry) ||
+      mapLookup(getMap(keys.app), resourceKeysToTry) ||
+      card.dataset.app || '';
   }
 
   function setResourceValue(card, mapKey, value){
+    const keys = resourceKeyList(card);
     const map = getMap(mapKey);
-    map[keyFor(card)] = value;
+    keys.forEach(function(key){ map[key] = value; });
     setMap(mapKey, map);
+    const type = resourceMapType(mapKey);
+    Object.keys(CANONICAL_RESOURCE_KEYS).filter(function(name){ return name === type; }).forEach(function(name){
+      const canonicalKey = CANONICAL_RESOURCE_KEYS[name];
+      const canonicalMap = getMap(canonicalKey);
+      keys.forEach(function(key){ canonicalMap[key] = value; });
+      setMap(canonicalKey, canonicalMap);
+    });
   }
 
   function clearResourceValue(card, mapKey){
+    const keys = resourceKeyList(card);
     const map = getMap(mapKey);
-    delete map[keyFor(card)];
+    keys.forEach(function(key){ delete map[key]; });
     setMap(mapKey, map);
+    const type = resourceMapType(mapKey);
+    Object.keys(CANONICAL_RESOURCE_KEYS).filter(function(name){ return name === type; }).forEach(function(name){
+      const canonicalKey = CANONICAL_RESOURCE_KEYS[name];
+      const canonicalMap = getMap(canonicalKey);
+      keys.forEach(function(key){ delete canonicalMap[key]; });
+      setMap(canonicalKey, canonicalMap);
+    });
   }
 
   function renderResourceChrome(card){
-    const keys = resourceKeys();
     const thumb = card.querySelector('.thumb');
-    const img = getMap(keys.thumb)[keyFor(card)] || card.dataset.thumb || '';
+    const img = getResourceThumb(card);
     if(thumb){
       thumb.classList.toggle('has-image', !!img);
       thumb.style.backgroundImage = img ? 'url("' + img + '")' : '';
@@ -207,6 +288,22 @@
       if(card.dataset.visibleActionsReady === '1') return;
       card.dataset.visibleActionsReady = '1';
       renderResourceChrome(card);
+      card.querySelectorAll('.mini-hint').forEach(function(hint){
+        hint.textContent = 'Use Edit to manage URL, reader link, and thumbnail.';
+      });
+      card.addEventListener('click', function(e){
+        if(e.defaultPrevented || e.target.closest('button,input,select,textarea,a,.portal-resource-actions,.course-meta-controls')) return;
+        const link = getResourceLink(card);
+        if(!link) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        window.open(link, '_blank', 'noopener,noreferrer');
+      }, true);
+      card.addEventListener('contextmenu', function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        openResourceEditor(card);
+      }, true);
       const actions = document.createElement('div');
       actions.className = 'portal-resource-actions';
       actions.innerHTML = '<button type="button" data-portal-action="open">Open</button><button type="button" data-portal-action="quick-edit">Edit</button><button type="button" data-portal-action="reader">Reader</button>';
@@ -233,13 +330,12 @@
           openResourceEditor(card);
         }
         if(action === 'reader'){
-          const appMap = getMap(keys.app);
-          const finalUrl = appMap[keyFor(card)] || link;
+          const finalUrl = getResourceAppLink(card) || link;
           if(finalUrl) window.open('reader.html?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(finalUrl), '_blank', 'noopener,noreferrer');
           else alert('Set a direct PDF/EPUB URL or normal link first.');
         }
         if(action === 'cover'){
-          const current = getMap(keys.thumb)[keyFor(card)] || card.dataset.thumb || '';
+          const current = getResourceThumb(card);
           const val = prompt('Paste thumbnail image URL for:\n' + title, current || 'https://');
           if(val) setResourceValue(card, keys.thumb, val.trim());
           if(val === '') clearResourceValue(card, keys.thumb);

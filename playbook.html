@@ -460,12 +460,14 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
       return;
     }
 
+    const flatPayload = payload && payload.payload ? payload.payload : {};
     const body = {
       source: 'jideatom-portal',
       destination: 'notion',
       notion_target: getNotionTarget(),
       sent_at: new Date().toISOString(),
-      ...payload
+      ...payload,
+      ...flatPayload
     };
 
     try {
@@ -485,6 +487,10 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
         form.set('destination', body.destination);
         form.set('notion_target', body.notion_target);
         form.set('sent_at', body.sent_at);
+        Object.keys(flatPayload).forEach(function (key) {
+          const value = flatPayload[key];
+          form.set(key, typeof value === 'object' ? JSON.stringify(value) : String(value ?? ''));
+        });
         form.set('payload_json', JSON.stringify(body.payload || {}));
         form.set('body_json', JSON.stringify(body));
         await fetch(makeWebhookUrl, {
@@ -492,7 +498,7 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
           mode: 'no-cors',
           body: form
         });
-        setSyncStatus('Sent to Make. If Make is on Run once, it should capture this request.');
+        setSyncStatus('Sent to Make with flat fields. Check the Webhooks module output, then map title/status/deadline into Notion.');
       } catch (fallbackErr) {
         setSyncStatus(fallbackErr.message || err.message || 'Make sync failed');
         console.error('Make sync failed', fallbackErr);

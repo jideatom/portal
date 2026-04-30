@@ -21,10 +21,6 @@
 .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:min(860px,calc(100% - 24px));background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:10px;display:grid;grid-template-columns:repeat(8,1fr);gap:8px;z-index:1000}
 .bottom-nav a{text-decoration:none;color:var(--muted);font-size:12px;font-weight:800;text-align:center;padding:10px 6px;border-radius:14px}
 .bottom-nav a.active{background:linear-gradient(135deg,var(--accent),#60a5fa);color:#fff}
-.ctx-menu{position:fixed;z-index:9999;min-width:210px;background:#0f172a;color:#fff;border:1px solid rgba(255,255,255,.1);border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,.25);padding:6px;display:none}
-.ctx-menu.open{display:block}
-.ctx-menu button{display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer}
-.ctx-menu button:hover{background:rgba(255,255,255,.08)}
 @media (max-width:900px){.stack-row{grid-template-columns:1fr} .bottom-nav{grid-template-columns:repeat(4,1fr);row-gap:8px}}
 </style>
 </head>
@@ -90,112 +86,5 @@
 <a href="index.html">Home</a><a href="linux.html">Linux</a><a href="python.html">Python</a><a href="ai.html">AI</a><a href="devops.html">DevOps</a><a href="cloud.html">Cloud</a><a href="courses.html" class="active">Courses</a><a href="playbook.html">Playbook</a>
 </nav>
 
-<div id="ctxMenu" class="ctx-menu">
-<button data-action="open">Open link</button>
-<button data-action="edit">Edit link</button>
-<button data-action="open-app">Open in app</button>
-<button data-action="set-app-link">Edit app link</button>
-<button data-action="thumb-url">Set thumbnail URL</button>
-<button data-action="clear-thumb">Clear thumbnail</button>
-</div>
-
-<script>
-const LINK_KEY = document.body.dataset.linkKey;
-const THUMB_KEY = document.body.dataset.thumbKey;
-const APP_KEY = document.body.dataset.appKey;
-const menu = document.getElementById('ctxMenu');
-let currentResource = null;
-
-function slug(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,90)}
-function keyFor(el){return slug(el.dataset.title || el.querySelector('strong').innerText.trim())}
-function getMap(name){try{return JSON.parse(localStorage.getItem(name)||'{}')}catch(e){return {}}}
-function setMap(name, value){localStorage.setItem(name, JSON.stringify(value))}
-
-function getLink(el){return getMap(LINK_KEY)[keyFor(el)] || el.dataset.link || ''}
-function setLink(el, url){const m=getMap(LINK_KEY);m[keyFor(el)]=url;setMap(LINK_KEY,m);renderResource(el)}
-function getThumb(el){return getMap(THUMB_KEY)[keyFor(el)] || el.dataset.thumb || ''}
-function setThumb(el, url){const m=getMap(THUMB_KEY);m[keyFor(el)]=url;setMap(THUMB_KEY,m);renderResource(el)}
-function clearThumb(el){const m=getMap(THUMB_KEY);delete m[keyFor(el)];setMap(THUMB_KEY,m);renderResource(el)}
-function getAppLink(el){return getMap(APP_KEY)[keyFor(el)] || el.dataset.app || ''}
-function setAppLink(el, url){const m=getMap(APP_KEY);m[keyFor(el)]=url;setMap(APP_KEY,m)}
-
-function renderResource(el){
-const thumb = el.querySelector('.thumb');
-if(!thumb) return;
-const href = getLink(el);
-const img = getThumb(el);
-thumb.classList.toggle('has-image', !!img);
-thumb.style.backgroundImage = img ? 'url("' + img + '")' : '';
-thumb.textContent = img ? '' : '📘';
-let badge = el.querySelector('.badge-link');
-if (href) {
-if (!badge) {
-badge = document.createElement('div');
-badge.className='badge-link';
-badge.textContent='linked';
-el.appendChild(badge);
-}
-} else if (badge) {
-badge.remove();
-}
-}
-
-function openMenu(x,y,el){
-currentResource=el;
-menu.style.left=x+'px';
-menu.style.top=y+'px';
-menu.classList.add('open');
-}
-
-function closeMenu(){
-menu.classList.remove('open');
-currentResource=null;
-}
-
-document.querySelectorAll('.stack-item').forEach(el=>{
-renderResource(el);
-el.addEventListener('click', ()=>{
-const href = getLink(el);
-if (href) window.open(href,'_blank','noopener,noreferrer');
-});
-el.addEventListener('contextmenu', e=>{
-e.preventDefault();
-openMenu(e.clientX, e.clientY, el);
-});
-});
-
-document.addEventListener('click', e=>{ if(!menu.contains(e.target)) closeMenu(); });
-menu.addEventListener('click', e=>{
-const btn = e.target.closest('button[data-action]');
-if(!btn || !currentResource) return;
-const action = btn.dataset.action;
-if(action==='open'){
-const href=getLink(currentResource);
-if(href) window.open(href,'_blank','noopener,noreferrer');
-} else if(action==='edit'){
-const val = prompt('Paste link for:\n' + (currentResource.dataset.title || ''), getLink(currentResource)||'https://');
-if(val) setLink(currentResource, val.trim());
-} else if(action==='open-app'){
-const appLink=getAppLink(currentResource);
-const normalLink=getLink(currentResource);
-const finalUrl = appLink || normalLink;
-if(finalUrl){
-const readerUrl='reader.html?title='+encodeURIComponent(currentResource.dataset.title)+'&url='+encodeURIComponent(finalUrl);
-window.open(readerUrl,'_blank','noopener,noreferrer');
-}
-} else if(action==='set-app-link'){
-const val = prompt('Paste direct PDF/EPUB URL for:\n' + (currentResource.dataset.title || ''), getAppLink(currentResource)||'https://');
-if(val) setAppLink(currentResource, val.trim());
-} else if(action==='thumb-url'){
-const val = prompt('Paste image URL for:\n' + (currentResource.dataset.title || ''), getThumb(currentResource)||'https://');
-if(val) setThumb(currentResource, val.trim());
-} else if(action==='clear-thumb'){
-clearThumb(currentResource);
-}
-closeMenu();
-});
-window.addEventListener('scroll', closeMenu, true);
-window.addEventListener('resize', closeMenu);
-</script>
 <script src="assets/js/portal-product.js"></script>
 </body></html>
