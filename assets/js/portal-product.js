@@ -327,6 +327,102 @@
     });
   }
 
+  function isProgressResource(card){
+    if(!card || card.classList.contains('book')) return false;
+    if(card.dataset.status === 'Later') return false;
+    if(card.dataset.priority === 'Reference') return false;
+    const section = card.closest('.stack-card');
+    if(section && section.dataset.track === 'Parked') return false;
+    return card.matches('.course,.stack-item');
+  }
+
+  function progressStatus(card){
+    const meta = getCourseMeta()[keyFor(card)] || {};
+    return card.dataset.filterStatus || meta.status || card.dataset.status || 'Not started';
+  }
+
+  function isProgressDone(card){
+    return progressStatus(card) === 'Done';
+  }
+
+  function progressGroups(){
+    const groups = [];
+    document.querySelectorAll('.path-grid,.stack-row').forEach(function(container){
+      const cards = Array.from(container.querySelectorAll('.course,.stack-item')).filter(isProgressResource);
+      if(cards.length) groups.push(cards);
+    });
+    return groups;
+  }
+
+  function isProgressLocked(card){
+    if(!isProgressResource(card)) return false;
+    let locked = false;
+    progressGroups().some(function(group){
+      const index = group.indexOf(card);
+      if(index < 0) return false;
+      locked = index > 0 && !isProgressDone(group[index - 1]);
+      return true;
+    });
+    return locked;
+  }
+
+  function showProgressNotice(card){
+    const previous = progressGroups().reduce(function(found, group){
+      const index = group.indexOf(card);
+      return index > 0 ? group[index - 1] : found;
+    }, null);
+    const needed = previous ? resourceTitle(previous) : 'the previous course';
+    alert('Course locked. Finish this first:\n\n' + needed);
+  }
+
+  function setProgressStatus(card, status){
+    updateCourseMeta(card, {status:status});
+    card.dataset.filterStatus = status;
+    const statusSelect = card.querySelector('[data-course-meta="status"]');
+    if(statusSelect) statusSelect.value = status;
+    applyProgressLocks();
+    if(location.pathname.endsWith('courses.html')) applyCourseFilters();
+  }
+
+  function toggleProgressDone(card){
+    if(isProgressLocked(card)){
+      showProgressNotice(card);
+      return;
+    }
+    if(isProgressDone(card)){
+      if(isLocked()){
+        alert('Already marked done. Unlock edit mode if you need to undo progress.');
+        return;
+      }
+      const ok = window.confirm('Mark this course incomplete?');
+      if(!ok) return;
+      setProgressStatus(card, 'Not started');
+      return;
+    }
+    setProgressStatus(card, 'Done');
+  }
+
+  function applyProgressLocks(){
+    progressGroups().forEach(function(group){
+      group.forEach(function(card, index){
+        const locked = index > 0 && !isProgressDone(group[index - 1]);
+        const done = isProgressDone(card);
+        card.classList.toggle('portal-progress-locked', locked);
+        card.classList.toggle('portal-progress-done', done);
+        card.setAttribute('aria-disabled', locked ? 'true' : 'false');
+        let badge = card.querySelector('.portal-progress-badge');
+        if(!badge){
+          badge = document.createElement('div');
+          badge.className = 'portal-progress-badge';
+          card.appendChild(badge);
+        }
+        badge.textContent = done ? 'done' : locked ? 'locked' : 'unlocked';
+        const doneBtn = card.querySelector('[data-portal-action="mark-done"]');
+        if(doneBtn) doneBtn.textContent = done ? 'Done ✓' : locked ? 'Locked' : 'Mark done';
+      });
+    });
+  }
+
   function renderResourceChrome(card){
     const thumb = card.querySelector('.thumb');
     const img = getResourceThumb(card);
@@ -360,6 +456,12 @@
       });
       card.addEventListener('click', function(e){
         if(e.defaultPrevented || e.target.closest('button,input,select,textarea,a,.portal-resource-actions,.course-meta-controls')) return;
+        if(isProgressLocked(card)){
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          showProgressNotice(card);
+          return;
+        }
         const link = getResourceLink(card);
         if(!link) return;
         e.preventDefault();
@@ -377,7 +479,7 @@
       }, true);
       const actions = document.createElement('div');
       actions.className = 'portal-resource-actions';
-      actions.innerHTML = '<button type="button" data-portal-action="open">Open</button><button type="button" data-portal-action="quick-edit">Edit</button><button type="button" data-portal-action="reader">Reader</button>';
+      actions.innerHTML = '<button type="button" data-portal-action="mark-done">Mark done</button><button type="button" data-portal-action="open">Open</button><button type="button" data-portal-action="quick-edit">Edit</button><button type="button" data-portal-action="reader">Reader</button>';
       const body = card.querySelector('.resource-body') || card.querySelector('.body') || card;
       body.appendChild(actions);
       actions.addEventListener('click', function(e){
@@ -389,7 +491,15 @@
         const title = resourceTitle(card);
         const action = btn.dataset.portalAction;
         const link = getResourceLink(card);
+        if(action === 'mark-done'){
+          toggleProgressDone(card);
+          return;
+        }
         if(action === 'open'){
+          if(isProgressLocked(card)){
+            showProgressNotice(card);
+            return;
+          }
           if(link) window.open(link, '_blank', 'noopener,noreferrer');
           else alert('No link set yet.');
         }
@@ -409,6 +519,10 @@
           openResourceEditor(card);
         }
         if(action === 'reader'){
+          if(isProgressLocked(card)){
+            showProgressNotice(card);
+            return;
+          }
           const finalUrl = getResourceAppLink(card) || link;
           if(finalUrl) window.open('reader.html?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(finalUrl), '_blank', 'noopener,noreferrer');
           else alert('Set a direct PDF/EPUB URL or normal link first.');
@@ -452,10 +566,18 @@
         saveResourceEditor(card);
       }
       if(action === 'open' && card){
+        if(isProgressLocked(card)){
+          showProgressNotice(card);
+          return;
+        }
         const link = document.getElementById('portalEditorUrl').value.trim() || getResourceLink(card);
         if(link) window.open(link, '_blank', 'noopener,noreferrer');
       }
       if(action === 'reader' && card){
+        if(isProgressLocked(card)){
+          showProgressNotice(card);
+          return;
+        }
         const title = resourceTitle(card);
         const reader = document.getElementById('portalEditorReaderUrl').value.trim() || document.getElementById('portalEditorUrl').value.trim();
         if(reader) window.open('reader.html?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(reader), '_blank', 'noopener,noreferrer');
@@ -690,6 +812,12 @@
     controls.querySelector('[data-course-meta="priority"]').value = card.dataset.filterPriority;
     controls.addEventListener('click', function(e){ e.stopPropagation(); });
     controls.addEventListener('change', function(e){
+      if(isLocked()){
+        showLockNotice();
+        e.preventDefault();
+        applyCourseFilters();
+        return;
+      }
       const select = e.target.closest('select[data-course-meta]');
       if(!select) return;
       const patch = {};
@@ -702,6 +830,7 @@
         card.dataset.filterPriority = select.value;
       }
       updateCourseMeta(card, patch);
+      applyProgressLocks();
       applyCourseFilters();
     });
   }
@@ -765,6 +894,8 @@
     importPortalData:importPortalData,
     loadSettingsIntoForm:loadSettingsIntoForm,
     saveSettingsFromForm:saveSettingsFromForm,
+    isLocked:isLocked,
+    setLocked:setLocked,
     keys:{webhook:WEBHOOK_KEY, notionTarget:NOTION_TARGET_KEY}
   };
 
@@ -776,11 +907,23 @@
     document.head.appendChild(style);
   }
 
+  function addLockStyles(){
+    if(document.getElementById('portalLockStyles')) return;
+    const style = document.createElement('style');
+    style.id = 'portalLockStyles';
+    style.textContent = '.portal-lock-toggle{border:1px solid rgba(15,23,42,.12);background:#0f172a;color:#fff;border-radius:999px;padding:10px 13px;font-size:12px;font-weight:900;box-shadow:0 12px 30px rgba(15,23,42,.18);cursor:pointer;white-space:nowrap}.portal-lock-toggle.in-header{min-height:40px;box-shadow:none;background:linear-gradient(135deg,#0f172a,#312e81)}.portal-lock-toggle.floating{position:fixed;right:14px;top:14px;z-index:10001}.portal-unlocked .portal-lock-toggle{background:linear-gradient(135deg,#16a34a,#0f766e);color:#fff}.portal-locked .portal-resource-actions [data-portal-action="quick-edit"],.portal-locked .portal-resource-actions [data-portal-action="cover"],.portal-locked .course-meta-controls{display:none!important}.portal-locked .portal-resource-actions::after{content:"edit locked";display:inline-flex;align-items:center;border:1px solid rgba(15,23,42,.1);background:#f8fafc;color:#64748b;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900}.portal-locked .ctx-menu button[data-action="edit"],.portal-locked .ctx-menu button[data-action="set-app-link"],.portal-locked .ctx-menu button[data-action="thumb-url"],.portal-locked .ctx-menu button[data-action="clear-thumb"]{display:none}.portal-progress-locked{opacity:.58;filter:grayscale(.15)}.portal-progress-locked .thumb{background:linear-gradient(135deg,#e5e7eb,#cbd5e1)!important}.portal-progress-locked .portal-resource-actions [data-portal-action="open"],.portal-progress-locked .portal-resource-actions [data-portal-action="reader"]{opacity:.45}.portal-progress-done{outline:2px solid rgba(34,197,94,.22);outline-offset:2px}.portal-progress-badge{position:absolute;top:10px;left:10px;font-size:10px;font-weight:900;text-transform:uppercase;border:1px solid rgba(15,23,42,.1);border-radius:999px;background:#fff;color:#64748b;padding:4px 8px;z-index:2}.portal-progress-done .portal-progress-badge{background:#dcfce7;color:#166534;border-color:#bbf7d0}.portal-progress-locked .portal-progress-badge{background:#f1f5f9;color:#64748b}.portal-lock-toast{position:fixed;left:50%;top:72px;transform:translate(-50%,-8px);z-index:10002;max-width:min(520px,calc(100vw - 24px));background:#0f172a;color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px 14px;box-shadow:0 18px 50px rgba(2,6,23,.32);font-size:13px;font-weight:800;line-height:1.35;opacity:0;transition:opacity .18s ease,transform .18s ease}.portal-lock-toast.show{opacity:1;transform:translate(-50%,0)}@media(max-width:700px){.portal-lock-toggle.floating{top:auto;right:12px;bottom:92px}.portal-lock-toast{top:14px;font-size:12px}}';
+    document.head.appendChild(style);
+  }
+
   document.addEventListener('DOMContentLoaded', function(){
     addStyles();
+    addLockStyles();
+    ensureLockToggle();
+    applyLockMode();
     addSettingsNav();
     addResourceActions();
     initCourseFilters();
+    applyProgressLocks();
     initSettingsPage();
   });
 })();
