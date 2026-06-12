@@ -192,6 +192,20 @@ body.dark .play-tab{background:rgba(17,27,42,.82)}
 .ms-title{font-size:.82rem;font-weight:700;line-height:1.45}
 .ms-title.done{text-decoration:line-through;color:var(--text3)}
 .ms-date{font-size:.6rem;color:var(--text3);font-family:var(--mono);margin-top:3px}
+.ms-actions{display:flex;gap:6px;align-items:center}
+.ms-mini-btn{
+  border:1px solid var(--border2);
+  background:var(--bg3);
+  color:var(--text2);
+  border-radius:10px;
+  padding:7px 9px;
+  font-size:.58rem;
+  font-family:var(--mono);
+  font-weight:800;
+  text-transform:uppercase;
+  cursor:pointer
+}
+.ms-mini-btn.danger{color:var(--red)}
 .add-row{display:flex;gap:8px;margin-top:12px}
 .add-input,.add-date,textarea,input[type="date"],input[type="text"],input[type="number"],select{
   background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.25)), var(--bg3);
@@ -369,6 +383,15 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
 .status-red{background:rgba(207,91,107,.12);color:var(--red)}
 .small{font-size:.74rem;color:var(--text2);font-weight:600;line-height:1.55}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
+.notion-card{
+  background:linear-gradient(135deg,rgba(91,91,214,.1),rgba(76,125,136,.08));
+  border:1px solid var(--border2);
+  border-radius:18px;
+  padding:14px;
+  margin:14px 0
+}
+.sync-status{font-size:.72rem;color:var(--text2);font-weight:800;min-height:20px}
+.link-btn{text-decoration:none;display:inline-flex;align-items:center}
 .hidden{display:none}
 @media (max-width:700px){
   .add-row,.form-grid,.form-grid.two,.stats-grid,.tech-grid{grid-template-columns:1fr}
@@ -383,20 +406,22 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
   <section class="play-panel active" id="goalsPanel"><div class="sec-lbl">Monthly Milestones</div><div id="monthsHost"></div></section>
   <section class="play-panel" id="planPanel"><div class="card"><div class="sec-lbl">Execution Plan</div><p class="plan-help">Use this for your monthly focus, weekly commitments, exam targets, and notes.</p><textarea id="playbookPlan" placeholder="Write your execution plan here..."></textarea></div></section>
   <section class="play-panel" id="buildPanel"><div class="card"><div class="sec-lbl">Build Mode</div><p class="plan-help">These are your output projects.</p><div id="buildProjectsHost"></div></div></section>
-  <section class="play-panel" id="techGoalPanel"><div class="card"><div class="sec-lbl">Tech/Career OS</div><p class="plan-help">This section is your working cockpit for Tech/Career only. Health/Fitness stays separate by design.</p><div class="stats-grid"><div class="stat-card"><div class="stat-k">Current Week</div><div class="stat-v" id="tgWeek">1</div></div><div class="stat-card"><div class="stat-k">Deep Work</div><div class="stat-v" id="tgDeepWork">0h</div></div><div class="stat-card"><div class="stat-k">Features</div><div class="stat-v" id="tgFeatures">0</div></div><div class="stat-card"><div class="stat-k">Outreach</div><div class="stat-v" id="tgOutreach">0</div></div></div><div class="tech-grid"><div class="goal-box"><div class="sec-lbl">Current Goal</div><div class="stack"><input id="techGoalTitle" type="text" placeholder="Main tech goal"/><div class="form-grid two"><input id="techGoalDeadline" type="date"/><select id="techGoalStatus"><option>Not Started</option><option selected>In Progress</option><option>Done</option><option>Blocked</option></select></div><input id="techGoalProgress" type="number" min="0" max="100" placeholder="Progress %"/><textarea id="techGoalFocus" placeholder="Weekly focus"></textarea><textarea id="techGoalDeliverable" placeholder="Current build deliverable"></textarea><textarea id="techGoalProof" placeholder="Sales / proof target"></textarea><div class="actions"><button class="pri-btn" id="saveTechGoalBtn">Save Goal</button></div></div></div><div class="goal-box"><div class="sec-lbl">Goal Snapshot</div><div id="techGoalSnapshot"></div></div></div></div><div class="card" style="margin-top:12px"><div class="sec-lbl">Daily Entry</div><div class="form-grid"><input id="entryDate" type="date"/><input id="entryDeepWork" type="number" step="0.5" placeholder="Deep work hours"/><input id="entryPython" type="number" step="0.5" placeholder="Python hours"/></div><div class="form-grid"><input id="entryLinux" type="number" step="0.5" placeholder="Linux/API hours"/><input id="entryAIRAG" type="number" step="0.5" placeholder="AI/RAG hours"/><input id="entryN8N" type="number" step="0.5" placeholder="n8n hours"/></div><div class="form-grid"><input id="entryFastAPI" type="number" step="0.5" placeholder="FastAPI/Web App hours"/><input id="entrySales" type="number" step="0.5" placeholder="Sales/Portfolio hours"/><input id="entryOutreach" type="number" step="1" placeholder="Outreach count"/></div><div class="form-grid"><input id="entryFeatures" type="number" step="1" placeholder="Features shipped"/><input id="entryWin" type="text" placeholder="Main win"/><input id="entryBlocker" type="text" placeholder="Main blocker"/></div><textarea id="entryNotes" placeholder="Notes"></textarea><input id="editingEntryId" type="hidden"/><div class="actions"><button class="pri-btn" id="saveEntryBtn">Save Entry</button><button class="sec-btn hidden" id="cancelEditBtn">Cancel Edit</button></div></div><div class="card" style="margin-top:12px"><div class="sec-lbl">Recent Entries</div><div id="techEntriesHost" class="entry-list"></div></div></section>
+  <section class="play-panel" id="techGoalPanel"><div class="card"><div class="sec-lbl">Tech/Career OS</div><p class="plan-help">This section is your working cockpit for Tech/Career only. Health/Fitness stays separate by design.</p><div class="notion-card"><div class="sec-lbl">Notion Sync via Make</div><p class="plan-help">Save your Make webhook once, then Tech Goal updates and daily logs can flow into your Notion goals database.</p><div class="form-grid two"><input id="makeWebhookUrl" type="url" placeholder="Make webhook URL"/><input id="notionGoalTarget" type="text" placeholder="Notion target, e.g. Tech Goals"/></div><div class="actions"><button class="sec-btn" id="saveSyncSettingsBtn">Save Sync</button><button class="sec-btn" id="testSyncBtn">Send Test</button><button class="pri-btn" id="sendGoalToNotionBtn">Send Goal to Notion</button><a class="sec-btn link-btn" href="settings.html">Settings</a></div><div class="sync-status" id="syncStatus">Not connected yet.</div></div><div class="stats-grid"><div class="stat-card"><div class="stat-k">Current Week</div><div class="stat-v" id="tgWeek">1</div></div><div class="stat-card"><div class="stat-k">Deep Work</div><div class="stat-v" id="tgDeepWork">0h</div></div><div class="stat-card"><div class="stat-k">Features</div><div class="stat-v" id="tgFeatures">0</div></div><div class="stat-card"><div class="stat-k">Outreach</div><div class="stat-v" id="tgOutreach">0</div></div></div><div class="tech-grid"><div class="goal-box"><div class="sec-lbl">Current Goal</div><div class="stack"><input id="techGoalTitle" type="text" placeholder="Main tech goal"/><div class="form-grid two"><input id="techGoalDeadline" type="date"/><select id="techGoalStatus"><option>Not Started</option><option selected>In Progress</option><option>Done</option><option>Blocked</option></select></div><input id="techGoalProgress" type="number" min="0" max="100" placeholder="Progress %"/><textarea id="techGoalFocus" placeholder="Weekly focus"></textarea><textarea id="techGoalDeliverable" placeholder="Current build deliverable"></textarea><textarea id="techGoalProof" placeholder="Sales / proof target"></textarea><div class="actions"><button class="pri-btn" id="saveTechGoalBtn">Save Goal</button></div></div></div><div class="goal-box"><div class="sec-lbl">Goal Snapshot</div><div id="techGoalSnapshot"></div></div></div></div><div class="card" style="margin-top:12px"><div class="sec-lbl">Daily Entry</div><div class="form-grid"><input id="entryDate" type="date"/><input id="entryDeepWork" type="number" step="0.5" placeholder="Deep work hours"/><input id="entryPython" type="number" step="0.5" placeholder="Python hours"/></div><div class="form-grid"><input id="entryLinux" type="number" step="0.5" placeholder="Linux/API hours"/><input id="entryAIRAG" type="number" step="0.5" placeholder="AI/RAG hours"/><input id="entryN8N" type="number" step="0.5" placeholder="n8n hours"/></div><div class="form-grid"><input id="entryFastAPI" type="number" step="0.5" placeholder="FastAPI/Web App hours"/><input id="entrySales" type="number" step="0.5" placeholder="Sales/Portfolio hours"/><input id="entryOutreach" type="number" step="1" placeholder="Outreach count"/></div><div class="form-grid"><input id="entryFeatures" type="number" step="1" placeholder="Features shipped"/><input id="entryWin" type="text" placeholder="Main win"/><input id="entryBlocker" type="text" placeholder="Main blocker"/></div><textarea id="entryNotes" placeholder="Notes"></textarea><input id="editingEntryId" type="hidden"/><div class="actions"><button class="pri-btn" id="saveEntryBtn">Save Entry</button><button class="sec-btn hidden" id="cancelEditBtn">Cancel Edit</button></div></div><div class="card" style="margin-top:12px"><div class="sec-lbl">Recent Entries</div><div id="techEntriesHost" class="entry-list"></div></div></section>
 </div>
 <nav class="bnav"><div class="bnav-inner"><a class="ni" href="index.html"><span>🏠</span><span class="ni-lbl">Home</span></a><a class="ni" href="linux.html"><span>🐧</span><span class="ni-lbl">Linux</span></a><a class="ni" href="python.html"><span>🐍</span><span class="ni-lbl">Python</span></a><a class="ni" href="ai.html"><span>🧠</span><span class="ni-lbl">AI</span></a><a class="ni" href="devops.html"><span>⚙️</span><span class="ni-lbl">DevOps</span></a><a class="ni" href="cloud.html"><span>☁️</span><span class="ni-lbl">Cloud</span></a><a class="ni" href="courses.html"><span>📚</span><span class="ni-lbl">Courses</span></a><a class="ni active" href="playbook.html"><span>📘</span><span class="ni-lbl">Playbook</span></a></div></nav>
 <script src="assets/js/app-core.js"></script>
+<script src="assets/js/portal-product.js"></script>
 <script>
 (function(){
   const MONTHS=[['apr','April 2026','#8b5cf6'],['may','May 2026','#3b82f6'],['jun','June 2026','#10b981'],['jul','July 2026','#f59e0b'],['aug','August 2026','#f97316'],['sep','September 2026','#ef4444']];
   const monthsHost=document.getElementById('monthsHost');
+  let openMonth='may';
   function getGoals(){try{return JSON.parse(localStorage.getItem('goals_v1')||'{}')||{};}catch(e){return {};}}
   function setGoals(g){localStorage.setItem('goals_v1',JSON.stringify(g));}
   function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  function updateSnapshot(){const now=new Date(); const map={3:'apr',4:'may',5:'jun',6:'jul',7:'aug',8:'sep'}; const nameMap={apr:'April 2026',may:'May 2026',jun:'June 2026',jul:'July 2026',aug:'August 2026',sep:'September 2026'}; const currentKey=map[now.getMonth()]||'apr'; const items=(getGoals()[currentKey]||[]); const done=items.filter(x=>x.done).length; const total=items.length; const upcoming=items.filter(x=>!x.done).slice(0,2).map(x=>x.text); localStorage.setItem('goals_snapshot',JSON.stringify({month:nameMap[currentKey],done,total,upcoming,updated:new Date().toISOString()})); document.getElementById('gcLbl').textContent=`${done} of ${total} milestones complete`; document.getElementById('gcTitle').textContent=nameMap[currentKey]; document.getElementById('gcSub').textContent=upcoming[0]?`Next: ${upcoming[0]}`:'Add your milestones below, then write the plan on the next tab.';}
-  function renderMonths(){const goals=getGoals(); monthsHost.innerHTML=MONTHS.map(([key,name,color],idx)=>{const items=goals[key]||[]; const rows=items.length?items.map(item=>`<div class="ms-row"><button class="ms-check ${item.done?'done':''}" data-action="toggle-goal" data-key="${key}" data-id="${item.id}">${item.done?'✓':''}</button><div class="ms-copy"><div class="ms-title ${item.done?'done':''}">${esc(item.text)}</div>${item.date?`<div class="ms-date">Target: ${esc(item.date)}</div>`:''}</div></div>`).join(''):`<div class="ms-row"><div class="ms-copy"><div class="ms-title">No milestones yet</div></div></div>`; return `<div class="month-card"><div class="month-hdr" data-action="toggle-month" data-key="${key}"><div class="month-dot" style="background:${color}"></div><span>${name}</span></div><div class="month-body ${idx===0?'open':''}" id="body-${key}">${rows}<div class="add-row"><input class="add-input" id="in-${key}" placeholder="Add a milestone…"><input class="add-date" id="dt-${key}" type="date"><button class="add-btn" data-action="add-goal" data-key="${key}">Add</button></div></div></div>`;}).join(''); updateSnapshot();}
-  monthsHost.addEventListener('click', function(e){const target=e.target.closest('[data-action]'); if(!target) return; const action=target.dataset.action; const key=target.dataset.key; if(action==='toggle-month'){const el=document.getElementById(`body-${key}`); if(el) el.classList.toggle('open'); return;} if(action==='add-goal'){const goals=getGoals(); goals[key]=goals[key]||[]; const text=document.getElementById(`in-${key}`).value.trim(); const date=document.getElementById(`dt-${key}`).value; if(!text) return; goals[key].push({id:String(Date.now()),text,date,done:false}); setGoals(goals); renderMonths(); return;} if(action==='toggle-goal'){const id=target.dataset.id; const goals=getGoals(); goals[key]=(goals[key]||[]).map(x=>x.id===id?{...x,done:!x.done}:x); setGoals(goals); renderMonths();}});
+  function updateSnapshot(){const now=new Date(); const map={3:'apr',4:'may',5:'jun',6:'jul',7:'aug',8:'sep'}; const nameMap={apr:'April 2026',may:'May 2026',jun:'June 2026',jul:'July 2026',aug:'August 2026',sep:'September 2026'}; const currentKey=map[now.getMonth()]||'apr'; openMonth=openMonth||currentKey; const items=(getGoals()[currentKey]||[]); const done=items.filter(x=>x.done).length; const total=items.length; const pct=total?Math.round(done/total*100):0; const upcoming=items.filter(x=>!x.done).slice(0,2).map(x=>x.text); localStorage.setItem('goals_snapshot',JSON.stringify({month:nameMap[currentKey],done,total,pct,upcoming,updated:new Date().toISOString()})); document.getElementById('gcLbl').textContent=`${done} of ${total} milestones complete`; document.getElementById('gcTitle').textContent=nameMap[currentKey]; document.getElementById('gcSub').textContent=upcoming[0]?`Next: ${upcoming[0]}`:'Add your milestones below, then write the plan on the next tab.';}
+  function renderMonths(){const goals=getGoals(); monthsHost.innerHTML=MONTHS.map(([key,name,color],idx)=>{const items=goals[key]||[]; const rows=items.length?items.map(item=>`<div class="ms-row"><button class="ms-check ${item.done?'done':''}" data-action="toggle-goal" data-key="${key}" data-id="${item.id}">${item.done?'✓':''}</button><div class="ms-copy"><div class="ms-title ${item.done?'done':''}">${esc(item.text)}</div>${item.date?`<div class="ms-date">Target: ${esc(item.date)}</div>`:''}</div><div class="ms-actions"><button class="ms-mini-btn" data-action="edit-goal" data-key="${key}" data-id="${item.id}">Edit</button><button class="ms-mini-btn danger" data-action="delete-goal" data-key="${key}" data-id="${item.id}">Delete</button></div></div>`).join(''):`<div class="ms-row"><div class="ms-copy"><div class="ms-title">No milestones yet</div></div></div>`; return `<div class="month-card"><div class="month-hdr" data-action="toggle-month" data-key="${key}"><div class="month-dot" style="background:${color}"></div><span>${name}</span></div><div class="month-body ${(key===openMonth || (!openMonth && idx===0))?'open':''}" id="body-${key}">${rows}<div class="add-row"><input class="add-input" id="in-${key}" placeholder="Add a milestone…"><input class="add-date" id="dt-${key}" type="date"><button class="add-btn" data-action="add-goal" data-key="${key}">Add</button></div></div></div>`;}).join(''); updateSnapshot();}
+  monthsHost.addEventListener('click', function(e){const target=e.target.closest('[data-action]'); if(!target) return; const action=target.dataset.action; const key=target.dataset.key; if(action==='toggle-month'){openMonth=key; const el=document.getElementById(`body-${key}`); if(el) el.classList.toggle('open'); return;} if(action==='add-goal'){openMonth=key; const goals=getGoals(); goals[key]=goals[key]||[]; const text=document.getElementById(`in-${key}`).value.trim(); const date=document.getElementById(`dt-${key}`).value; if(!text) return; goals[key].push({id:String(Date.now()),text,date,done:false}); setGoals(goals); renderMonths(); return;} if(action==='toggle-goal'){openMonth=key; const id=target.dataset.id; const goals=getGoals(); goals[key]=(goals[key]||[]).map(x=>x.id===id?{...x,done:!x.done}:x); setGoals(goals); renderMonths(); return;} if(action==='edit-goal'){openMonth=key; const id=target.dataset.id; const goals=getGoals(); const item=(goals[key]||[]).find(x=>x.id===id); if(!item) return; const text=prompt('Edit milestone text:',item.text||''); if(text===null) return; const clean=text.trim(); if(!clean) return; const date=prompt('Edit target date (YYYY-MM-DD, optional):',item.date||''); goals[key]=(goals[key]||[]).map(x=>x.id===id?{...x,text:clean,date:(date||'').trim()}:x); setGoals(goals); renderMonths(); return;} if(action==='delete-goal'){openMonth=key; const id=target.dataset.id; const goals=getGoals(); const item=(goals[key]||[]).find(x=>x.id===id); if(!item) return; if(!confirm('Delete this milestone?\\n\\n'+item.text)) return; goals[key]=(goals[key]||[]).filter(x=>x.id!==id); setGoals(goals); renderMonths();}});
   document.querySelectorAll('.play-tab').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.play-tab').forEach(x=>x.classList.remove('active')); document.querySelectorAll('.play-panel').forEach(x=>x.classList.remove('active')); btn.classList.add('active'); document.getElementById(btn.dataset.target).classList.add('active');});});
   const textarea=document.getElementById('playbookPlan'); textarea.value=localStorage.getItem('playbook_plan')||''; textarea.addEventListener('input',()=>localStorage.setItem('playbook_plan',textarea.value));
   function applyTheme(){const t=localStorage.getItem('theme')||'light'; document.body.classList.toggle('dark',t==='dark'); document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';}
@@ -412,24 +437,87 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
   const GOAL_KEY = 'tech_goal_v1';
   const LOG_KEY = 'tech_daily_logs_v1';
   const START = new Date('2026-04-20T00:00:00');
-  const MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/rllml47qp9ykbqd6l12o5zsankjx3d23';
+  const MAKE_WEBHOOK_KEY = 'make_webhook_url_v1';
+  const NOTION_TARGET_KEY = 'notion_goal_target_v1';
+
+  function getMakeWebhookUrl() {
+    return (localStorage.getItem(MAKE_WEBHOOK_KEY) || '').trim();
+  }
+
+  function getNotionTarget() {
+    return (localStorage.getItem(NOTION_TARGET_KEY) || '').trim();
+  }
+
+  function setSyncStatus(message) {
+    const el = document.getElementById('syncStatus');
+    if (el) el.textContent = message;
+  }
+
+  function loadSyncSettings() {
+    const webhook = document.getElementById('makeWebhookUrl');
+    const target = document.getElementById('notionGoalTarget');
+    if (webhook) webhook.value = getMakeWebhookUrl();
+    if (target) target.value = getNotionTarget();
+    setSyncStatus(getMakeWebhookUrl() ? 'Connected: Make webhook saved for Notion sync.' : 'Not connected yet.');
+  }
+
+  function saveSyncSettings() {
+    localStorage.setItem(MAKE_WEBHOOK_KEY, document.getElementById('makeWebhookUrl').value.trim());
+    localStorage.setItem(NOTION_TARGET_KEY, document.getElementById('notionGoalTarget').value.trim());
+    setSyncStatus('Sync settings saved.');
+  }
 
   async function syncToMake(payload) {
-    if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.includes('PASTE_YOUR_MAKE_WEBHOOK_URL_HERE')) {
+    const makeWebhookUrl = getMakeWebhookUrl();
+    if (!makeWebhookUrl) {
       console.warn('Make webhook URL not set');
+      setSyncStatus('Make webhook URL is not set.');
       return;
     }
 
+    const flatPayload = payload && payload.payload ? payload.payload : {};
+    const body = {
+      source: 'jideatom-portal',
+      destination: 'notion',
+      notion_target: getNotionTarget(),
+      sent_at: new Date().toISOString(),
+      ...payload,
+      ...flatPayload
+    };
+
     try {
-      const res = await fetch(MAKE_WEBHOOK_URL, {
+      const res = await fetch(makeWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(body)
       });
 
       if (!res.ok) throw new Error(`Webhook failed: ${res.status}`);
+      setSyncStatus('Last sync sent to Make.');
     } catch (err) {
-      console.error('Make sync failed', err);
+      try {
+        const form = new URLSearchParams();
+        form.set('type', body.type || '');
+        form.set('source', body.source);
+        form.set('destination', body.destination);
+        form.set('notion_target', body.notion_target);
+        form.set('sent_at', body.sent_at);
+        Object.keys(flatPayload).forEach(function (key) {
+          const value = flatPayload[key];
+          form.set(key, typeof value === 'object' ? JSON.stringify(value) : String(value ?? ''));
+        });
+        form.set('payload_json', JSON.stringify(body.payload || {}));
+        form.set('body_json', JSON.stringify(body));
+        await fetch(makeWebhookUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: form
+        });
+        setSyncStatus('Sent to Make with flat fields. Check the Webhooks module output, then map title/status/deadline into Notion.');
+      } catch (fallbackErr) {
+        setSyncStatus(fallbackErr.message || err.message || 'Make sync failed');
+        console.error('Make sync failed', fallbackErr);
+      }
     }
   }
 
@@ -506,8 +594,8 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
     document.getElementById('techGoalProof').value = g.salesProof || '';
   }
 
-  function saveGoal() {
-    const g = {
+  function goalFromForm() {
+    return {
       title: document.getElementById('techGoalTitle').value.trim(),
       deadline: document.getElementById('techGoalDeadline').value,
       status: document.getElementById('techGoalStatus').value,
@@ -516,19 +604,33 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
       deliverable: document.getElementById('techGoalDeliverable').value.trim(),
       salesProof: document.getElementById('techGoalProof').value.trim()
     };
+  }
 
-    setGoal(g);
-
-    syncToMake({
-      type: 'tech_goal',
-      goal: g.title,
+  function techGoalPayload(g) {
+    const buildSnap = JSON.parse(localStorage.getItem('build_mode_snapshot') || '{}');
+    return {
+      title: g.title,
       status: g.status,
       deadline: g.deadline,
       progress: g.progress,
       weekly_focus: g.weeklyFocus,
       build_deliverable: g.deliverable,
       sales_proof: g.salesProof,
-      area: 'Tech/Career'
+      area: 'Tech/Career',
+      current_week: currentWeek(),
+      build_snapshot: buildSnap
+    };
+  }
+
+  function saveGoal() {
+    const g = goalFromForm();
+
+    setGoal(g);
+    setSyncStatus('Saving goal and sending to Make...');
+
+    syncToMake({
+      type: 'notion_goal_upsert',
+      payload: techGoalPayload(g)
     });
 
     renderTechGoalSnapshot();
@@ -627,20 +729,23 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
     setLogs(logs);
 
     syncToMake({
-      type: 'daily_tech_log',
-      date: entry.date,
-      deep_work: entry.deepWork,
-      python: entry.python,
-      linux_api: entry.linux,
-      ai_rag: entry.aiRag,
-      n8n: entry.n8n,
-      fastapi_web: entry.fastapi,
-      sales_portfolio: entry.sales,
-      outreach: entry.outreach,
-      features_shipped: entry.features,
-      win: entry.win,
-      blocker: entry.blocker,
-      notes: entry.notes
+      type: 'notion_daily_tech_log',
+      payload: {
+        date: entry.date,
+        deep_work: entry.deepWork,
+        python: entry.python,
+        linux_api: entry.linux,
+        ai_rag: entry.aiRag,
+        n8n: entry.n8n,
+        fastapi_web: entry.fastapi,
+        sales_portfolio: entry.sales,
+        outreach: entry.outreach,
+        features_shipped: entry.features,
+        win: entry.win,
+        blocker: entry.blocker,
+        notes: entry.notes,
+        goal: getGoal().title
+      }
     });
 
     resetEntryForm();
@@ -716,10 +821,34 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
     `).join('');
   }
 
+  document.getElementById('saveSyncSettingsBtn').addEventListener('click', saveSyncSettings);
+  document.getElementById('testSyncBtn').addEventListener('click', function () {
+    saveSyncSettings();
+    setSyncStatus('Sending test event...');
+    syncToMake({
+      type: 'portal_connection_test',
+      payload: {
+        message: 'Playbook Tech Goal Make webhook test',
+        goal: getGoal().title
+      }
+    });
+  });
+  document.getElementById('sendGoalToNotionBtn').addEventListener('click', function () {
+    saveSyncSettings();
+    const g = goalFromForm();
+    setGoal(g);
+    renderTechGoalSnapshot();
+    setSyncStatus('Sending current goal to Make...');
+    syncToMake({
+      type: 'notion_goal_upsert',
+      payload: techGoalPayload(g)
+    });
+  });
   document.getElementById('saveTechGoalBtn').addEventListener('click', saveGoal);
   document.getElementById('saveEntryBtn').addEventListener('click', saveEntry);
   document.getElementById('cancelEditBtn').addEventListener('click', resetEntryForm);
 
+  loadSyncSettings();
   loadGoalIntoForm();
   renderTechGoalSnapshot();
   renderEntries();

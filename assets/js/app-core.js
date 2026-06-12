@@ -4,6 +4,29 @@ function getJSON(key,fallback){try{return JSON.parse(localStorage.getItem(key)||
 function setJSON(key,val){localStorage.setItem(key,JSON.stringify(val));}
 function getSD(){const s=getJSON('streakData',{}); s.days=s.days||{}; s.sessions=s.sessions||[]; s.totalMins=Number(s.totalMins||0); s.current=Number(s.current||0); s.best=Number(s.best||0); s.lastStudy=s.lastStudy||''; s.manualDays=s.manualDays||{}; return s;}
 function setSD(s){setJSON('streakData',s);}
+function slug(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,90);}
+function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function shortDate(ts,date){const d=ts?new Date(ts):new Date((date||localDateStr())+'T00:00:00'); return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});}
+const EXECUTION_PATH=[
+  {title:'PIKUMA – Linux Command-Line & Bash',short:'Linux command line',href:'courses.html'},
+  {title:'Academind – Git & GitHub: The Practical Guide',short:'Git and GitHub',href:'courses.html'},
+  {title:'Code with Mosh – Complete Python Mastery',short:'Beginner Python',href:'courses.html'},
+  {title:'ArjanCodes – Next-Level Python',short:'Next-Level Python',href:'courses.html'},
+  {title:'FastAPI Beginner Course',short:'FastAPI basics',href:'courses.html'},
+  {title:'TestDriven.io – Test-Driven Development with FastAPI and Docker',short:'FastAPI + Docker + TDD',href:'courses.html'},
+  {title:'Master Python Network Automation for Network Engineers',short:'Network automation',href:'courses.html'},
+  {title:'Bret Fisher – Docker Mastery',short:'Docker Mastery',href:'courses.html'},
+  {title:'DevOps Directive – GitHub Actions',short:'GitHub Actions',href:'courses.html'},
+  {title:'DataTalksClub – LLM Zoomcamp',short:'LLM Zoomcamp',href:'courses.html'}
+];
+function getCourseMeta(){return getJSON('course_resource_meta_v1',{});}
+function executionSnapshot(){
+  const meta=getCourseMeta();
+  const statuses=EXECUTION_PATH.map(item=>(meta[slug(item.title)]&&meta[slug(item.title)].status)||'Not started');
+  const done=statuses.filter(s=>s==='Done').length;
+  const nextIdx=Math.min(done,EXECUTION_PATH.length-1);
+  return {done:done,total:EXECUTION_PATH.length,next:EXECUTION_PATH[nextIdx],nextIndex:nextIdx,complete:done>=EXECUTION_PATH.length,statuses:statuses,pct:Math.round(done/EXECUTION_PATH.length*100)};
+}
 function recalc(s){
   const DAY=86400000;
   const keys = Array.from(new Set(Object.keys(s.days).filter(k=>s.days[k]>0).concat(Object.keys(s.manualDays||{}).filter(k=>s.manualDays[k])))).sort();
@@ -17,12 +40,13 @@ function recalc(s){
   }
   s.current=cur; s.best=Math.max(best,cur); return s;
 }
-window.logStudyMinutes=function(mins,topic){
+window.logStudyMinutes=function(mins,topic,details){
   mins=Number(mins||25);
   const s=getSD(); const today=localDateStr();
   s.days[today]=(s.days[today]||0)+mins;
   s.totalMins+=mins;
-  s.sessions.push({date:today,mins:mins,topic:topic||'',ts:Date.now(),source:'timer'});
+  details=details||{};
+  s.sessions.push({date:today,mins:mins,topic:topic||'',ts:Date.now(),source:details.source||'timer',mood:details.mood||'',notes:details.notes||''});
   recalc(s); setSD(s);
   if(window.refreshHomeWidgets) window.refreshHomeWidgets();
 };
@@ -31,7 +55,7 @@ window.markStudyActivity=function(){
   if(s.manualDays[today]) return false;
   s.manualDays[today]=true;
   if(!s.sessions.some(x=>x.date===today && x.source==='manual')){
-    s.sessions.push({date:today,mins:0,topic:'Manual activity check-in',ts:Date.now(),source:'manual'});
+    s.sessions.push({date:today,mins:0,topic:'Manual activity check-in',ts:Date.now(),source:'activity'});
   }
   recalc(s); setSD(s);
   if(window.refreshHomeWidgets) window.refreshHomeWidgets();
@@ -42,6 +66,20 @@ window.resetStudyData=function(){
   localStorage.removeItem('lastHeatmapLog');
   if(window.refreshHomeWidgets) window.refreshHomeWidgets();
 };
+function ensureManualLog(){
+  if(document.getElementById('manualLogOverlay')) return;
+  const overlay=document.createElement('div');
+  overlay.className='manual-log-overlay';
+  overlay.id='manualLogOverlay';
+  overlay.innerHTML='<form class="manual-log-card" id="manualLogForm"><div class="manual-log-head"><div><h3>Log Session</h3><p>Use this only for real study you completed outside the timer.</p></div><button class="manual-log-close" id="manualLogClose" type="button">×</button></div><div class="manual-grid"><div class="manual-field full"><label for="manualTopic">Topic</label><input id="manualTopic" name="topic" autocomplete="off" placeholder="What did you study?"></div><div class="manual-field"><label for="manualMins">Minutes</label><input id="manualMins" name="mins" type="number" min="1" max="360" value="25"></div><div class="manual-field"><label for="manualMood">Focus</label><select id="manualMood" name="mood"><option value="steady">Steady</option><option value="strong">Strong</option><option value="tough">Tough</option><option value="review">Review</option></select></div><div class="manual-field full"><label for="manualNotes">Notes</label><textarea id="manualNotes" name="notes" placeholder="One thing learned, one blocker, or one next action."></textarea></div></div><div class="manual-actions"><button class="manual-cancel" id="manualLogCancel" type="button">Cancel</button><button class="manual-save" type="submit">Save Session</button></div></form>';
+  document.body.appendChild(overlay);
+  function close(){overlay.classList.remove('open');}
+  window.openManualLog=function(topic){document.getElementById('manualTopic').value=topic||document.body.getAttribute('data-today-topic')||''; overlay.classList.add('open'); document.getElementById('manualTopic').focus();};
+  document.getElementById('manualLogClose').onclick=close;
+  document.getElementById('manualLogCancel').onclick=close;
+  overlay.addEventListener('click',function(e){if(e.target===overlay) close();});
+  document.getElementById('manualLogForm').addEventListener('submit',function(e){e.preventDefault(); const topic=document.getElementById('manualTopic').value.trim()||'Manual study session'; const mins=Math.max(1,Math.min(360,Number(document.getElementById('manualMins').value||25))); const mood=document.getElementById('manualMood').value; const notes=document.getElementById('manualNotes').value.trim(); window.logStudyMinutes(mins,topic,{source:'manual-log',mood:mood,notes:notes}); document.getElementById('manualNotes').value=''; close();});
+}
 
 function ensureTimer(){
   if(document.getElementById('coreTimerOverlay')) return;
@@ -75,6 +113,8 @@ function aiPct(){
 }
 function computeProgress(){const trackKeys={claude:['c1','c2','c3','c4','c5'],linux:['l1a','l1b','l1c','l1d','l2a','l2b','l2c','l2d','l3a','l3b','l3c','l3d','l4a','l4b','l4c','l4d','l5a','l5b','l5c','l6a','l6b','l6c','l6d'],python:['py1a','py1b','py1c','py1d','py1e','py2a','py2b','py2c','py2d','py2e','py3a','py3b','py3c','py3d','py3e','py4a','py4b','py4c','py4d'],cloud:['a-clf1','a-clf2','a-clf3','a-clf4','a-clf5','a-clf6','a-saa1','a-saa2','a-saa3','a-saa4','a-saa5','a-saa6','a-saa7','a-saa8','a-ans1','a-ans2','a-ans3','a-ans4','a-ans5','a-ans6','a-ans7','a-ans8','a-ans9','a-sap1','a-sap2','a-sap3','a-sap4','a-sap5','a-sap6']}; return {claude:trackPct('claudeSprint_Mar2026',trackKeys.claude),linux:trackPct('rhcsaProgress',trackKeys.linux),python:trackPct('pythonProgress',trackKeys.python),ai:aiPct(),cloud:trackPct('cloudProgress',trackKeys.cloud)};}
 function pickSmartSession(goal,s,progress){const candidates=[]; if(goal.upcoming&&goal.upcoming[0]) candidates.push({score:100,phase:'Playbook Priority',title:goal.upcoming[0],sub:'Pulled from your next unfinished milestone so your daily session matches your actual plan.',href:'playbook.html'});
+  const exec=executionSnapshot();
+  if(!exec.complete) candidates.push({score:98,phase:'Execution Order',title:exec.next.short,sub:'Next locked-path course: '+exec.next.title+'. Finish this before jumping tracks.',href:'courses.html'});
   const aiSnap=getJSON('ai_module_snapshot', null);
   if(aiSnap){
     const modules=[
@@ -86,7 +126,7 @@ function pickSmartSession(goal,s,progress){const candidates=[]; if(goal.upcoming
     ];
     modules.sort((a,b)=>(aiSnap[a.k]||0)-(aiSnap[b.k]||0));
     if(modules.length) candidates.push({score:92,phase:modules[0].phase,title:modules[0].title,sub:modules[0].sub,href:modules[0].href});
-  } const tracks=[{pct:progress.linux,phase:'Linux',title:'Linux RHCSA push',sub:'Commands, permissions, shell, or RHCSA drills.',href:'linux.html'},{pct:progress.python,phase:'Python',title:'Python core practice',sub:'Automation momentum and AI engineering prep.',href:'python.html'},{pct:progress.ai,phase:'AI',title:'AI roadmap focus',sub:'Prompting, LLM fundamentals, retrieval, or evaluation.',href:'ai.html'},{pct:progress.claude,phase:'Claude',title:'Claude workflow session',sub:'Prompting, MCP, tool use, and Claude workflows.',href:'claude.html'},{pct:progress.cloud,phase:'Cloud',title:'Cloud networking block',sub:'Cloud foundations, AWS/Azure, or networking.',href:'cloud.html'}].sort((a,b)=>a.pct-b.pct); tracks.forEach((t,idx)=>{let score=60-idx*5; if(t.pct===0) score+=15; if(t.pct<20) score+=10; candidates.push({score:score,phase:t.phase,title:t.title,sub:t.sub,href:t.href});}); const buildSnap=getJSON('build_mode_snapshot', null);
+  } const tracks=[{pct:progress.linux,phase:'Linux',title:'Linux RHCSA push',sub:'Commands, permissions, shell, or RHCSA drills.',href:'linux.html'},{pct:progress.python,phase:'Python',title:'Python core practice',sub:'Automation momentum and AI engineering prep.',href:'python.html'},{pct:progress.ai,phase:'AI',title:'AI roadmap focus',sub:'Prompting, LLM fundamentals, retrieval, or evaluation.',href:'ai.html'},{pct:progress.claude,phase:'Claude',title:'Claude workflow session',sub:'Prompting, MCP, tool use, and Claude workflows inside the AI page.',href:'ai.html'},{pct:progress.cloud,phase:'Cloud',title:'Cloud networking block',sub:'Cloud foundations, AWS/Azure, or networking.',href:'cloud.html'}].sort((a,b)=>a.pct-b.pct); tracks.forEach((t,idx)=>{let score=60-idx*5; if(t.pct===0) score+=15; if(t.pct<20) score+=10; candidates.push({score:score,phase:t.phase,title:t.title,sub:t.sub,href:t.href});}); const buildSnap=getJSON('build_mode_snapshot', null);
   if(buildSnap){
     const buildChoices=[
       {id:'p1',phase:'Build Mode',title:'Work on Logistics + Car Sales Copilot',sub:'Advance shipment tracking, documents, and customer updates.',href:'playbook.html'},
@@ -98,14 +138,18 @@ function pickSmartSession(goal,s,progress){const candidates=[]; if(goal.upcoming
   if((s.current||0)<3) candidates.push({score:88,phase:'Streak Protection',title:'Quick win to protect your streak',sub:'Take a shorter, easier session today so momentum stays alive.',href:tracks[0]?tracks[0].href:'index.html'}); return candidates.sort((a,b)=>b.score-a.score)[0]||{phase:'Focus Session',title:'Study Session',sub:'Pick one meaningful block and move it forward.',href:'index.html'};}
 window.refreshHomeWidgets=function(){
   const s=getSD(); const goal=getJSON('goals_snapshot',{}); const today=localDateStr(); const progress=computeProgress();
-  const gb=document.getElementById('goalBanner'); if(gb){gb.style.display='flex'; document.getElementById('gbMonth').textContent=goal.month||'This Month'; document.getElementById('gbTitle').textContent=goal.total?(goal.done+' of '+goal.total+' milestones complete'):'No goals set yet'; document.getElementById('gbSub').textContent=goal.upcoming&&goal.upcoming[0]?('Next: '+goal.upcoming[0]):'Tap to set your monthly milestones →'; document.getElementById('gbPct').textContent=goal.total?(goal.pct+'%'):'-'; document.getElementById('gbFill').style.width=(goal.pct||0)+'%';}
+  const gb=document.getElementById('goalBanner'); if(gb){const goalTotal=Number(goal.total||0); const goalDone=Number(goal.done||0); const storedPct=Number(goal.pct); const goalPct=goalTotal?Math.max(0,Math.min(100,Number.isFinite(storedPct)?storedPct:Math.round(goalDone/goalTotal*100))):0; gb.style.display='flex'; document.getElementById('gbMonth').textContent=goal.month||'This Month'; document.getElementById('gbTitle').textContent=goalTotal?(goalDone+' of '+goalTotal+' milestones complete'):'No goals set yet'; document.getElementById('gbSub').textContent=goal.upcoming&&goal.upcoming[0]?('Next: '+goal.upcoming[0]):'Tap Edit Goals to update your milestones'; document.getElementById('gbPct').textContent=goalTotal?(goalPct+'%'):'-'; document.getElementById('gbFill').style.width=goalPct+'%';}
   var cur=document.getElementById('skCurrent'),best=document.getElementById('skBest'),hours=document.getElementById('skHours'); if(cur)cur.textContent=s.current||0; if(best)best.textContent=s.best||0; if(hours){const m=s.totalMins||0; hours.textContent=m<60?(m+'m'):(Math.floor(m/60)+'h'+(m%60?(m%60+'m'):''));}
-  const smart=pickSmartSession(goal,s,progress); document.body.setAttribute('data-today-topic',smart.title); var ph=document.getElementById('focusPhase'),ti=document.getElementById('focusTitle'),su=document.getElementById('focusSub'),btn=document.getElementById('focusStartBtn'),resetBtn=document.getElementById('resetStudyBtn'),studied=document.getElementById('focusStudied'); if(ph)ph.textContent=smart.phase; if(ti)ti.textContent=smart.title; if(su)su.textContent=smart.sub; if(btn)btn.onclick=function(e){e.preventDefault(); e.stopPropagation(); window.openTimer(smart.title,25);}; if(resetBtn)resetBtn.onclick=function(e){e.preventDefault(); if(confirm('Reset study time, streak, heatmap, and achievement state?')) window.resetStudyData();}; if(studied)studied.style.display=((s.days[today]&&s.days[today]>0) || (s.manualDays&&s.manualDays[today]))?'inline-flex':'none';
+  const smart=pickSmartSession(goal,s,progress); document.body.setAttribute('data-today-topic',smart.title); var ph=document.getElementById('focusPhase'),ti=document.getElementById('focusTitle'),su=document.getElementById('focusSub'),btn=document.getElementById('focusStartBtn'),manualBtn=document.getElementById('manualLogBtn'),resetBtn=document.getElementById('resetStudyBtn'),studied=document.getElementById('focusStudied'); if(ph)ph.textContent=smart.phase; if(ti)ti.textContent=smart.title; if(su)su.textContent=smart.sub; if(btn)btn.onclick=function(e){e.preventDefault(); e.stopPropagation(); window.openTimer(smart.title,25);}; if(manualBtn)manualBtn.onclick=function(e){e.preventDefault(); e.stopPropagation(); if(window.openManualLog) window.openManualLog(smart.title);}; if(resetBtn)resetBtn.onclick=function(e){e.preventDefault(); if(confirm('Reset study time, streak, heatmap, and achievement state?')) window.resetStudyData();}; if(studied)studied.style.display=((s.days[today]&&s.days[today]>0) || (s.manualDays&&s.manualDays[today]))?'inline-flex':'none';
+  const realSessions=(s.sessions||[]).filter(x=>Number(x.mins||0)>0); const xp=Math.round((s.totalMins||0)*2); const level=Math.max(1,Math.floor(xp/240)+1);
+  const exec=executionSnapshot(); const exTitle=document.getElementById('execHomeTitle'),exSub=document.getElementById('execHomeSub'),exChip=document.getElementById('execHomeChip'),exFill=document.getElementById('execHomeFill'),exMini=document.getElementById('execHomeMini'); if(exTitle){exTitle.textContent=exec.complete?'Execution path complete':'Next: '+exec.next.short;} if(exSub){exSub.textContent=exec.complete?'You finished the 10-step course path. Switch to Build Mode and ship.':exec.next.title;} if(exChip)exChip.textContent=exec.done+'/'+exec.total; if(exFill)exFill.style.width=exec.pct+'%'; if(exMini){exMini.innerHTML=EXECUTION_PATH.map((item,i)=>'<span class="exec-dot '+(i<exec.done?'done':i===exec.nextIndex?'current':'')+'" title="'+item.short+'"></span>').join('');}
   ['claude','linux','python','ai','cloud'].forEach(id=>{const bar=document.getElementById('pb-'+id),lbl=document.getElementById('pp-'+id); if(bar)bar.style.width=progress[id]+'%'; if(lbl)lbl.textContent=progress[id]+'%';});
   const overall=Math.round((progress.claude+progress.linux+progress.python+progress.ai+progress.cloud)/5); const overallEl=document.getElementById('overallPct'); if(overallEl)overallEl.textContent=overall+'% overall';
   const hm=document.getElementById('hmGrid'); if(hm){hm.innerHTML=''; const vals=Object.values(s.days).filter(v=>v>0),max=vals.length?Math.max.apply(null,vals):1; const todayDate=new Date(); todayDate.setHours(0,0,0,0); const cells=[]; for(let i=111;i>=0;i--){const d=new Date(todayDate); d.setDate(d.getDate()-i); cells.push({k:localDateStr(d),today:i===0});} for(let j=0;j<cells.length;j+=7){const col=document.createElement('div'); col.className='hm-col'; cells.slice(j,j+7).forEach(c=>{const cell=document.createElement('div'); const v=s.days[c.k]||0; const active=((s.manualDays&&s.manualDays[c.k]) || v>0); const lvl=!active?'':v===0?'l1':v/max<.25?'l1':v/max<.5?'l2':v/max<.75?'l3':'l4'; cell.className='hm-cell'+(lvl?' '+lvl:'')+(c.today?' today':''); cell.title=c.today?'Today — tap to mark activity':(c.k+(v?' · '+Math.round(v)+'min':((s.manualDays&&s.manualDays[c.k])?' · activity marked':''))); if(c.today){cell.onclick=function(){window.markStudyActivity();};} col.appendChild(cell);}); hm.appendChild(col);}}
-  const ach=document.getElementById('achievementsCard'); if(ach){const timerSessions=(s.sessions||[]).filter(x=>x.source==='timer'); const buildSnap=getJSON('build_mode_snapshot', {}); const buildVals=Object.values(buildSnap||{}); const buildStarted=buildVals.some(v=>v>0); const buildHalf=buildVals.some(v=>v>=50); const buildDone=buildVals.some(v=>v>=100); const badges=[['First Session',timerSessions.length>=1],['Hour Builder',(s.totalMins||0)>=60 && timerSessions.length>=3],['3-Day Streak',(s.current||0)>=3],['7-Day Streak',(s.current||0)>=7],['First Project Started',buildStarted],['Project Momentum',buildHalf],['Project Shipped',buildDone],['Halfway There',overall>=50],['Claude Sprint',progress.claude>=100]]; ach.className='ach-card'; ach.innerHTML='<h3>Momentum looks better when it moves</h3><div class="ach-sub">Timer completion adds real study time. Heatmap taps only mark activity.</div><div class="ach-row">'+badges.map(b=>'<div class="ach-pill '+(b[1]?'on':'')+'">'+(b[1]?'✓ ':'• ')+b[0]+'</div>').join('')+'</div>';}
-  const buildSnap=getJSON('build_mode_snapshot', null); const next=document.getElementById('nextActionsCard'); if(next){const actions=[]; if(goal.upcoming&&goal.upcoming[0]) actions.push({title:'Finish your next Playbook milestone',sub:goal.upcoming[0],href:'playbook.html'}); if(progress.python===0) actions.push({title:'Start Python core',sub:'Your Python track is still untouched',href:'python.html'}); if(progress.ai<20) actions.push({title:'Push the AI path forward',sub:'Build prompting and LLM fundamentals momentum',href:'ai.html'}); if(buildSnap){
+  const recent=document.getElementById('recentLogsCard'); if(recent){const recentLogs=(s.sessions||[]).filter(x=>Number(x.mins||0)>0).sort((a,b)=>(b.ts||0)-(a.ts||0)).slice(0,5); recent.innerHTML=recentLogs.length?'<div class="recent-list">'+recentLogs.map(x=>'<div class="recent-log"><div class="recent-ico">'+(x.source==='manual-log'?'✍':'⏱')+'</div><div><div class="recent-title">'+esc(x.topic||'Study session')+'</div><div class="recent-meta">'+shortDate(x.ts,x.date)+' · '+(x.source==='manual-log'?'manual log':'timer')+(x.mood?' · '+esc(x.mood):'')+'</div></div><div class="recent-min">'+Number(x.mins||0)+'m</div></div>').join('')+'</div>':'<div class="empty-log">No real study sessions logged yet. Finish a timer or use Log Session after studying away from the app.</div>';}
+  const ach=document.getElementById('achievementsCard'); if(ach){const studySessions=(s.sessions||[]).filter(x=>Number(x.mins||0)>0); const buildSnap=getJSON('build_mode_snapshot', {}); const buildVals=Object.values(buildSnap||{}); const buildStarted=buildVals.some(v=>v>0); const buildHalf=buildVals.some(v=>v>=50); const buildDone=buildVals.some(v=>v>=100); const badges=[['First Session',studySessions.length>=1],['Hour Builder',(s.totalMins||0)>=60 && studySessions.length>=3],['Level 2',level>=2],['3-Day Streak',(s.current||0)>=3],['7-Day Streak',(s.current||0)>=7],['First Project Started',buildStarted],['Project Momentum',buildHalf],['Project Shipped',buildDone],['Halfway There',overall>=50],['Claude Sprint',progress.claude>=100]]; ach.className='ach-card'; ach.innerHTML='<h3>Momentum looks better when it moves</h3><div class="ach-sub">Timer completion or manual logs add real study time. Heatmap taps only mark activity.</div><div class="ach-row">'+badges.map(b=>'<div class="ach-pill '+(b[1]?'on':'')+'">'+(b[1]?'✓ ':'• ')+b[0]+'</div>').join('')+'</div>';}
+  const buildSnap=getJSON('build_mode_snapshot', null); const buildCard=document.getElementById('buildSummaryCard'); if(buildCard){const snap=buildSnap||{}; const projects=[{id:'p1',title:'Logistics + Car Sales Copilot',tag:'friend project',sub:'Vehicle tracking, document intake, shipping status, and customer updates.'},{id:'p2',title:'SoftTouch Repair + Parts Intelligence',tag:'friend project',sub:'Manual search, repair triage, part lookup, and quote support.'},{id:'p3',title:'Malaria Consortium Ops Intelligence',tag:'professional',sub:'Reports, data quality checks, management briefs, and operations visibility.'}]; buildCard.innerHTML='<div class="build-summary">'+projects.map(p=>{const pct=Math.max(0,Math.min(100,Number(snap[p.id]||0))); const state=pct>=100?'Shipped':pct>=50?'Strong momentum':pct>0?'In progress':'Not started'; return '<a class="build-item" href="playbook.html"><div class="build-top"><div class="build-title">'+p.title+'</div><div class="build-tag">'+p.tag+'</div></div><div class="build-sub">'+p.sub+'</div><div class="build-bar"><div class="build-fill" style="width:'+pct+'%"></div></div><div class="build-meta"><span>'+state+'</span><span>'+pct+'%</span></div></a>';}).join('')+'</div>';}
+  const next=document.getElementById('nextActionsCard'); if(next){const actions=[]; if(!exec.complete) actions.push({title:'Continue the execution order',sub:'Next course: '+exec.next.title,href:'courses.html'}); if(goal.upcoming&&goal.upcoming[0]) actions.push({title:'Finish your next Playbook milestone',sub:goal.upcoming[0],href:'playbook.html'}); if(progress.python===0) actions.push({title:'Start Python core',sub:'Your Python track is still untouched',href:'python.html'}); if(progress.ai<20) actions.push({title:'Push the AI path forward',sub:'Build prompting and LLM fundamentals momentum',href:'ai.html'}); if(buildSnap){
       const builds=[
         {id:'p1',title:'Push Logistics + Car Sales Copilot',sub:'Keep your retrieval project moving this week.',href:'playbook.html'},
         {id:'p2',title:'Advance SoftTouch Repair + Parts Intelligence',sub:'Turn Python + network ops into an AI workflow.',href:'playbook.html'},
@@ -115,5 +159,5 @@ window.refreshHomeWidgets=function(){
     }
     if((s.current||0)<3) actions.push({title:'Protect your streak',sub:'A short focused session today keeps momentum alive.',href:'index.html'}); if(progress.cloud<15) actions.push({title:'Open Cloud and finish foundations',sub:'Start with cloud foundations and networking alignment.',href:'cloud.html'}); next.innerHTML='<div class="next-actions-list">'+(actions.slice(0,4).map((a,i)=>'<a class="next-act" href="'+a.href+'"><div class="next-num">'+(i+1)+'</div><div><strong>'+a.title+'</strong><span>'+a.sub+'</span></div></a>').join('')||'<div class="next-act"><div class="next-num">1</div><div><strong>Set your first milestone</strong><span>Use Playbook to define this month’s target.</span></div></div>')+'</div>';}
 };
-document.addEventListener('DOMContentLoaded',function(){ensureTimer(); if(window.refreshHomeWidgets) window.refreshHomeWidgets();});
+document.addEventListener('DOMContentLoaded',function(){ensureTimer(); ensureManualLog(); if(window.refreshHomeWidgets) window.refreshHomeWidgets();});
 })();

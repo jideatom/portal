@@ -1,1 +1,102 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Ebook Reader</title><script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script><style>:root{--bg:#0f172a;--panel:#111827;--line:#243244;--text:#e5e7eb;--muted:#94a3b8;--accent:#8b5cf6}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}.topbar{position:sticky;top:0;z-index:20;display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(15,23,42,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}.title-wrap h1{margin:0;font-size:18px}.title-wrap p{margin:4px 0 0;color:var(--muted);font-size:12px}.controls{display:flex;gap:8px;flex-wrap:wrap}button,a.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:10px 12px;border-radius:12px;cursor:pointer;text-decoration:none;font-weight:700;font-size:13px}button:hover,a.btn:hover{border-color:var(--accent)}#frameWrap,#epubWrap{height:calc(100vh - 74px)}#pdfFrame{width:100%;height:100%;border:0;background:#fff}#viewer{width:100%;height:100%}.hidden{display:none}.msg{padding:24px;color:var(--muted)}</style></head><body><div class="topbar"><div class="title-wrap"><h1 id="bookTitle">Ebook Reader</h1><p id="bookMeta">Open PDFs in the browser or EPUBs in the built-in reader.</p></div><div class="controls"><button id="prevBtn" class="hidden">Prev</button><button id="nextBtn" class="hidden">Next</button><a id="sourceBtn" class="btn" href="#" target="_blank" rel="noopener noreferrer">Open Source</a></div></div><div id="frameWrap" class="hidden"><iframe id="pdfFrame"></iframe></div><div id="epubWrap" class="hidden"><div id="viewer"></div></div><div id="message" class="msg">No book URL supplied.</div><script>const params=new URLSearchParams(location.search);const url=params.get('url');const title=params.get('title')||'Ebook Reader';document.getElementById('bookTitle').textContent=title;document.getElementById('sourceBtn').href=url||'#';function extOf(u){try{const p=new URL(u,location.href).pathname.toLowerCase();if(p.endsWith('.pdf'))return 'pdf';if(p.endsWith('.epub'))return 'epub';return '';}catch(e){return '';}}const ext=url?extOf(url):'';const frameWrap=document.getElementById('frameWrap');const epubWrap=document.getElementById('epubWrap');const message=document.getElementById('message');const prevBtn=document.getElementById('prevBtn');const nextBtn=document.getElementById('nextBtn');if(!url){message.textContent='No book URL supplied.';}else if(ext==='pdf'){frameWrap.classList.remove('hidden');message.classList.add('hidden');document.getElementById('bookMeta').textContent='PDF loaded in browser view.';document.getElementById('pdfFrame').src=url;}else if(ext==='epub'){epubWrap.classList.remove('hidden');message.classList.add('hidden');prevBtn.classList.remove('hidden');nextBtn.classList.remove('hidden');document.getElementById('bookMeta').textContent='EPUB loaded in built-in reader.';const book=ePub(url);const rendition=book.renderTo("viewer",{width:"100%",height:"100%"});rendition.display();prevBtn.onclick=()=>rendition.prev();nextBtn.onclick=()=>rendition.next();}else{message.innerHTML='This link is not a direct PDF/EPUB URL.<br><br>Use <strong>Open Source</strong> or save a direct file link for in-app reading.';}</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ebook Reader</title>
+<script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+<style>
+:root{--bg:#0f172a;--panel:#111827;--soft:#1e293b;--line:#243244;--text:#e5e7eb;--muted:#94a3b8;--accent:#8b5cf6;--good:#22c55e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}.topbar{position:sticky;top:0;z-index:20;display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(15,23,42,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}.title-wrap h1{margin:0;font-size:18px}.title-wrap p{margin:4px 0 0;color:var(--muted);font-size:12px}.controls{display:flex;gap:8px;flex-wrap:wrap}button,a.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:10px 12px;border-radius:12px;cursor:pointer;text-decoration:none;font-weight:800;font-size:13px}button.primary,a.primary{background:linear-gradient(135deg,#4f46e5,#8b5cf6);border-color:transparent;color:#fff}button.good,a.good{background:linear-gradient(135deg,#16a34a,#059669);border-color:transparent;color:#fff}button:hover,a.btn:hover{border-color:var(--accent)}#frameWrap,#epubWrap{height:calc(100vh - 74px)}#pdfFrame{width:100%;height:100%;border:0;background:#fff}#viewer{width:100%;height:100%}.hidden{display:none!important}.msg{max-width:860px;margin:0 auto;padding:24px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0}.card h2{margin:0 0 8px;font-size:18px}.card p{color:var(--muted);line-height:1.55;margin:0 0 12px}.steps{display:grid;gap:8px;color:var(--muted);font-size:14px;line-height:1.45}.steps strong{color:var(--text)}.urlbox{word-break:break-all;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px;color:#cbd5e1;font-size:12px;margin-top:10px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:#cbd5e1;font-size:12px;font-weight:800;margin-bottom:10px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="title-wrap"><h1 id="bookTitle">Ebook Reader</h1><p id="bookMeta">Preparing ebook handoff.</p></div>
+  <div class="controls">
+    <button id="prevBtn" class="hidden">Prev</button>
+    <button id="nextBtn" class="hidden">Next</button>
+    <a id="sourceBtn" class="btn" href="#" target="_blank" rel="noopener noreferrer">Open Source</a>
+    <button id="externalBtn" class="good hidden" type="button">Download / Open with app</button>
+  </div>
+</div>
+<div id="frameWrap" class="hidden"><iframe id="pdfFrame"></iframe></div>
+<div id="epubWrap" class="hidden"><div id="viewer"></div></div>
+<main id="message" class="msg">No book URL supplied.</main>
+<script>
+const params=new URLSearchParams(location.search);
+const rawUrl=params.get('url')||'';
+const title=params.get('title')||'Ebook Reader';
+const forcedType=(params.get('type')||'').toLowerCase();
+const bookTitle=document.getElementById('bookTitle');
+const bookMeta=document.getElementById('bookMeta');
+const sourceBtn=document.getElementById('sourceBtn');
+const externalBtn=document.getElementById('externalBtn');
+const frameWrap=document.getElementById('frameWrap');
+const epubWrap=document.getElementById('epubWrap');
+const message=document.getElementById('message');
+const prevBtn=document.getElementById('prevBtn');
+const nextBtn=document.getElementById('nextBtn');
+bookTitle.textContent=title;
+
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function parseUrl(u){try{return new URL(u,location.href);}catch(e){return null;}}
+function driveId(u){
+  const p=parseUrl(u); if(!p || !p.hostname.includes('drive.google.com')) return '';
+  const fileMatch=p.pathname.match(/\/file\/d\/([^/]+)/); if(fileMatch) return fileMatch[1];
+  return p.searchParams.get('id')||'';
+}
+function driveLinks(u){
+  const id=driveId(u); if(!id) return null;
+  return {
+    id,
+    preview:'https://drive.google.com/file/d/'+id+'/view',
+    download:'https://drive.google.com/uc?export=download&id='+id
+  };
+}
+function extOf(u){
+  if(forcedType==='pdf'||forcedType==='epub') return forcedType;
+  const p=parseUrl(u); if(!p) return '';
+  const path=p.pathname.toLowerCase();
+  if(path.endsWith('.pdf')) return 'pdf';
+  if(path.endsWith('.epub')) return 'epub';
+  return '';
+}
+function showMessage(html){message.innerHTML=html;message.classList.remove('hidden');frameWrap.classList.add('hidden');epubWrap.classList.add('hidden');}
+function setupExternal(downloadUrl, sourceUrl, label){
+  sourceBtn.href=sourceUrl||downloadUrl||'#';
+  externalBtn.classList.remove('hidden');
+  externalBtn.onclick=function(){ location.href=downloadUrl||sourceUrl; };
+  if(label) bookMeta.textContent=label;
+}
+
+if(!rawUrl){
+  showMessage('<div class="card"><h2>No ebook link supplied.</h2><p>Edit this book and add a Google Drive share link or a direct PDF/EPUB link in Reader URL.</p></div>');
+}else{
+  const drive=driveLinks(rawUrl);
+  const ext=extOf(rawUrl);
+  if(drive){
+    setupExternal(drive.download, drive.preview, 'Google Drive file. Use download/open to hand off to your device reader.');
+    showMessage('<div class="card"><span class="pill">Google Drive file detected</span><h2>Use your device reader for this ebook.</h2><p>Google Drive links are not true direct ebook URLs, so the portal cannot reliably render them inside the browser. Use the button below to download the file; Android, iOS, Windows, or macOS will then offer the installed apps that can open it.</p><p><button class="good" type="button" onclick="location.href=\''+drive.download+'\'">Download / Open with app</button> <a class="btn" href="'+drive.preview+'" target="_blank" rel="noopener noreferrer">Open Drive Preview</a></p><div class="steps"><div><strong>Mobile:</strong> download the file, then choose your PDF/ebook reader from the browser download prompt or Downloads app.</div><div><strong>Desktop:</strong> download the file, then use your OS Open With menu if the browser does not ask automatically.</div></div><div class="urlbox">'+esc(drive.preview)+'</div></div>');
+  }else if(ext==='pdf'){
+    setupExternal(rawUrl, rawUrl, 'PDF loaded in browser view. External open is also available.');
+    frameWrap.classList.remove('hidden');message.classList.add('hidden');document.getElementById('pdfFrame').src=rawUrl;
+  }else if(ext==='epub'){
+    setupExternal(rawUrl, rawUrl, 'EPUB built-in reader, if the host allows browser access.');
+    epubWrap.classList.remove('hidden');message.classList.add('hidden');prevBtn.classList.remove('hidden');nextBtn.classList.remove('hidden');
+    try{
+      const book=ePub(rawUrl);
+      const rendition=book.renderTo('viewer',{width:'100%',height:'100%'});
+      rendition.display().catch(()=>showMessage('<div class="card"><h2>EPUB could not load in browser.</h2><p>The host may block browser access. Use Download / Open with app instead.</p></div>'));
+      prevBtn.onclick=()=>rendition.prev(); nextBtn.onclick=()=>rendition.next();
+    }catch(e){
+      showMessage('<div class="card"><h2>EPUB could not load in browser.</h2><p>Use Download / Open with app instead.</p></div>');
+    }
+  }else{
+    setupExternal(rawUrl, rawUrl, 'Unknown file type. External handoff is safest.');
+    showMessage('<div class="card"><h2>This is not a direct PDF/EPUB URL.</h2><p>The portal can still hand it to the browser/device, but for best results use a Google Drive file share link or a direct file URL.</p><p><button class="good" type="button" onclick="location.href=\''+esc(rawUrl)+'\'">Open / Download</button></p><div class="urlbox">'+esc(rawUrl)+'</div></div>');
+  }
+}
+</script>
+</body>
+</html>

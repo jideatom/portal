@@ -1,0 +1,10 @@
+{
+  "name": "Jideatom Learning Path",
+  "short_name": "Learning Path",
+  "description": "Personal learning portal for Linux, Python, AI, DevOps, cloud, courses, and playbook tracking.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f0f2f7",
+  "theme_color": "#0f172a"
+}
