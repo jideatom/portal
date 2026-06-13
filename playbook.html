@@ -415,7 +415,8 @@ body.dark .proj-item{background:rgba(17,27,42,.74)}
 (function(){
   const MONTHS=[['apr','April 2026','#8b5cf6'],['may','May 2026','#3b82f6'],['jun','June 2026','#10b981'],['jul','July 2026','#f59e0b'],['aug','August 2026','#f97316'],['sep','September 2026','#ef4444']];
   const monthsHost=document.getElementById('monthsHost');
-  let openMonth='may';
+  const _mKey={3:'apr',4:'may',5:'jun',6:'jul',7:'aug',8:'sep'};
+  let openMonth=_mKey[new Date().getMonth()]||MONTHS[MONTHS.length-1][0];
   function getGoals(){try{return JSON.parse(localStorage.getItem('goals_v1')||'{}')||{};}catch(e){return {};}}
   function setGoals(g){localStorage.setItem('goals_v1',JSON.stringify(g));}
   function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
