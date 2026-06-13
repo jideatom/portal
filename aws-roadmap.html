@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>AWS SA Roadmap</title>
+<style>
+:root{--bg:#f3f5fa;--card:#fff;--soft:#e9edf6;--text:#0f172a;--muted:#64748b;--line:#d9deea;--aws:#f97316;--aws2:#ea580c;--indigo:#6366f1;--green:#10b981;--red:#ef4444;--shadow:0 10px 30px rgba(15,23,42,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
+a{text-decoration:none;color:inherit} button{font-family:inherit;cursor:pointer}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.top-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--muted);background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:6px 11px;flex-shrink:0}
+.top-title{flex:1;font-size:14px;font-weight:800}
+.top-sub{font-size:10px;color:var(--muted);font-weight:600}
+
+/* COUNTDOWN STRIP */
+.countdown-strip{display:grid;grid-template-columns:1fr 1fr;background:linear-gradient(135deg,#f97316,#7c3aed);padding:10px 14px;gap:10px}
+@media(min-width:500px){.countdown-strip{grid-template-columns:1fr 1fr 1fr 1fr;gap:12px}}
+.cd-item{text-align:center}
+.cd-num{font-size:20px;font-weight:900;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.cd-lbl{font-size:9px;font-weight:800;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
+
+/* TABS */
+.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--line);background:var(--card);overflow-x:auto;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{padding:11px 16px;font-size:12px;font-weight:800;color:var(--muted);border:none;background:none;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
+.tab-btn.active{color:var(--aws);border-bottom-color:var(--aws)}
+
+/* WRAP */
+.wrap{width:min(860px,calc(100% - 24px));margin:0 auto;padding:14px 0 110px}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* PHASE HEADER */
+.phase-hdr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 13px;border-radius:13px;margin-bottom:10px}
+.phase-hdr.saa{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1.5px solid #fed7aa}
+.phase-hdr.sap{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1.5px solid #ddd6fe}
+.phase-label{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.phase-hdr.saa .phase-label{color:var(--aws)}
+.phase-hdr.sap .phase-label{color:var(--indigo)}
+.phase-title{font-size:14px;font-weight:800}
+.phase-sub{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+.phase-bar-wrap{min-width:80px}
+.phase-pct{font-size:16px;font-weight:900;text-align:right}
+.phase-hdr.saa .phase-pct{color:var(--aws)}
+.phase-hdr.sap .phase-pct{color:var(--indigo)}
+.phase-bar{height:6px;background:var(--soft);border-radius:99px;overflow:hidden;margin-top:4px}
+.phase-bar-fill{height:100%;border-radius:99px;transition:width .3s}
+.phase-hdr.saa .phase-bar-fill{background:var(--aws)}
+.phase-hdr.sap .phase-bar-fill{background:var(--indigo)}
+
+/* WEEK CARDS */
+.weeks-list{display:grid;gap:8px;margin-bottom:16px}
+.week-card{background:var(--card);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);overflow:hidden}
+.week-card.exam-week{border-color:#a855f7;box-shadow:0 0 0 2px rgba(168,85,247,.15),var(--shadow)}
+.week-head{display:flex;align-items:center;gap:10px;padding:11px 13px;cursor:pointer;user-select:none}
+.week-badge{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0}
+.saa .week-badge{background:linear-gradient(135deg,#f97316,#ea580c)}
+.sap .week-badge{background:linear-gradient(135deg,#6366f1,#7c3aed)}
+.exam-week .week-badge{background:linear-gradient(135deg,#a855f7,#7c3aed)}
+.week-info{flex:1;min-width:0}
+.week-title{font-size:13px;font-weight:800;line-height:1.2}
+.week-meta{font-size:10px;color:var(--muted);font-weight:600;margin-top:2px}
+.week-prog{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.week-frac{font-size:10px;font-weight:800;color:var(--muted)}
+.week-chev{font-size:12px;color:var(--muted);transition:transform .2s;flex-shrink:0}
+.week-card.open .week-chev{transform:rotate(90deg)}
+.week-body{display:none;padding:0 13px 13px;border-top:1px solid var(--line)}
+.week-card.open .week-body{display:block}
+.topic-list{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.topic-item{display:flex;align-items:flex-start;gap:9px;font-size:12px;font-weight:600;line-height:1.4;cursor:pointer}
+.topic-item input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:1px;accent-color:var(--aws);cursor:pointer}
+.topic-item.done{color:var(--muted);text-decoration:line-through}
+.lab-box{margin-top:10px;padding:9px 11px;border-radius:9px;background:#fff7ed;border:1px solid #fed7aa;font-size:11px;font-weight:600;line-height:1.45;color:#7c2d12}
+.lab-box strong{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:#ea580c;font-weight:900;margin-bottom:4px}
+.exam-badge-box{margin-top:10px;padding:9px 11px;border-radius:9px;background:#f5f3ff;border:1px solid #ddd6fe;font-size:11px;font-weight:600;color:#4c1d95}
+.exam-badge-box strong{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:#7c3aed;font-weight:900;margin-bottom:4px}
+
+/* SCORES TAB */
+.scores-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.scores-hdr h2{margin:0;font-size:14px;font-weight:800}
+.log-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 13px;border-radius:99px;background:var(--aws);color:#fff;font-size:11px;font-weight:800;border:none}
+.score-chart{display:grid;gap:6px;margin-bottom:16px}
+.sc-row{display:grid;grid-template-columns:80px 1fr auto;gap:10px;align-items:center;font-size:11px;padding:8px 11px;background:var(--soft);border-radius:9px;border:1px solid var(--line)}
+.sc-date{font-size:10px;color:var(--muted);font-weight:700}
+.sc-bar-wrap{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.sc-bar-fill{height:100%;border-radius:99px;transition:width .3s}
+.sc-pct{font-size:13px;font-weight:900;min-width:36px;text-align:right}
+.sc-target-line{font-size:10px;color:var(--muted);font-weight:700;margin-bottom:6px;padding-left:90px}
+.scores-empty{text-align:center;padding:24px;color:var(--muted);font-size:12px;font-weight:600}
+.score-modal{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px}
+.score-modal.open{display:flex}
+.score-modal-card{background:var(--card);border-radius:18px;padding:18px;width:min(380px,100%);box-shadow:0 24px 80px rgba(0,0,0,.3)}
+.score-modal-card h3{margin:0 0 14px;font-size:15px;font-weight:800}
+.score-field{display:grid;gap:5px;margin-bottom:12px;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.score-field input,.score-field select,.score-field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 11px;font:inherit;font-size:13px;font-weight:700;background:var(--soft)}
+.score-field textarea{min-height:60px;resize:vertical}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+.modal-actions button{border:0;border-radius:10px;padding:10px 14px;font-weight:900;font-size:12px}
+.btn-save{background:var(--aws);color:#fff}
+.btn-cancel{background:var(--soft);color:var(--text)}
+
+/* CHECKLIST TAB */
+.cl-section{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:13px;margin-bottom:12px;box-shadow:var(--shadow)}
+.cl-section h3{margin:0 0 10px;font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px}
+.cl-list{display:grid;gap:7px}
+.cl-item{display:flex;align-items:flex-start;gap:9px;font-size:12px;font-weight:600;line-height:1.4;cursor:pointer}
+.cl-item input{width:15px;height:15px;flex-shrink:0;margin-top:1px;accent-color:var(--green);cursor:pointer}
+.cl-item.done{color:var(--muted);text-decoration:line-through}
+.resources-card{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1.5px solid #fed7aa;border-radius:13px;padding:13px;margin-bottom:12px}
+.resources-card h3{margin:0 0 10px;font-size:13px;font-weight:800;color:#7c2d12}
+.res-list{display:grid;gap:7px}
+.res-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;font-weight:600;line-height:1.4}
+.res-dot{width:6px;height:6px;border-radius:50%;background:#f97316;flex-shrink:0;margin-top:4px}
+
+/* NAV */
+.bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:min(480px,calc(100% - 24px));background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border:1.5px solid rgba(255,255,255,.8);border-radius:26px;box-shadow:0 4px 24px rgba(15,23,42,.10);padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:4px;z-index:999}
+.bottom-nav a{text-decoration:none;color:#94a3b8;font-size:10px;font-weight:900;text-align:center;padding:10px 6px;border-radius:20px;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:52px;justify-content:center}
+.bottom-nav a.active{background:linear-gradient(145deg,#4f46e5,#7c3aed);color:#fff}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="top-back" href="cloud.html">&#8592; Cloud</a>
+  <div style="flex:1">
+    <div class="top-title">🏅 AWS SA Roadmap</div>
+    <div class="top-sub">SAA-C03 → SAP-C02 · Jun 13 – Dec 12, 2026</div>
+  </div>
+</div>
+
+<div class="countdown-strip" id="countdownStrip">
+  <div class="cd-item"><div class="cd-num" id="cdSaaDays">--</div><div class="cd-lbl">SAA Days</div></div>
+  <div class="cd-item"><div class="cd-num" id="cdSapDays">--</div><div class="cd-lbl">SAP Days</div></div>
+  <div class="cd-item"><div class="cd-num" id="cdSaaProgress">0%</div><div class="cd-lbl">SAA Done</div></div>
+  <div class="cd-item"><div class="cd-num" id="cdSapProgress">0%</div><div class="cd-lbl">SAP Done</div></div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="roadmap">📅 Roadmap</button>
+  <button class="tab-btn" data-tab="scores">📊 Practice Scores</button>
+  <button class="tab-btn" data-tab="checklist">✅ Pre-Exam Checklist</button>
+</div>
+
+<div class="wrap">
+
+  <!-- ROADMAP TAB -->
+  <div class="tab-panel active" id="tab-roadmap">
+
+    <!-- SAA PHASE -->
+    <div class="phase-hdr saa" id="saaHdr">
+      <div>
+        <div class="phase-label">Phase 1</div>
+        <div class="phase-title">Solutions Architect Associate (SAA-C03)</div>
+        <div class="phase-sub">Weeks 1–12 · Exam target: Sept 12, 2026</div>
+      </div>
+      <div class="phase-bar-wrap">
+        <div class="phase-pct" id="saaPct">0%</div>
+        <div class="phase-bar"><div class="phase-bar-fill" id="saaFill" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="weeks-list" id="saaWeeks"></div>
+
+    <!-- SAP PHASE -->
+    <div class="phase-hdr sap" id="sapHdr">
+      <div>
+        <div class="phase-label">Phase 2</div>
+        <div class="phase-title">Solutions Architect Professional (SAP-C02)</div>
+        <div class="phase-sub">Weeks 13–24 · Exam target: Dec 12, 2026</div>
+      </div>
+      <div class="phase-bar-wrap">
+        <div class="phase-pct" id="sapPct">0%</div>
+        <div class="phase-bar"><div class="phase-bar-fill" id="sapFill" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="weeks-list" id="sapWeeks"></div>
+
+  </div>
+
+  <!-- SCORES TAB -->
+  <div class="tab-panel" id="tab-scores">
+    <div class="scores-hdr">
+      <h2>Practice Exam Scores</h2>
+      <button class="log-btn" onclick="openScoreModal()">+ Log Score</button>
+    </div>
+    <div id="saaScoresSection">
+      <div style="font-size:12px;font-weight:800;margin-bottom:6px">SAA-C03 Scores <span style="color:var(--muted);font-weight:600">(target: 85%)</span></div>
+      <div class="sc-target-line">── 85% target ──────────────────────────────────</div>
+      <div class="score-chart" id="saaScoreChart"></div>
+    </div>
+    <div style="margin-top:16px" id="sapScoresSection">
+      <div style="font-size:12px;font-weight:800;margin-bottom:6px">SAP-C02 Scores <span style="color:var(--muted);font-weight:600">(target: 80%)</span></div>
+      <div class="sc-target-line">── 80% target ──────────────────────────────────</div>
+      <div class="score-chart" id="sapScoreChart"></div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST TAB -->
+  <div class="tab-panel" id="tab-checklist">
+    <div class="resources-card">
+      <h3>📚 Key Resources</h3>
+      <div class="res-list">
+        <div class="res-item"><span class="res-dot"></span><span><strong>Primary:</strong> Adrian Cantrill SAA-C03 + SAP-C02 (cantrill.io)</span></div>
+        <div class="res-item"><span class="res-dot"></span><span><strong>Practice exams:</strong> Tutorials Dojo (Jon Bonso) — SAA + SAP sets</span></div>
+        <div class="res-item"><span class="res-dot"></span><span><strong>Backup course:</strong> Stephane Maarek (Udemy) for quick second pass</span></div>
+        <div class="res-item"><span class="res-dot"></span><span><strong>Whitepapers:</strong> Well-Architected Framework, DR, Organizations best practices</span></div>
+        <div class="res-item"><span class="res-dot"></span><span><strong>Practice portal:</strong> <a href="https://aws.amazon.com/certification/certified-solutions-architect-associate/" target="_blank" style="color:var(--aws2)">aws.amazon.com/certification</a></span></div>
+      </div>
+    </div>
+    <div class="cl-section" id="saaChecklist">
+      <h3>🟠 SAA-C03 Pre-Exam Checklist</h3>
+      <div class="cl-list" id="saaClItems"></div>
+    </div>
+    <div class="cl-section" id="sapChecklist">
+      <h3>🟣 SAP-C02 Pre-Exam Checklist</h3>
+      <div class="cl-list" id="sapClItems"></div>
+    </div>
+  </div>
+
+</div><!-- .wrap -->
+
+<!-- SCORE MODAL -->
+<div class="score-modal" id="scoreModal">
+  <div class="score-modal-card">
+    <h3>Log Practice Score</h3>
+    <div class="score-field">
+      <label>Exam</label>
+      <select id="scoreExam">
+        <option value="SAA">SAA-C03</option>
+        <option value="SAP">SAP-C02</option>
+      </select>
+    </div>
+    <div class="score-field">
+      <label>Score (%)</label>
+      <input type="number" id="scoreVal" min="0" max="100" placeholder="e.g. 78"/>
+    </div>
+    <div class="score-field">
+      <label>Notes (optional)</label>
+      <textarea id="scoreNote" placeholder="What tripped you up? What to review?"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeScoreModal()">Cancel</button>
+      <button class="btn-save" onclick="saveScore()">Save</button>
+    </div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html">🏠<span>Home</span></a>
+  <a href="courses.html">📚<span>Courses</span></a>
+  <a href="playbook.html">📘<span>Playbook</span></a>
+  <a href="career.html">🎯<span>Hub</span></a>
+  <a href="settings.html">⚙️<span>Settings</span></a>
+</nav>
+
+<script src="assets/js/portal-product.js"></script>
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+
+const WEEKS = [
+  {n:1,phase:'SAA',title:'AWS Foundations + IAM',
+   topics:['IAM — users, groups, roles, policies, permission boundaries','Root account security + MFA on root','Billing alerts, AWS Budgets, Cost Explorer basics','Global Infrastructure — regions, AZs, edge locations, PoPs','Shared Responsibility Model — know this cold'],
+   lab:'Create IAM admin user, enable root MFA, set billing alarm (<$10). Test IAM policy deny.'},
+  {n:2,phase:'SAA',title:'EC2 Deep Dive',
+   topics:['Instance types and families (c, m, r, t, p…)','Pricing: On-Demand, Reserved, Spot, Savings Plans — when to use each','AMIs, launch templates, user data scripts','EBS types: gp3, io2, st1, sc1 — IOPS vs throughput vs cost','Placement groups: cluster / spread / partition'],
+   lab:'Launch EC2 in public + private subnet. Access private instance via SSM Session Manager (no bastion). Attach and resize EBS volume live.'},
+  {n:3,phase:'SAA',title:'VPC & Networking — Your Superpower',
+   topics:['VPC CIDR design, public vs private subnets','IGW, NAT Gateway, Route Tables — know the flow cold','NACLs vs Security Groups (stateless vs stateful)','VPC Peering, Transit Gateway intro','VPC Endpoints: Gateway (S3/DynamoDB) vs Interface (PrivateLink)'],
+   lab:'Build 3-tier VPC from scratch: public/private/data subnets, NAT GW, IGW, route tables. Verify connectivity at each layer.'},
+  {n:4,phase:'SAA',title:'S3 + CloudFront',
+   topics:['S3 storage classes: Standard, IA, One Zone-IA, Glacier, Glacier Deep Archive, Intelligent-Tiering','S3 lifecycle policies, versioning, MFA Delete, replication (CRR/SRR)','S3 pre-signed URLs, access points, Object Lock (WORM)','CloudFront distributions, origins, OAI vs OAC, cache behaviors, invalidations','S3 Transfer Acceleration, Multipart Upload thresholds'],
+   lab:'S3 static website + CloudFront distribution. Test OAC blocking direct S3 access. Set up lifecycle rule archiving objects to Glacier after 90d.'},
+  {n:5,phase:'SAA',title:'Databases I — RDS + Aurora',
+   topics:['RDS engines: MySQL, PostgreSQL, MariaDB, Oracle, SQL Server','Multi-AZ (standby failover) vs Read Replicas (performance) — exam trap','Automated backups, manual snapshots, restore to point-in-time','Aurora architecture: cluster volume, 6-way replication across 3 AZs','Aurora Serverless v2, RDS Proxy, parameter groups vs option groups'],
+   lab:'Create RDS PostgreSQL Multi-AZ. Force a failover and observe DNS flip time. Create read replica in different AZ.'},
+  {n:6,phase:'SAA',title:'Databases II — DynamoDB, ElastiCache, Others',
+   topics:['DynamoDB: partition key, sort key, composite keys, GSI vs LSI','DynamoDB capacity: provisioned vs on-demand, auto scaling, DAX','DynamoDB Streams, TTL, global tables (multi-region active-active)','ElastiCache: Redis (persistence, replication) vs Memcached (pure cache)','Redshift overview, Neptune overview, DocumentDB — know use cases'],
+   lab:'Create DynamoDB table with GSI. Enable DynamoDB Streams + trigger Lambda on inserts. Set up ElastiCache Redis cluster.'},
+  {n:7,phase:'SAA',title:'Serverless — Lambda + API Gateway',
+   topics:['Lambda: runtimes, execution role, memory/timeout/layers, env vars','Lambda concurrency: reserved vs provisioned, cold starts','Lambda@Edge and CloudFront Functions — when each applies','API Gateway: REST vs HTTP vs WebSocket APIs, authorizers, stages','Step Functions: Standard vs Express, state machine patterns'],
+   lab:'Lambda + API Gateway REST API + DynamoDB CRUD backend. Add Lambda authorizer. Test cold start vs provisioned concurrency.'},
+  {n:8,phase:'SAA',title:'Messaging + Events — SQS, SNS, EventBridge',
+   topics:['SQS: standard vs FIFO, visibility timeout, DLQ, long polling vs short polling','SQS: message retention, batch processing, Lambda trigger','SNS: topics, subscriptions, fan-out pattern (SNS → multiple SQS)','EventBridge: event buses, rules, targets, scheduled events (cron)','Kinesis Data Streams vs Firehose vs Analytics — know the differences'],
+   lab:'SNS → SQS fan-out: one SNS topic to two SQS queues with different filters. Add Lambda triggered by SQS. EventBridge cron rule calling Lambda.'},
+  {n:9,phase:'SAA',title:'High Availability + Auto Scaling + Route 53',
+   topics:['ALB vs NLB vs CLB — which layer, which use case','ALB listener rules, target groups, health checks, sticky sessions','Auto Scaling groups, launch templates, scaling policies (target tracking, step, scheduled)','Route 53 routing policies: simple, failover, geolocation, latency, weighted, multivalue','Route 53 health checks + DNS failover patterns'],
+   lab:'ALB + ASG with CPU target tracking. Route 53 failover between two ALBs in different regions. Test health check failover.'},
+  {n:10,phase:'SAA',title:'IaC + Monitoring + Operations',
+   topics:['CloudFormation: templates (YAML), stacks, change sets, nested stacks, drift detection, rollback','CloudWatch: metrics, custom metrics, logs, log groups, metric filters, alarms, dashboards','CloudTrail: management events vs data events, trail to S3, CloudTrail Insights','AWS Config: rules, remediation, conformance packs','Systems Manager: Parameter Store, Secrets Manager, Session Manager, Patch Manager'],
+   lab:'CloudFormation stack: VPC + EC2 + SG + EIP in YAML. CloudWatch alarm → SNS → email on CPU > 70%. SSM Parameter Store for env secrets.'},
+  {n:11,phase:'SAA',title:'Security Deep Dive',
+   topics:['KMS: CMKs, key policies, grants, envelope encryption, key rotation','ACM: public vs private certs, certificate validation, integration with ALB/CloudFront','WAF: web ACLs, managed rules, custom rules, IP sets; Shield Standard vs Advanced','GuardDuty, Inspector v2, Macie — what each detects','Cognito: User Pools (auth) vs Identity Pools (authz) — exam trap; STS AssumeRole'],
+   lab:'Enable GuardDuty. Create KMS CMK, encrypt EBS volume. Set up WAF ACL on ALB with rate-limiting rule. Cognito user pool + app client.'},
+  {n:12,phase:'SAA',title:'SAA Practice Exam Blitz',examWeek:true,
+   topics:['2 full Tutorials Dojo mock exams per day (timed)','Deep-review every wrong answer — understand WHY, not just the right answer','Revisit weak areas: database use cases, IAM edge cases, cost optimization','Re-read SAA whitepaper summaries + AWS FAQs for EC2, S3, VPC','Book exam when consistently scoring 85%+ on fresh TD sets'],
+   lab:'No new labs. Terminate all running resources. Focus 100% on practice exam review.'},
+  {n:13,phase:'SAP',title:'SAP Orientation + AWS Organizations + SCPs',
+   topics:['How SAP differs from SAA: long scenarios, multi-constraint architecture tradeoffs','AWS Organizations: OUs, management account, member accounts, consolidated billing','Service Control Policies (SCPs): deny by default, allow vs deny strategies, inheritance','Permission Boundaries: how they differ from SCPs','AWS Config: cross-account aggregator setup'],
+   lab:'Create AWS Organization with 2 accounts. Write SCP that restricts member accounts to us-east-1 and eu-west-1 only. Test enforcement.'},
+  {n:14,phase:'SAP',title:'Control Tower + Landing Zone + Account Vending',
+   topics:['AWS Control Tower: landing zone, shared accounts (log archive, audit)','Guardrails: preventive (SCP-based) vs detective (Config-based)','Account Factory: automated account provisioning patterns','AWS Service Catalog: product portfolio, launch constraints, self-service provisioning','Centralized logging architecture: CloudTrail + S3 + GuardDuty aggregation'],
+   lab:'Enable Control Tower in dev account. Explore Account Factory. Review built-in guardrails. Plan log-archive account design.'},
+  {n:15,phase:'SAP',title:'Advanced VPC + Hybrid Networking — Your Edge',
+   topics:['Transit Gateway: attachments (VPC, VPN, DX), route tables, peering across regions/accounts','Direct Connect: private VIF, public VIF, transit VIF, LAG, redundancy patterns','DX + VPN as active/passive failover — know the routing behavior','AWS VPN: Site-to-Site (IKEv2, BGP), Client VPN (OpenVPN)','Route 53 Resolver: inbound/outbound endpoints, forwarding rules for hybrid DNS','AWS Network Firewall vs WAF vs Security Groups — layered defense'],
+   lab:'Transit Gateway connecting 3 VPCs with custom route tables. Simulate DX failover to VPN using BGP AS path prepending.'},
+  {n:16,phase:'SAP',title:'Migration Strategies',
+   topics:['7 Rs: Retire, Retain, Rehost (lift&shift), Replatform, Repurchase, Refactor, Relocate','AWS Migration Hub: tracking migrations across tools','Application Migration Service (MGN): agentless vs agent-based, cutover process','DMS: homogeneous vs heterogeneous, CDC replication, SCT for schema conversion','Snow family: Snowcone (8TB), Snowball Edge (up to 210TB), Snowmobile (100PB) — when each','DataSync: accelerated online transfer; Transfer Family: SFTP/FTP/FTPS to S3/EFS'],
+   lab:'DMS replication instance + task (MySQL → RDS PostgreSQL). Test full-load then CDC. DataSync agent configuration.'},
+  {n:17,phase:'SAP',title:'Advanced IAM + Identity Federation',
+   topics:['SAML 2.0 federation: AssumeRoleWithSAML — corporate AD → AWS','OIDC federation: AssumeRoleWithWebIdentity — web/mobile apps','Cross-account role assumption: trust policies, external ID for third-party','IAM Identity Center (SSO): permission sets, multi-account access, SCIM provisioning','AWS Managed Microsoft AD vs AD Connector vs Simple AD — know the use case boundaries','Resource-based policies vs identity-based policies — when each applies'],
+   lab:'Cross-account role: Account A assumes role in Account B using trust policy. IAM Identity Center: set up with AWS Managed AD.'},
+  {n:18,phase:'SAP',title:'Disaster Recovery Patterns',
+   topics:['RTO vs RPO — memorize the definition, know what drives cost','4 DR strategies: Backup&Restore (hours RTO), Pilot Light (minutes RTO), Warm Standby (sub-minute), Multi-Site Active-Active (near-zero)','DR for RDS: cross-region read replica promote, snapshot copy','DR for EC2: AMI copy cross-region, ASG in standby region, Route 53 failover','Elastic Disaster Recovery (CloudEndure): continuous replication, minimal RTO/RPO','Region selection for DR: regulatory constraints, latency, service availability'],
+   lab:'Multi-AZ RDS with Route 53 failover routing. AMI copy to second region. Test Route 53 health check failover with HTTP check.'},
+  {n:19,phase:'SAP',title:'Cost Governance at Scale',
+   topics:['Savings Plans: Compute vs EC2 Instance vs SageMaker — flexibility hierarchy','Reserved Instances: Standard vs Convertible, zonal vs regional','Cost Explorer: usage patterns, RI recommendations, Savings Plans recommendations','Cost Anomaly Detection: monitors, alert thresholds, subscriptions','AWS Budgets: cost/usage/RI/Savings Plans budgets, Budget Actions (SCP, IAM, EC2 stop)','Compute Optimizer, Trusted Advisor — cost and performance recommendations','Tag policies in Organizations, cost allocation tags'],
+   lab:'Set up Cost Anomaly Detection monitor. Create Budget with SNS alert. Use Cost Explorer to analyze last 3 months of usage. Tag all resources.'},
+  {n:20,phase:'SAP',title:'Security at Scale',
+   topics:['Security Hub: aggregation across accounts/regions, security standards (CIS, PCI, FSBP)','AWS Config: conformance packs, auto-remediation with SSM Automation documents','Amazon Inspector v2: EC2 + Lambda + ECR scanning, vulnerability findings','Amazon Macie: S3 sensitive data discovery, findings, classification jobs','Security Lake: centralized OCSF log aggregation, Glue/Athena integration','Detective: graph-based investigation of GuardDuty/Security Hub findings','CloudTrail Lake: immutable log aggregation, SQL-based query'],
+   lab:'Enable Security Hub in org management account + auto-enable in member accounts. Create Config rule with Lambda auto-remediation for unencrypted S3 buckets.'},
+  {n:21,phase:'SAP',title:'Advanced Networking + Edge Services',
+   topics:['Direct Connect: Dedicated vs Hosted connections, resilience patterns (HA, maximum)','Global Accelerator: static anycast IPs, endpoint groups, weighted routing — vs CloudFront','Route 53 advanced: private hosted zones, split-horizon DNS, DNSSEC','VPC sharing with Resource Access Manager: shared subnets across accounts','AWS PrivateLink: endpoint services, NLB backing, consumer/provider model','Egress-only Internet Gateway (IPv6 NAT), IPv6 in VPC design'],
+   lab:'Global Accelerator with two regional ALB endpoints — compare latency vs direct ALB. Route 53 private hosted zone with hybrid resolver endpoint.'},
+  {n:22,phase:'SAP',title:'Well-Architected Framework + Whitepapers',
+   topics:['Pillar 1 — Operational Excellence: IaC, observability, runbooks, frequent small changes','Pillar 2 — Security: IAM least privilege, data protection, detective controls','Pillar 3 — Reliability: availability targets, resiliency patterns, chaos engineering','Pillar 4 — Performance Efficiency: right instance selection, global architecture','Pillar 5 — Cost Optimization: consumption model, expenditure awareness','Pillar 6 — Sustainability: utilization efficiency, carbon footprint reduction'],
+   lab:'Run AWS Well-Architected Tool review on one of your existing workloads. Read DR whitepaper + Organizations best practices whitepaper.'},
+  {n:23,phase:'SAP',title:'SAP Practice Exam Intensive',
+   topics:['2 full Tutorials Dojo SAP sets daily (timed, 75 questions each)','Deep-review every wrong answer — SAP wrong answers are concept gaps, not lucky misses','Focus areas: Organizations + multi-account, hybrid networking, migration, DR scenarios','Long question stamina: practice reading 200-word scenarios before answering','Book exam when consistently scoring 80%+ on fresh TD SAP sets'],
+   lab:'No new labs. All energy on practice exam + review cycle.'},
+  {n:24,phase:'SAP',title:'Final Review + Buffer',examWeek:true,
+   topics:['Targeted review of weakest services from practice exams','Re-read key whitepaper summaries: WAF, DR, Organizations, security','Service limits and quotas — a few SAP questions test awareness','Last TD set 2-3 days before exam. Stop heavy study 48h before exam.','Sleep, hydrate, review your own notes — not new material'],
+   lab:'Terminate any running resources. Confirm exam booking. Review your personal notes one final time.'},
+];
+
+const SAA_CHECKLIST = [
+  'Scoring 85%+ consistently on fresh Tutorials Dojo SAA sets',
+  'Completed all Adrian Cantrill SAA modules + hands-on demos',
+  'Built VPC from scratch (subnets, NAT GW, IGW, route tables, SG, NACL)',
+  'Built serverless backend: Lambda + API Gateway + DynamoDB',
+  'Can explain Multi-AZ vs Read Replica difference without notes',
+  'Can explain SQS Standard vs FIFO vs SNS fan-out trade-offs',
+  'Know all S3 storage classes and their access pattern use cases',
+  'Know IAM: users, groups, roles, policies, permission boundaries, STS',
+  'Know Route 53 all routing policies and when to use each',
+  'Know EBS types and when to use gp3 vs io2 vs st1',
+  'Confirmed exam booking at Pearson VUE (or test center near you)',
+  'Government photo ID ready for exam day',
+  'Exam fee paid ($150 USD)'
+];
+
+const SAP_CHECKLIST = [
+  'Scoring 80%+ consistently on fresh Tutorials Dojo SAP sets',
+  'SAA-C03 already passed ✓',
+  'Completed Adrian Cantrill SAP-C02 course',
+  'Can design multi-account strategy with OUs, SCPs, Control Tower',
+  'Can explain all 4 DR strategies and their RTO/RPO characteristics',
+  'Can design hybrid networking with DX + Transit Gateway + Route 53 Resolver',
+  'Familiar with all 7 migration Rs and which AWS service supports each',
+  'Read Well-Architected Framework whitepaper (all 6 pillars)',
+  'Read AWS Disaster Recovery whitepaper',
+  'Read Organizations + multi-account best practices whitepaper',
+  'Can explain SAML federation flow and cross-account role assumption',
+  'Know Security Hub, GuardDuty, Inspector, Macie — what each detects',
+  'Know Savings Plans vs RI trade-offs and when to recommend each',
+  'Confirmed exam booking at Pearson VUE ($300 USD)',
+  'Government photo ID ready for exam day'
+];
+
+// ── STATE KEYS ────────────────────────────────────────────────────────────────
+const PROGRESS_KEY = 'aws_roadmap_progress_v1';
+const SCORES_KEY   = 'aws_roadmap_scores_v1';
+const CL_KEY       = 'aws_roadmap_checklist_v1';
+
+function getProgress(){ try{return JSON.parse(localStorage.getItem(PROGRESS_KEY)||'{}')}catch(e){return{}} }
+function saveProgress(d){ localStorage.setItem(PROGRESS_KEY,JSON.stringify(d)) }
+function getScores(){ try{return JSON.parse(localStorage.getItem(SCORES_KEY)||'[]')}catch(e){return[]} }
+function saveScores(d){ localStorage.setItem(SCORES_KEY,JSON.stringify(d)) }
+function getCL(){ try{return JSON.parse(localStorage.getItem(CL_KEY)||'{}')}catch(e){return{}} }
+function saveCL(d){ localStorage.setItem(CL_KEY,JSON.stringify(d)) }
+
+// ── COUNTDOWNS ────────────────────────────────────────────────────────────────
+const SAA_DATE = new Date('2026-09-12');
+const SAP_DATE = new Date('2026-12-12');
+function updateCountdowns(){
+  const now = Date.now();
+  document.getElementById('cdSaaDays').textContent = Math.max(0,Math.ceil((SAA_DATE-now)/86400000));
+  document.getElementById('cdSapDays').textContent = Math.max(0,Math.ceil((SAP_DATE-now)/86400000));
+  updatePhaseProgress();
+}
+
+// ── PHASE PROGRESS ────────────────────────────────────────────────────────────
+function updatePhaseProgress(){
+  const prog = getProgress();
+  let saaTotal=0,saaDone=0,sapTotal=0,sapDone=0;
+  WEEKS.forEach(w=>{
+    const wTotal = w.topics.length;
+    const wDone  = w.topics.filter((_,i)=> prog[w.n+'_'+i]).length;
+    if(w.phase==='SAA'){ saaTotal+=wTotal; saaDone+=wDone; }
+    else               { sapTotal+=wTotal; sapDone+=wDone; }
+  });
+  const saaPct = saaTotal ? Math.round(saaDone/saaTotal*100) : 0;
+  const sapPct = sapTotal ? Math.round(sapDone/sapTotal*100) : 0;
+  document.getElementById('saaPct').textContent = saaPct+'%';
+  document.getElementById('sapPct').textContent = sapPct+'%';
+  document.getElementById('saaFill').style.width = saaPct+'%';
+  document.getElementById('sapFill').style.width = sapPct+'%';
+  document.getElementById('cdSaaProgress').textContent = saaPct+'%';
+  document.getElementById('cdSapProgress').textContent = sapPct+'%';
+}
+
+// ── RENDER WEEKS ──────────────────────────────────────────────────────────────
+function renderWeeks(){
+  const prog = getProgress();
+  ['SAA','SAP'].forEach(phase=>{
+    const container = document.getElementById(phase.toLowerCase()+'Weeks');
+    const weeks = WEEKS.filter(w=>w.phase===phase);
+    container.innerHTML = weeks.map(w=>{
+      const done  = w.topics.filter((_,i)=>prog[w.n+'_'+i]).length;
+      const total = w.topics.length;
+      const isOpen = prog['open_'+w.n];
+      return `<div class="week-card ${phase.toLowerCase()}${w.examWeek?' exam-week':''}${isOpen?' open':''}" data-week="${w.n}">
+        <div class="week-head" onclick="toggleWeek(${w.n})">
+          <div class="week-badge">W${w.n}</div>
+          <div class="week-info">
+            <div class="week-title">${w.title}${w.examWeek?' 🎯':''}</div>
+            <div class="week-meta">${phase} · ${w.topics.length} topics${w.examWeek?' · EXAM WEEK':''}</div>
+          </div>
+          <div class="week-prog">
+            <span class="week-frac">${done}/${total}</span>
+          </div>
+          <div class="week-chev">▶</div>
+        </div>
+        <div class="week-body">
+          <ul class="topic-list">
+            ${w.topics.map((t,i)=>`<li class="topic-item${prog[w.n+'_'+i]?' done':''}" onclick="toggleTopic(${w.n},${i})">
+              <input type="checkbox" ${prog[w.n+'_'+i]?'checked':''} onclick="event.stopPropagation();toggleTopic(${w.n},${i})"/>
+              <span>${t}</span>
+            </li>`).join('')}
+          </ul>
+          <div class="${w.examWeek?'exam-badge-box':'lab-box'}">
+            <strong>${w.examWeek?'📋 Exam Prep':'🛠 Hands-On Lab'}</strong>
+            ${w.lab}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  });
+}
+
+function toggleWeek(n){
+  const prog = getProgress();
+  prog['open_'+n] = !prog['open_'+n];
+  saveProgress(prog);
+  const card = document.querySelector('[data-week="'+n+'"]');
+  if(card) card.classList.toggle('open', !!prog['open_'+n]);
+}
+
+function toggleTopic(weekN, idx){
+  const prog = getProgress();
+  prog[weekN+'_'+idx] = !prog[weekN+'_'+idx];
+  saveProgress(prog);
+  const card = document.querySelector('[data-week="'+weekN+'"]');
+  if(card){
+    const items = card.querySelectorAll('.topic-item');
+    const cbs   = card.querySelectorAll('.topic-item input');
+    if(items[idx]) items[idx].classList.toggle('done',!!prog[weekN+'_'+idx]);
+    if(cbs[idx])   cbs[idx].checked = !!prog[weekN+'_'+idx];
+    const total = items.length;
+    const done  = [...items].filter(li=>li.classList.contains('done')).length;
+    const frac  = card.querySelector('.week-frac');
+    if(frac) frac.textContent = done+'/'+total;
+  }
+  updatePhaseProgress();
+}
+
+// ── SCORES ────────────────────────────────────────────────────────────────────
+function renderScores(){
+  const scores = getScores();
+  ['SAA','SAP'].forEach(exam=>{
+    const target = exam==='SAA'?85:80;
+    const list   = scores.filter(s=>s.exam===exam);
+    const el     = document.getElementById(exam.toLowerCase()+'ScoreChart');
+    if(!list.length){ el.innerHTML='<div class="scores-empty">No scores logged yet. Take a practice set and log it here.</div>'; return; }
+    el.innerHTML = list.map(s=>{
+      const pct  = parseInt(s.score)||0;
+      const col  = pct>=target?'var(--green)':pct>=(target-10)?'var(--aws)':'var(--red)';
+      const date = new Date(s.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+      return `<div class="sc-row">
+        <div class="sc-date">${date}</div>
+        <div class="sc-bar-wrap"><div class="sc-bar-fill" style="width:${pct}%;background:${col}"></div></div>
+        <div class="sc-pct" style="color:${col}">${pct}%</div>
+      </div>${s.note?`<div style="font-size:10px;color:var(--muted);font-weight:600;padding:2px 0 4px 90px">${s.note}</div>`:''}`;
+    }).join('');
+  });
+}
+
+function openScoreModal(){ document.getElementById('scoreModal').classList.add('open'); }
+function closeScoreModal(){ document.getElementById('scoreModal').classList.remove('open'); }
+function saveScore(){
+  const exam  = document.getElementById('scoreExam').value;
+  const score = document.getElementById('scoreVal').value;
+  const note  = document.getElementById('scoreNote').value.trim();
+  if(!score||isNaN(parseInt(score))){ alert('Enter a valid score.'); return; }
+  const scores = getScores();
+  scores.push({ exam, score:parseInt(score), note, date: Date.now() });
+  saveScores(scores);
+  document.getElementById('scoreVal').value='';
+  document.getElementById('scoreNote').value='';
+  closeScoreModal();
+  renderScores();
+}
+document.getElementById('scoreModal').addEventListener('click',function(e){
+  if(e.target===this) closeScoreModal();
+});
+
+// ── CHECKLIST ─────────────────────────────────────────────────────────────────
+function renderChecklist(){
+  const cl = getCL();
+  [['SAA',SAA_CHECKLIST,'saaClItems'],['SAP',SAP_CHECKLIST,'sapClItems']].forEach(([exam,items,elId])=>{
+    const el = document.getElementById(elId);
+    el.innerHTML = items.map((item,i)=>{
+      const key = exam+'_'+i;
+      return `<label class="cl-item${cl[key]?' done':''}">
+        <input type="checkbox" ${cl[key]?'checked':''} onchange="toggleCL('${key}',this.checked)"/>
+        <span>${item}</span>
+      </label>`;
+    }).join('');
+  });
+}
+
+function toggleCL(key,val){
+  const cl = getCL();
+  cl[key] = val;
+  saveCL(cl);
+  const el = document.querySelector(`input[onchange="toggleCL('${key}',this.checked)"]`);
+  if(el) el.closest('.cl-item').classList.toggle('done',val);
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderWeeks();
+renderScores();
+renderChecklist();
+updateCountdowns();
+setInterval(updateCountdowns, 60000);
+</script>
+</body>
+</html>
