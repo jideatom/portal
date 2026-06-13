@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Career Hub</title>
+<style>
+:root{--bg:#f3f5fa;--card:#ffffff;--soft:#e9edf6;--text:#0f172a;--muted:#64748b;--line:#d9deea;--accent:#6366f1;--accent2:#7c3aed;--green:#10b981;--red:#ef4444;--orange:#f59e0b;--shadow:0 10px 30px rgba(15,23,42,.08);--radius:18px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,'DM Sans',Segoe UI,Roboto,Arial,sans-serif}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.top-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--muted);background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:6px 11px;flex-shrink:0;transition:background .15s}
+.top-back:hover{background:var(--line)}
+.top-title{flex:1;font-size:14px;font-weight:800;letter-spacing:-.01em}
+.top-sub{font-size:10px;color:var(--muted);font-weight:600}
+.refresh-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;color:var(--accent);background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:7px 12px;flex-shrink:0;transition:all .15s}
+.refresh-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.refresh-btn.spinning .ri{display:inline-block;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* STATUS BAR */
+.status-bar{display:flex;align-items:center;gap:8px;padding:7px 14px;background:var(--card);border-bottom:1px solid var(--line);font-size:11px;color:var(--muted);font-weight:600}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* FILTER CHIPS */
+.chips-wrap{padding:10px 14px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
+.chips-wrap::-webkit-scrollbar{display:none}
+.chip{padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--muted);font-size:12px;font-weight:800;white-space:nowrap;transition:all .15s}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* LAYOUT */
+.wrap{width:min(900px,calc(100% - 24px));margin:0 auto;padding:14px 0 110px}
+.content-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:680px){.content-grid{grid-template-columns:1fr 1fr}.full-width{grid-column:1/-1}}
+
+/* SECTION HEADERS */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px}
+.sec-hdr h2{margin:0;font-size:14px;font-weight:800;display:flex;align-items:center;gap:7px}
+.sec-hdr span{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.sec-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px;box-shadow:var(--shadow)}
+
+/* ARTICLE CARDS */
+.articles-list{display:grid;gap:9px}
+.ac{display:block;padding:11px;border-radius:12px;background:var(--soft);border:1px solid var(--line);transition:border-color .15s;position:relative}
+.ac:hover{border-color:var(--accent)}
+.ac-top{display:flex;gap:8px;align-items:flex-start;margin-bottom:6px}
+.ac-tag{padding:3px 8px;border-radius:99px;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;background:var(--accent);color:#fff;flex-shrink:0}
+.ac-title{font-size:13px;font-weight:700;line-height:1.35;color:var(--text)}
+.ac-meta{font-size:10px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:8px}
+.ac-ext{position:absolute;top:11px;right:11px;font-size:10px;color:var(--muted)}
+
+/* JOB CARDS */
+.jobs-list{display:grid;gap:9px}
+.jc{padding:11px;border-radius:12px;background:var(--soft);border:1px solid var(--line);transition:border-color .15s}
+.jc:hover{border-color:var(--green)}
+.jc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
+.jc-type{display:inline-block;padding:3px 8px;border-radius:99px;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.jc-type.contract{background:rgba(16,185,129,.15);color:#059669}
+.jc-type.freelance{background:rgba(99,102,241,.15);color:#4f46e5}
+.jc-type.full_time{background:rgba(99,102,241,.10);color:#6366f1}
+.jc-title{font-size:13px;font-weight:700;line-height:1.3;color:var(--text)}
+.jc-co{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+.jc-apply{display:inline-flex;align-items:center;font-size:11px;font-weight:800;color:var(--green);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:99px;padding:6px 10px;white-space:nowrap;flex-shrink:0;transition:all .15s}
+.jc-apply:hover{background:var(--green);color:#fff}
+.jc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.jc-tag{font-size:10px;font-weight:700;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+.jobs-note{font-size:11px;color:var(--muted);font-weight:600;text-align:center;padding:8px 0 0;border-top:1px solid var(--line);margin-top:10px}
+
+/* HN SIGNALS */
+.hn-list{display:grid;gap:8px}
+.hn{display:block;padding:10px 11px;border-radius:11px;background:var(--soft);border:1px solid var(--line);transition:border-color .15s}
+.hn:hover{border-color:#f59e0b}
+.hn-top{display:flex;gap:8px;align-items:flex-start}
+.hn-pts{flex-shrink:0;font-size:11px;font-weight:900;color:#f59e0b;font-variant-numeric:tabular-nums;min-width:44px}
+.hn-title{font-size:12px;font-weight:700;line-height:1.35;color:var(--text);flex:1}
+.hn-meta{font-size:10px;color:var(--muted);margin-top:4px;font-weight:600;padding-left:52px}
+
+/* SKILL DEMAND */
+.skill-grid{display:grid;grid-template-columns:1fr;gap:9px;margin-bottom:14px}
+@media(min-width:500px){.skill-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:680px){.skill-grid{grid-template-columns:repeat(3,1fr)}}
+.sk{padding:11px 13px;border-radius:12px;background:var(--soft);border:1px solid var(--line)}
+.sk-demand{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
+.sk-demand.fire{color:#ef4444}
+.sk-demand.high{color:#f59e0b}
+.sk-demand.good{color:#10b981}
+.sk-name{font-size:13px;font-weight:800;margin-bottom:3px}
+.sk-rate{font-size:11px;font-weight:700;color:var(--accent)}
+.sk-note{font-size:10px;color:var(--muted);margin-top:3px;font-weight:600;line-height:1.4}
+
+/* PLATFORMS */
+.platforms-hdr{font-size:12px;font-weight:800;margin:14px 0 9px;color:var(--text)}
+.platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(min-width:500px){.platform-grid{grid-template-columns:repeat(4,1fr)}}
+.plat{display:block;padding:10px 11px;border-radius:12px;background:var(--soft);border:1px solid var(--line);transition:border-color .15s}
+.plat:hover{border-color:var(--accent)}
+.plat-name{font-size:13px;font-weight:800;margin-bottom:3px}
+.plat-note{font-size:10px;color:var(--muted);font-weight:600;line-height:1.4}
+.plat-badge{display:inline-block;margin-top:5px;font-size:9px;font-weight:900;padding:2px 7px;border-radius:99px;text-transform:uppercase;letter-spacing:.05em}
+.plat-badge.elite{background:rgba(99,102,241,.12);color:var(--accent)}
+.plat-badge.volume{background:rgba(16,185,129,.12);color:#059669}
+.plat-badge.nofee{background:rgba(245,158,11,.12);color:#d97706}
+
+/* SKELETON LOADER */
+.skeleton{border-radius:8px;background:linear-gradient(90deg,var(--line) 25%,var(--soft) 50%,var(--line) 75%);background-size:200% 100%;animation:shimmer 1.3s ease infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-item{padding:11px;border-radius:12px;background:var(--soft);border:1px solid var(--line);margin-bottom:9px}
+.skel-line{height:10px;margin-bottom:7px}
+.skel-line.wide{width:80%}
+.skel-line.med{width:55%}
+.skel-line.narrow{width:35%}
+
+/* ERROR STATE */
+.err-state{text-align:center;padding:22px 16px;color:var(--muted);font-size:12px;font-weight:600}
+.err-state .err-icon{font-size:24px;margin-bottom:6px}
+.err-retry{display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-size:11px;font-weight:800;color:var(--accent);background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:7px 12px}
+
+/* NAV */
+.bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:min(480px,calc(100% - 24px));background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border:1.5px solid rgba(255,255,255,.8);border-radius:26px;box-shadow:0 4px 24px rgba(15,23,42,.10);padding:6px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;z-index:999}
+.bottom-nav a{text-decoration:none;color:#94a3b8;font-size:10px;font-weight:900;text-align:center;padding:10px 6px;border-radius:20px;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:52px;justify-content:center}
+.bottom-nav a.active{background:linear-gradient(145deg,#4f46e5,#7c3aed);color:#fff}
+
+/* EMPTY STATE */
+.empty-msg{text-align:center;padding:18px;color:var(--muted);font-size:12px;font-weight:600}
+
+/* CONSULTING ROLE TYPES (static) */
+.roles-grid{display:grid;gap:9px;margin-bottom:0}
+.role-card{padding:11px 13px;border-radius:12px;background:var(--soft);border:1px solid var(--line)}
+.role-title{font-size:13px;font-weight:800;margin-bottom:4px}
+.role-desc{font-size:11px;color:var(--muted);font-weight:600;line-height:1.45}
+.role-stack{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.role-tag{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="top-back" href="index.html">&#8592; Home</a>
+  <div style="flex:1">
+    <div class="top-title">🎯 Career Intelligence</div>
+    <div class="top-sub">Live articles · Consulting roles · Market signals</div>
+  </div>
+  <button class="refresh-btn" id="refreshBtn" onclick="refresh()">
+    <span class="ri">↺</span> Refresh
+  </button>
+</div>
+
+<div class="status-bar">
+  <span class="live-dot"></span>
+  <span id="statusText">Loading…</span>
+</div>
+
+<div class="chips-wrap" id="chipsWrap">
+  <button class="chip active" data-filter="all">All Tracks</button>
+  <button class="chip" data-filter="python">🐍 Python</button>
+  <button class="chip" data-filter="devops">⚙️ DevOps</button>
+  <button class="chip" data-filter="ai">🤖 AI / LLM</button>
+  <button class="chip" data-filter="linux">🐧 Linux</button>
+  <button class="chip" data-filter="cloud">☁️ Cloud</button>
+</div>
+
+<div class="wrap">
+  <div class="content-grid">
+
+    <!-- ARTICLES -->
+    <div class="sec-card">
+      <div class="sec-hdr">
+        <h2>📰 Tech Articles</h2>
+        <span id="artCount">loading</span>
+      </div>
+      <div class="articles-list" id="articlesEl">
+        <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>
+        <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>
+        <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>
+      </div>
+    </div>
+
+    <!-- JOBS -->
+    <div class="sec-card">
+      <div class="sec-hdr">
+        <h2>💼 Consulting Roles</h2>
+        <span id="jobCount">loading</span>
+      </div>
+      <div class="jobs-list" id="jobsEl">
+        <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>
+        <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>
+        <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>
+      </div>
+      <div class="jobs-note">Contract &amp; freelance roles only · Remote-first</div>
+    </div>
+
+    <!-- HN SIGNALS -->
+    <div class="sec-card full-width">
+      <div class="sec-hdr">
+        <h2>📡 HN Industry Signals</h2>
+        <a href="https://news.ycombinator.com" target="_blank" rel="noopener" style="font-size:10px;color:var(--muted);font-weight:700">news.ycombinator.com ↗</a>
+      </div>
+      <div class="hn-list" id="hnEl">
+        <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div></div>
+        <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div></div>
+      </div>
+    </div>
+
+    <!-- SKILL DEMAND -->
+    <div class="sec-card full-width">
+      <div class="sec-hdr">
+        <h2>📊 Skill Demand Snapshot</h2>
+        <span>consulting market 2025–26</span>
+      </div>
+
+      <div class="skill-grid">
+        <div class="sk"><div class="sk-demand fire">🔥 Very High</div><div class="sk-name">LLM / AI Integration</div><div class="sk-rate">$100–$200/hr</div><div class="sk-note">Fastest growing vertical. Clients need agents, RAG, automation workflows.</div></div>
+        <div class="sk"><div class="sk-demand fire">🔥 Very High</div><div class="sk-name">Python Automation</div><div class="sk-rate">$75–$150/hr</div><div class="sk-note">Scripts, APIs, data pipelines. Bread-and-butter consulting work.</div></div>
+        <div class="sk"><div class="sk-demand high">🟠 High</div><div class="sk-name">FastAPI / Backend APIs</div><div class="sk-rate">$70–$140/hr</div><div class="sk-note">Microservices, REST APIs, async Python backends for clients.</div></div>
+        <div class="sk"><div class="sk-demand high">🟠 High</div><div class="sk-name">DevOps / CI-CD</div><div class="sk-rate">$80–$160/hr</div><div class="sk-note">Docker, GitHub Actions, pipelines. Every team needs this set up.</div></div>
+        <div class="sk"><div class="sk-demand high">🟠 High</div><div class="sk-name">AWS / Cloud Architecture</div><div class="sk-rate">$85–$160/hr</div><div class="sk-note">Infrastructure design, cost optimization, migrations.</div></div>
+        <div class="sk"><div class="sk-demand good">🟢 Good</div><div class="sk-name">Linux / Sysadmin</div><div class="sk-rate">$60–$120/hr</div><div class="sk-note">Server admin, bash automation. Strong when paired with DevOps.</div></div>
+      </div>
+
+      <div class="platforms-hdr">🔗 Where to Find Consulting Work</div>
+      <div class="platform-grid">
+        <a class="plat" href="https://toptal.com" target="_blank" rel="noopener"><div class="plat-name">Toptal</div><div class="plat-note">Vetted, premium rates. Hard intake process.</div><div class="plat-badge elite">Elite</div></a>
+        <a class="plat" href="https://upwork.com" target="_blank" rel="noopener"><div class="plat-name">Upwork</div><div class="plat-note">High volume. Build reputation fast.</div><div class="plat-badge volume">Volume</div></a>
+        <a class="plat" href="https://arc.dev" target="_blank" rel="noopener"><div class="plat-name">Arc.dev</div><div class="plat-note">Remote contracts. Developer-first vetting.</div><div class="plat-badge elite">Vetted</div></a>
+        <a class="plat" href="https://contra.com" target="_blank" rel="noopener"><div class="plat-name">Contra</div><div class="plat-note">Zero platform fees. Independent work.</div><div class="plat-badge nofee">No Fee</div></a>
+        <a class="plat" href="https://gun.io" target="_blank" rel="noopener"><div class="plat-name">Gun.io</div><div class="plat-note">Python &amp; DevOps specialists. Curated projects.</div><div class="plat-badge elite">Curated</div></a>
+        <a class="plat" href="https://lemon.io" target="_blank" rel="noopener"><div class="plat-name">Lemon.io</div><div class="plat-note">European market. Strong dev rates.</div><div class="plat-badge volume">Active</div></a>
+        <a class="plat" href="https://wellfound.com" target="_blank" rel="noopener"><div class="plat-name">Wellfound</div><div class="plat-note">Startup contracts. AI &amp; DevOps in demand.</div><div class="plat-badge volume">Startup</div></a>
+        <a class="plat" href="https://linkedin.com/jobs" target="_blank" rel="noopener"><div class="plat-name">LinkedIn Jobs</div><div class="plat-note">Filter by "Contract". Direct client access.</div><div class="plat-badge elite">Direct</div></a>
+      </div>
+
+      <div class="platforms-hdr" style="margin-top:16px">🧠 Consulting Role Types</div>
+      <div class="roles-grid">
+        <div class="role-card"><div class="role-title">AI Automation Consultant</div><div class="role-desc">Build LLM-powered workflows, agents, and RAG systems for clients. Often billed as a project or retainer.</div><div class="role-stack"><span class="role-tag">Python</span><span class="role-tag">LangChain</span><span class="role-tag">FastAPI</span><span class="role-tag">Claude/GPT</span></div></div>
+        <div class="role-card"><div class="role-title">DevOps Contractor</div><div class="role-desc">Set up CI/CD pipelines, containerize apps, automate deployments. Short-term contracts, high leverage.</div><div class="role-stack"><span class="role-tag">Docker</span><span class="role-tag">GitHub Actions</span><span class="role-tag">Ansible</span><span class="role-tag">Linux</span></div></div>
+        <div class="role-card"><div class="role-title">Python Freelancer</div><div class="role-desc">Automation scripts, data pipelines, web scrapers, API integrations. Easiest entry point to consulting.</div><div class="role-stack"><span class="role-tag">Python</span><span class="role-tag">Pandas</span><span class="role-tag">FastAPI</span><span class="role-tag">Automation</span></div></div>
+        <div class="role-card"><div class="role-title">Cloud Solution Architect (Contract)</div><div class="role-desc">Design and migrate infrastructure to AWS. Highest rates, requires AWS cert plus delivery track record.</div><div class="role-stack"><span class="role-tag">AWS</span><span class="role-tag">Terraform</span><span class="role-tag">Python</span><span class="role-tag">Docker</span></div></div>
+      </div>
+
+    </div>
+
+  </div><!-- .content-grid -->
+</div><!-- .wrap -->
+
+<nav class="bottom-nav" id="bottomNav">
+  <a href="index.html">🏠<span>Home</span></a>
+  <a href="courses.html">📚<span>Courses</span></a>
+  <a href="playbook.html">📘<span>Playbook</span></a>
+  <a href="settings.html">⚙️<span>Settings</span></a>
+</nav>
+
+<script src="assets/js/portal-product.js"></script>
+<script>
+// ── CONFIG ───────────────────────────────────────────────────────────────────
+
+const FILTER_TAGS = {
+  all:    ['python','devops','docker','linux','aws','llm','ai','fastapi','automation'],
+  python: ['python','fastapi','pytest','automation'],
+  devops: ['devops','docker','kubernetes','cicd'],
+  ai:     ['llm','ai','machinelearning','langchain','rag'],
+  linux:  ['linux','bash','sysadmin','terminal'],
+  cloud:  ['aws','cloud','serverless','terraform']
+};
+
+const HN_QUERIES = {
+  all:    'python devops AI consultant freelance 2025',
+  python: 'python consulting freelance automation',
+  devops: 'devops contractor cloud freelance',
+  ai:     'AI LLM consulting agents 2025',
+  linux:  'linux sysadmin consulting freelance',
+  cloud:  'AWS cloud architect contract consulting'
+};
+
+const REMOTIVE_CATS = {
+  all:    ['software-dev','devops-sysadmin'],
+  python: ['software-dev'],
+  devops: ['devops-sysadmin'],
+  ai:     ['software-dev','data'],
+  linux:  ['devops-sysadmin'],
+  cloud:  ['devops-sysadmin']
+};
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+
+let currentFilter = 'all';
+let lastLoaded = null;
+const CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours
+
+// ── CACHE ────────────────────────────────────────────────────────────────────
+
+function getCached(key) {
+  try {
+    const item = JSON.parse(localStorage.getItem('career_' + key));
+    if (item && Date.now() - item.ts < CACHE_TTL) return item.data;
+  } catch(e) {}
+  return null;
+}
+
+function setCache(key, data) {
+  try {
+    localStorage.setItem('career_' + key, JSON.stringify({ ts: Date.now(), data }));
+  } catch(e) {}
+}
+
+// ── FETCH ────────────────────────────────────────────────────────────────────
+
+async function fetchArticles(filter) {
+  const ckey = 'art_' + filter;
+  const cached = getCached(ckey);
+  if (cached) return cached;
+
+  const tags = FILTER_TAGS[filter] || FILTER_TAGS.all;
+  const top = tags.slice(0, 4);
+  const results = await Promise.all(top.map(tag =>
+    fetch('https://dev.to/api/articles?tag=' + tag + '&per_page=5&state=rising')
+      .then(r => r.ok ? r.json() : [])
+      .catch(() => [])
+  ));
+  const seen = new Set();
+  const articles = results.flat().filter(a => {
+    if (seen.has(a.id)) return false;
+    seen.add(a.id); return true;
+  }).slice(0, 8);
+  setCache(ckey, articles);
+  return articles;
+}
+
+async function fetchJobs(filter) {
+  const ckey = 'jobs_' + filter;
+  const cached = getCached(ckey);
+  if (cached) return cached;
+
+  const cats = REMOTIVE_CATS[filter] || REMOTIVE_CATS.all;
+  const unique = [...new Set(cats)];
+  const results = await Promise.all(unique.map(cat =>
+    fetch('https://remotive.com/api/remote-jobs?category=' + cat + '&limit=20')
+      .then(r => r.ok ? r.json() : { jobs: [] })
+      .then(d => d.jobs || [])
+      .catch(() => [])
+  ));
+  const allJobs = results.flat();
+  const kws = ['consultant','contractor','freelance','contract','part-time','parttime'];
+  let filtered = allJobs.filter(j => {
+    const t = ((j.job_type||'') + ' ' + (j.title||'')).toLowerCase();
+    return kws.some(k => t.includes(k));
+  });
+  if (!filtered.length) filtered = allJobs;
+  const jobs = filtered.slice(0, 6);
+  setCache(ckey, jobs);
+  return jobs;
+}
+
+async function fetchHN(filter) {
+  const ckey = 'hn_' + filter;
+  const cached = getCached(ckey);
+  if (cached) return cached;
+
+  const q = HN_QUERIES[filter] || HN_QUERIES.all;
+  const url = 'https://hn.algolia.com/api/v1/search?query=' + encodeURIComponent(q) + '&tags=story&hitsPerPage=8';
+  try {
+    const data = await fetch(url).then(r => r.json());
+    const hits = (data.hits || []).filter(h => h.title && (h.url || h.objectID));
+    setCache(ckey, hits.slice(0, 6));
+    return hits.slice(0, 6);
+  } catch(e) {
+    return [];
+  }
+}
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  const diff = Date.now() - new Date(dateStr);
+  const m = Math.floor(diff/60000);
+  if (m < 60) return m + 'm ago';
+  const h = Math.floor(m/60);
+  if (h < 24) return h + 'h ago';
+  return Math.floor(h/24) + 'd ago';
+}
+
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderArticles(articles) {
+  const el = document.getElementById('articlesEl');
+  const cnt = document.getElementById('artCount');
+  if (!articles || !articles.length) {
+    el.innerHTML = '<div class="err-state"><div class="err-icon">📭</div><div>No articles found</div><button class="err-retry" onclick="refresh()">↺ Retry</button></div>';
+    cnt.textContent = '0 articles';
+    return;
+  }
+  cnt.textContent = articles.length + ' articles';
+  el.innerHTML = articles.map(a => {
+    const tag = (a.tag_list && a.tag_list[0]) || 'dev';
+    const mins = a.reading_time_minutes ? a.reading_time_minutes + ' min read · ' : '';
+    const hearts = a.public_reactions_count ? '♥ ' + a.public_reactions_count + ' · ' : '';
+    return '<a class="ac" href="' + escHtml(a.url) + '" target="_blank" rel="noopener">' +
+      '<div class="ac-top"><span class="ac-tag">' + escHtml(tag) + '</span><div class="ac-title">' + escHtml(a.title) + '</div></div>' +
+      '<div class="ac-meta">' + hearts + mins + timeAgo(a.published_at) + '</div>' +
+      '</a>';
+  }).join('');
+}
+
+function jobTypeClass(jt) {
+  const s = (jt||'').toLowerCase();
+  if (s.includes('contract') || s.includes('freelance')) return s.includes('freelance') ? 'freelance' : 'contract';
+  return 'full_time';
+}
+
+function jobTypeLabel(jt) {
+  const s = (jt||'full_time').toLowerCase().replace('_',' ');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function renderJobs(jobs) {
+  const el = document.getElementById('jobsEl');
+  const cnt = document.getElementById('jobCount');
+  if (!jobs || !jobs.length) {
+    el.innerHTML = '<div class="err-state"><div class="err-icon">📭</div><div>No roles found. Try refreshing.</div><button class="err-retry" onclick="refresh()">↺ Retry</button></div>';
+    cnt.textContent = '0 roles';
+    return;
+  }
+  cnt.textContent = jobs.length + ' roles';
+  el.innerHTML = jobs.map(j => {
+    const tags = (j.tags||[]).slice(0,4).map(t => '<span class="jc-tag">' + escHtml(t) + '</span>').join('');
+    const url = j.url || '#';
+    const tc = jobTypeClass(j.job_type);
+    const tl = jobTypeLabel(j.job_type);
+    return '<div class="jc">' +
+      '<div class="jc-top">' +
+        '<div><div class="jc-type ' + tc + '">' + tl + '</div>' +
+        '<div class="jc-title">' + escHtml(j.title) + '</div>' +
+        '<div class="jc-co">' + escHtml(j.company_name||'') + ' &middot; Remote</div></div>' +
+        '<a class="jc-apply" href="' + escHtml(url) + '" target="_blank" rel="noopener">Apply →</a>' +
+      '</div>' +
+      (tags ? '<div class="jc-tags">' + tags + '</div>' : '') +
+      '</div>';
+  }).join('');
+}
+
+function renderHN(hits) {
+  const el = document.getElementById('hnEl');
+  if (!hits || !hits.length) {
+    el.innerHTML = '<div class="empty-msg">No HN signals found. Try refreshing.</div>';
+    return;
+  }
+  el.innerHTML = hits.map(h => {
+    const url = h.url || ('https://news.ycombinator.com/item?id=' + h.objectID);
+    const pts = h.points ? h.points + ' pts' : '—';
+    const cmts = h.num_comments ? h.num_comments + ' comments' : '';
+    return '<a class="hn" href="' + escHtml(url) + '" target="_blank" rel="noopener">' +
+      '<div class="hn-top"><span class="hn-pts">' + pts + '</span><div class="hn-title">' + escHtml(h.title) + '</div></div>' +
+      '<div class="hn-meta">' + cmts + (cmts ? ' · ' : '') + timeAgo(h.created_at) + '</div>' +
+      '</a>';
+  }).join('');
+}
+
+// ── LOAD ─────────────────────────────────────────────────────────────────────
+
+function setStatus(msg) {
+  document.getElementById('statusText').textContent = msg;
+}
+
+function setSkeleton() {
+  const skel = '<div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>';
+  document.getElementById('articlesEl').innerHTML = skel + skel + skel;
+  document.getElementById('jobsEl').innerHTML = skel + skel + skel;
+  document.getElementById('hnEl').innerHTML = skel + skel;
+}
+
+async function loadAll(filter, forceRefresh) {
+  if (forceRefresh) {
+    ['art_','jobs_','hn_'].forEach(p => {
+      try { localStorage.removeItem('career_' + p + filter); } catch(e) {}
+    });
+    setSkeleton();
+  }
+  setStatus('Loading…');
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+  btn.disabled = true;
+
+  try {
+    const [articles, jobs, hn] = await Promise.all([
+      fetchArticles(filter),
+      fetchJobs(filter),
+      fetchHN(filter)
+    ]);
+    renderArticles(articles);
+    renderJobs(jobs);
+    renderHN(hn);
+    lastLoaded = new Date();
+    setStatus('Updated ' + lastLoaded.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ' · ' + (articles.length + jobs.length + hn.length) + ' items');
+  } catch(e) {
+    setStatus('Some feeds failed to load. ');
+  } finally {
+    btn.classList.remove('spinning');
+    btn.disabled = false;
+  }
+}
+
+// ── FILTER CHIPS ─────────────────────────────────────────────────────────────
+
+document.getElementById('chipsWrap').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  currentFilter = chip.dataset.filter;
+  loadAll(currentFilter, false);
+});
+
+function refresh() {
+  loadAll(currentFilter, true);
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+
+loadAll('all', false);
+</script>
+</body>
+</html>
