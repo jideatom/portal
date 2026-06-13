@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<meta name="theme-color" content="#0f172a"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Ebook Reader</title>
 <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
 <style>
 :root{--bg:#0f172a;--panel:#111827;--soft:#1e293b;--line:#243244;--text:#e5e7eb;--muted:#94a3b8;--accent:#8b5cf6;--good:#22c55e}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}.topbar{position:sticky;top:0;z-index:20;display:flex;gap:8px;align-items:center;padding:10px 14px;background:rgba(15,23,42,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow:hidden}.title-wrap h1{margin:0;font-size:15px;font-weight:700}.title-wrap p{margin:4px 0 0;color:var(--muted);font-size:12px}.controls{display:flex;gap:8px;flex-wrap:wrap}button,a.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:8px 11px;border-radius:10px;cursor:pointer;text-decoration:none;font-weight:800;font-size:12px;white-space:nowrap}button.primary,a.primary{background:linear-gradient(135deg,#4f46e5,#8b5cf6);border-color:transparent;color:#fff}button.good,a.good{background:linear-gradient(135deg,#16a34a,#059669);border-color:transparent;color:#fff}button:hover,a.btn:hover{border-color:var(--accent)}#frameWrap,#epubWrap{height:calc(100vh - 74px)}#pdfFrame{width:100%;height:100%;border:0;background:#fff}#viewer{width:100%;height:100%}.hidden{display:none!important}.msg{max-width:860px;margin:0 auto;padding:24px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0}.card h2{margin:0 0 8px;font-size:18px}.card p{color:var(--muted);line-height:1.55;margin:0 0 12px}.steps{display:grid;gap:8px;color:var(--muted);font-size:14px;line-height:1.45}.steps strong{color:var(--text)}.urlbox{word-break:break-all;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px;color:#cbd5e1;font-size:12px;margin-top:10px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:#cbd5e1;font-size:12px;font-weight:800;margin-bottom:10px}
+*{box-sizing:border-box}body{margin:0;padding-bottom:110px;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}.topbar{position:sticky;top:0;z-index:20;display:flex;gap:8px;align-items:center;padding:10px 14px;background:rgba(15,23,42,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow:hidden}.title-wrap h1{margin:0;font-size:15px;font-weight:700}.title-wrap p{margin:4px 0 0;color:var(--muted);font-size:12px}.controls{display:flex;gap:8px;flex-wrap:wrap}button,a.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:8px 11px;border-radius:10px;cursor:pointer;text-decoration:none;font-weight:800;font-size:12px;white-space:nowrap}button.primary,a.primary{background:linear-gradient(135deg,#4f46e5,#8b5cf6);border-color:transparent;color:#fff}button.good,a.good{background:linear-gradient(135deg,#16a34a,#059669);border-color:transparent;color:#fff}button:hover,a.btn:hover{border-color:var(--accent)}#frameWrap,#epubWrap{height:calc(100vh - 74px - 110px)}#pdfFrame{width:100%;height:100%;border:0;background:#fff}#viewer{width:100%;height:100%}.hidden{display:none!important}.msg{max-width:860px;margin:0 auto;padding:24px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0}.card h2{margin:0 0 8px;font-size:18px}.card p{color:var(--muted);line-height:1.55;margin:0 0 12px}.steps{display:grid;gap:8px;color:var(--muted);font-size:14px;line-height:1.45}.steps strong{color:var(--text)}.urlbox{word-break:break-all;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px;color:#cbd5e1;font-size:12px;margin-top:10px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:#cbd5e1;font-size:12px;font-weight:800;margin-bottom:10px}
 </style>
 </head>
 <body>
@@ -98,5 +99,6 @@ if(!rawUrl){
   }
 }
 </script>
+<script src="assets/js/portal-product.js"></script>
 </body>
 </html>
