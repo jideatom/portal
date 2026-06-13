@@ -152,15 +152,14 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
   </div>
 </div>
 
-<!-- Track filter chips -->
+<!-- Track filter chips — track pages navigate, execution stays here -->
 <div class="track-chips">
   <button class="track-chip active" data-filter-track="All">All tracks</button>
-  <button class="track-chip" data-filter-track="Execution"><span class="chip-dot" style="background:#7c3aed"></span>Execution</button>
-  <button class="track-chip" data-filter-track="AI"><span class="chip-dot" style="background:#3b82f6"></span>AI</button>
-  <button class="track-chip" data-filter-track="Python"><span class="chip-dot" style="background:#16a34a"></span>Python</button>
-  <button class="track-chip" data-filter-track="DevOps"><span class="chip-dot" style="background:#f59e0b"></span>DevOps</button>
-  <button class="track-chip" data-filter-track="Linux"><span class="chip-dot" style="background:#64748b"></span>Linux</button>
-  <button class="track-chip" data-filter-track="Cloud"><span class="chip-dot" style="background:#0ea5e9"></span>Cloud</button>
+  <a class="track-chip" href="linux.html"><span class="chip-dot" style="background:#64748b"></span>Linux</a>
+  <a class="track-chip" href="python.html"><span class="chip-dot" style="background:#16a34a"></span>Python</a>
+  <a class="track-chip" href="ai.html"><span class="chip-dot" style="background:#3b82f6"></span>AI</a>
+  <a class="track-chip" href="devops.html"><span class="chip-dot" style="background:#f59e0b"></span>DevOps</a>
+  <a class="track-chip" href="cloud.html"><span class="chip-dot" style="background:#0ea5e9"></span>Cloud</a>
 </div>
 
 <!-- Progress stepper -->
@@ -174,9 +173,9 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
     <div class="s-dot locked" title="02 · Git & GitHub"></div>
     <div class="s-dot locked" title="03 · Python Mastery"></div>
     <div class="s-dot locked" title="04 · Next-Level Python"></div>
-    <div class="s-dot locked" title="05 · FastAPI Beginner"></div>
-    <div class="s-dot locked" title="06 · FastAPI + Docker + TDD"></div>
-    <div class="s-dot locked" title="07 · Network Automation"></div>
+    <div class="s-dot locked" title="05 · SQL Mastery"></div>
+    <div class="s-dot locked" title="06 · FastAPI Beginner"></div>
+    <div class="s-dot locked" title="07 · FastAPI + Docker + TDD"></div>
     <div class="s-dot locked" title="08 · Docker Mastery"></div>
     <div class="s-dot locked" title="09 · GitHub Actions"></div>
     <div class="s-dot locked" title="10 · LLM Zoomcamp"></div>
@@ -271,19 +270,31 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
     </div>
 
     <div class="stack-item queue-item"
+      data-title="Code with Mosh – SQL Mastery"
+      data-link="https://codewithmosh.com/p/complete-sql-mastery"
+      data-type="Course" data-priority="Primary">
+      <span class="queue-num">05</span>
+      <div class="queue-icon" style="background:#fce7f3;color:#9d174d">SQL</div>
+      <div class="queue-body">
+        <div class="queue-title">Code with Mosh – SQL Mastery</div>
+        <div class="queue-sub">DevOps · Primary</div>
+      </div>
+      <div class="queue-right"><span class="lock-ico">🔒</span></div>
+      <div class="thumb" style="display:none" aria-hidden="true">📘</div>
+      <div class="body" aria-hidden="true"><strong>Code with Mosh – SQL Mastery</strong><span></span></div>
+    </div>
+
+    <div class="stack-item queue-item"
       data-title="FastAPI Beginner Course"
       data-link="https://fastapi.tiangolo.com/tutorial/"
       data-type="Course" data-priority="Primary">
-      <span class="queue-num">05</span>
+      <span class="queue-num">06</span>
       <div class="queue-icon" style="background:#dbeafe;color:#1e40af">API</div>
       <div class="queue-body">
         <div class="queue-title">FastAPI Beginner Course</div>
         <div class="queue-sub">DevOps · Primary</div>
       </div>
-      <div class="queue-right">
-        <span class="gap-warn">Add SQL first</span>
-        <span class="lock-ico">🔒</span>
-      </div>
+      <div class="queue-right"><span class="lock-ico">🔒</span></div>
       <div class="thumb" style="display:none" aria-hidden="true">📘</div>
       <div class="body" aria-hidden="true"><strong>FastAPI Beginner Course</strong><span></span></div>
     </div>
@@ -292,7 +303,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
       data-title="TestDriven.io – Test-Driven Development with FastAPI and Docker"
       data-link="https://testdriven.io/courses/tdd-fastapi/"
       data-type="Course" data-priority="Primary">
-      <span class="queue-num">06</span>
+      <span class="queue-num">07</span>
       <div class="queue-icon" style="background:#dbeafe;color:#1e40af">TDD</div>
       <div class="queue-body">
         <div class="queue-title">TestDriven.io – FastAPI + Docker + TDD</div>
@@ -301,21 +312,6 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
       <div class="queue-right"><span class="lock-ico">🔒</span></div>
       <div class="thumb" style="display:none" aria-hidden="true">📘</div>
       <div class="body" aria-hidden="true"><strong>TestDriven.io – Test-Driven Development with FastAPI and Docker</strong><span></span></div>
-    </div>
-
-    <div class="stack-item queue-item"
-      data-title="Master Python Network Automation for Network Engineers"
-      data-link="https://www.udemy.com/course/master-python-network-automation-for-network-engineers/"
-      data-type="Course" data-priority="Primary">
-      <span class="queue-num">07</span>
-      <div class="queue-icon" style="background:#d1fae5;color:#065f46">NT</div>
-      <div class="queue-body">
-        <div class="queue-title">Python Network Automation for Network Engineers</div>
-        <div class="queue-sub">Python · NetworkEng</div>
-      </div>
-      <div class="queue-right"><span class="lock-ico">🔒</span></div>
-      <div class="thumb" style="display:none" aria-hidden="true">📘</div>
-      <div class="body" aria-hidden="true"><strong>Master Python Network Automation for Network Engineers</strong><span></span></div>
     </div>
 
     <div class="stack-item queue-item"
@@ -545,31 +541,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   setTimeout(syncQueueIcons, 200);
 
-  document.querySelectorAll('.track-chip').forEach(function(chip) {
+  // Track chip "All tracks" toggles active state only (others are <a> links)
+  document.querySelectorAll('button.track-chip').forEach(function(chip) {
     chip.addEventListener('click', function() {
       document.querySelectorAll('.track-chip').forEach(function(c) { c.classList.remove('active'); });
       chip.classList.add('active');
-      var track = chip.dataset.filterTrack;
-      var sel = document.querySelector('[data-course-filter="track"]');
-      if (sel) { sel.value=(track==='All')?'All':track; sel.dispatchEvent(new Event('change',{bubbles:true})); }
-      document.querySelectorAll('.lib-section').forEach(function(sec) {
-        sec.classList.toggle('lib-track-hidden', track!=='All' && sec.dataset.libTrack!==track);
-      });
-      var execSection = document.querySelector('.stack-card[data-track="Execution"]');
-      var stepperEl = document.querySelector('.path-stepper');
-      var showExec = (track==='All'||track==='Execution');
-      if (execSection) execSection.style.display=showExec?'':'none';
-      if (stepperEl) stepperEl.style.display=showExec?'':'none';
     });
   });
 });
-
-function toggleLib(head) {
-  var section = head.closest('.lib-section');
-  var btn = head.querySelector('.lib-toggle');
-  var expanded = section.classList.toggle('expanded');
-  btn.textContent = expanded ? 'Collapse' : 'Expand';
-}
 </script>
 </body>
 </html>
