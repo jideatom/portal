@@ -45,32 +45,17 @@ button{font-family:inherit;cursor:pointer}
 .sec-hdr span{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .sec-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px;box-shadow:var(--shadow)}
 
-/* ARTICLE CARDS */
+/* ARTICLE CARDS — shared by both article sections */
 .articles-list{display:grid;gap:9px}
 .ac{display:block;padding:11px;border-radius:12px;background:var(--soft);border:1px solid var(--line);transition:border-color .15s;position:relative}
 .ac:hover{border-color:var(--accent)}
 .ac-top{display:flex;gap:8px;align-items:flex-start;margin-bottom:6px}
-.ac-tag{padding:3px 8px;border-radius:99px;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;background:var(--accent);color:#fff;flex-shrink:0}
+.ac-tag{padding:3px 8px;border-radius:99px;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;background:var(--accent);color:#fff;flex-shrink:0;white-space:nowrap}
+.ac-tag.green{background:var(--green)}
+.ac-tag.orange{background:var(--orange)}
 .ac-title{font-size:13px;font-weight:700;line-height:1.35;color:var(--text)}
 .ac-meta{font-size:10px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:8px}
-.ac-ext{position:absolute;top:11px;right:11px;font-size:10px;color:var(--muted)}
-
-/* JOB CARDS */
-.jobs-list{display:grid;gap:9px}
-.jc{padding:11px;border-radius:12px;background:var(--soft);border:1px solid var(--line);transition:border-color .15s}
-.jc:hover{border-color:var(--green)}
-.jc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
-.jc-type{display:inline-block;padding:3px 8px;border-radius:99px;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-.jc-type.contract{background:rgba(16,185,129,.15);color:#059669}
-.jc-type.freelance{background:rgba(99,102,241,.15);color:#4f46e5}
-.jc-type.full_time{background:rgba(99,102,241,.10);color:#6366f1}
-.jc-title{font-size:13px;font-weight:700;line-height:1.3;color:var(--text)}
-.jc-co{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
-.jc-apply{display:inline-flex;align-items:center;font-size:11px;font-weight:800;color:var(--green);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:99px;padding:6px 10px;white-space:nowrap;flex-shrink:0;transition:all .15s}
-.jc-apply:hover{background:var(--green);color:#fff}
-.jc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
-.jc-tag{font-size:10px;font-weight:700;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
-.jobs-note{font-size:11px;color:var(--muted);font-weight:600;text-align:center;padding:8px 0 0;border-top:1px solid var(--line);margin-top:10px}
+.ac-source{font-size:9px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
 
 /* HN SIGNALS */
 .hn-list{display:grid;gap:8px}
@@ -121,21 +106,20 @@ button{font-family:inherit;cursor:pointer}
 .err-state .err-icon{font-size:24px;margin-bottom:6px}
 .err-retry{display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-size:11px;font-weight:800;color:var(--accent);background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:7px 12px}
 
-/* NAV */
-.bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:min(480px,calc(100% - 24px));background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border:1.5px solid rgba(255,255,255,.8);border-radius:26px;box-shadow:0 4px 24px rgba(15,23,42,.10);padding:6px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;z-index:999}
-.bottom-nav a{text-decoration:none;color:#94a3b8;font-size:10px;font-weight:900;text-align:center;padding:10px 6px;border-radius:20px;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:52px;justify-content:center}
-.bottom-nav a.active{background:linear-gradient(145deg,#4f46e5,#7c3aed);color:#fff}
-
-/* EMPTY STATE */
-.empty-msg{text-align:center;padding:18px;color:var(--muted);font-size:12px;font-weight:600}
-
-/* CONSULTING ROLE TYPES (static) */
+/* ROLES */
 .roles-grid{display:grid;gap:9px;margin-bottom:0}
 .role-card{padding:11px 13px;border-radius:12px;background:var(--soft);border:1px solid var(--line)}
 .role-title{font-size:13px;font-weight:800;margin-bottom:4px}
 .role-desc{font-size:11px;color:var(--muted);font-weight:600;line-height:1.45}
 .role-stack{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
 .role-tag{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--muted)}
+
+/* NAV */
+.bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:min(480px,calc(100% - 24px));background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border:1.5px solid rgba(255,255,255,.8);border-radius:26px;box-shadow:0 4px 24px rgba(15,23,42,.10);padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:4px;z-index:999}
+.bottom-nav a{text-decoration:none;color:#94a3b8;font-size:10px;font-weight:900;text-align:center;padding:10px 6px;border-radius:20px;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:52px;justify-content:center}
+.bottom-nav a.active{background:linear-gradient(145deg,#4f46e5,#7c3aed);color:#fff}
+
+.empty-msg{text-align:center;padding:18px;color:var(--muted);font-size:12px;font-weight:600}
 </style>
 </head>
 <body>
@@ -144,7 +128,7 @@ button{font-family:inherit;cursor:pointer}
   <a class="top-back" href="index.html">&#8592; Home</a>
   <div style="flex:1">
     <div class="top-title">🎯 Career Intelligence</div>
-    <div class="top-sub">Live articles · Consulting roles · Market signals</div>
+    <div class="top-sub">Live articles · Africa tech news · Market signals</div>
   </div>
   <button class="refresh-btn" id="refreshBtn" onclick="refresh()">
     <span class="ri">↺</span> Refresh
@@ -168,7 +152,7 @@ button{font-family:inherit;cursor:pointer}
 <div class="wrap">
   <div class="content-grid">
 
-    <!-- ARTICLES -->
+    <!-- TRACK ARTICLES -->
     <div class="sec-card">
       <div class="sec-hdr">
         <h2>📰 Tech Articles</h2>
@@ -181,18 +165,17 @@ button{font-family:inherit;cursor:pointer}
       </div>
     </div>
 
-    <!-- JOBS -->
+    <!-- AFRICA TECH NEWS -->
     <div class="sec-card">
       <div class="sec-hdr">
-        <h2>💼 Consulting Roles</h2>
-        <span id="jobCount">loading</span>
+        <h2>🌍 Nigeria &amp; Africa Tech</h2>
+        <span id="africaCount">loading</span>
       </div>
-      <div class="jobs-list" id="jobsEl">
+      <div class="articles-list" id="africaEl">
         <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>
         <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>
         <div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>
       </div>
-      <div class="jobs-note">Contract &amp; freelance roles only · Remote-first</div>
     </div>
 
     <!-- HN SIGNALS -->
@@ -252,6 +235,7 @@ button{font-family:inherit;cursor:pointer}
   <a href="index.html">🏠<span>Home</span></a>
   <a href="courses.html">📚<span>Courses</span></a>
   <a href="playbook.html">📘<span>Playbook</span></a>
+  <a href="career.html" class="active">🎯<span>Hub</span></a>
   <a href="settings.html">⚙️<span>Settings</span></a>
 </nav>
 
@@ -277,19 +261,25 @@ const HN_QUERIES = {
   cloud:  'AWS cloud architect contract consulting'
 };
 
-const REMOTIVE_CATS = {
-  all:    ['software-dev','devops-sysadmin'],
-  python: ['software-dev'],
-  devops: ['devops-sysadmin'],
-  ai:     ['software-dev','data'],
-  linux:  ['devops-sysadmin'],
-  cloud:  ['devops-sysadmin']
+// Africa-focused search queries per filter
+const AFRICA_QUERIES = {
+  all:    ['nigeria tech', 'africa developer', 'africa fintech', 'africa startup'],
+  python: ['python nigeria', 'python africa developer'],
+  devops: ['devops africa', 'cloud nigeria engineer'],
+  ai:     ['AI africa', 'machine learning nigeria'],
+  linux:  ['linux africa', 'open source nigeria'],
+  cloud:  ['cloud computing africa', 'aws nigeria']
 };
+
+// TechCabal & Techpoint via rss2json (free, CORS-friendly)
+const AFRICA_RSS = [
+  'https://techcabal.com/feed/',
+  'https://techpoint.africa/feed/'
+];
 
 // ── STATE ────────────────────────────────────────────────────────────────────
 
 let currentFilter = 'all';
-let lastLoaded = null;
 const CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours
 
 // ── CACHE ────────────────────────────────────────────────────────────────────
@@ -331,79 +321,88 @@ async function fetchArticles(filter) {
   return articles;
 }
 
-// Roles that match the career path: AI/LLM, cloud, DevOps, Python, infra, networking
-const RELEVANT_KWS = [
-  'python','devops','cloud','aws','azure','gcp','ai engineer','ai specialist',
-  'machine learning','ml engineer','llm','language model','mlops',
-  'infrastructure','platform engineer','platform engineering',
-  'linux','network engineer','networking','automation engineer',
-  'backend','backend developer','backend engineer','api engineer',
-  'docker','kubernetes','k8s','site reliability','sre','devsecops',
-  'data engineer','data pipeline','data infrastructure',
-  'fastapi','langchain','langraph','rag pipeline','ai automation',
-  'cloud architect','cloud engineer','cloud infrastructure','cloud networking',
-  'solutions architect','infrastructure engineer','systems engineer',
-  'ai consultant','devops consultant','python developer','python engineer',
-  'terraform','ansible','ci/cd','cicd','github actions',
-  'software engineer','software developer'
-];
-
-// Roles that have nothing to do with the career path — exclude these
-const EXCLUDED_KWS = [
-  'copywriter','copy writer','content writer','content creator','content strategist',
-  'seo specialist','seo manager','social media','social media manager',
-  'head of sales','sales executive','sales manager','sales representative',
-  'marketing manager','digital marketing','growth marketing','email marketing',
-  'graphic designer','ux designer','ui designer','product designer','visual designer',
-  'customer success','account manager','account executive','customer support',
-  'human resources','hr manager','recruiter','talent acquisition',
-  'product manager','product owner','scrum master','agile coach',
-  'financial analyst','accountant','bookkeeper','finance manager',
-  'data entry','virtual assistant','executive assistant','administrative',
-  'technical writer','documentation writer'
-];
-
-function isRelevant(j) {
-  const title = (j.title || '').toLowerCase();
-  const tags  = ((j.tags || []).join(' ')).toLowerCase();
-  const combined = title + ' ' + tags;
-  if (EXCLUDED_KWS.some(k => title.includes(k))) return false;
-  return RELEVANT_KWS.some(k => combined.includes(k));
-}
-
-async function fetchJobs(filter) {
-  const ckey = 'jobs_' + filter;
+async function fetchAfricaTech(filter) {
+  const ckey = 'africa_' + filter;
   const cached = getCached(ckey);
   if (cached) return cached;
 
-  // Fetch from all relevant categories to get enough volume to filter down
-  const cats = [...new Set((REMOTIVE_CATS[filter] || REMOTIVE_CATS.all).concat(['devops-sysadmin','software-dev']))];
-  const results = await Promise.all(cats.map(cat =>
-    fetch('https://remotive.com/api/remote-jobs?category=' + cat + '&limit=30')
-      .then(r => r.ok ? r.json() : { jobs: [] })
-      .then(d => d.jobs || [])
-      .catch(() => [])
-  ));
+  const queries = AFRICA_QUERIES[filter] || AFRICA_QUERIES.all;
+  const items = [];
+
+  // 1. Dev.to tagged 'nigeria' and 'africa'
+  const devtoResults = await Promise.all(
+    ['nigeria', 'africa', 'afrotech'].map(tag =>
+      fetch('https://dev.to/api/articles?tag=' + tag + '&per_page=6&state=fresh')
+        .then(r => r.ok ? r.json() : [])
+        .catch(() => [])
+    )
+  );
+  devtoResults.flat().forEach(a => {
+    items.push({
+      id: 'devto_' + a.id,
+      title: a.title,
+      url: a.url,
+      source: 'Dev.to',
+      tag: (a.tag_list && a.tag_list[0]) || 'africa',
+      date: a.published_at,
+      points: a.public_reactions_count || 0
+    });
+  });
+
+  // 2. TechCabal & Techpoint via rss2json
+  const rssResults = await Promise.all(
+    AFRICA_RSS.map(rssUrl => {
+      const apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl) + '&count=6';
+      const sourceName = rssUrl.includes('techcabal') ? 'TechCabal' : 'Techpoint';
+      return fetch(apiUrl)
+        .then(r => r.ok ? r.json() : { items: [] })
+        .then(d => (d.items || []).map(item => ({
+          id: 'rss_' + btoa(item.link || item.title || '').slice(0,12),
+          title: item.title,
+          url: item.link,
+          source: sourceName,
+          tag: 'africa',
+          date: item.pubDate,
+          points: 0
+        })))
+        .catch(() => []);
+    })
+  );
+  rssResults.flat().forEach(a => items.push(a));
+
+  // 3. HN Algolia queries for Africa tech
+  const hnQuery = queries[0];
+  try {
+    const hnData = await fetch(
+      'https://hn.algolia.com/api/v1/search?query=' + encodeURIComponent(hnQuery) + '&tags=story&hitsPerPage=6'
+    ).then(r => r.json());
+    (hnData.hits || []).filter(h => h.title && (h.url || h.objectID)).forEach(h => {
+      items.push({
+        id: 'hn_' + h.objectID,
+        title: h.title,
+        url: h.url || ('https://news.ycombinator.com/item?id=' + h.objectID),
+        source: 'HN',
+        tag: 'tech',
+        date: h.created_at,
+        points: h.points || 0
+      });
+    });
+  } catch(e) {}
 
   // Deduplicate by id
   const seen = new Set();
-  const allJobs = results.flat().filter(j => {
-    if (seen.has(j.id)) return false;
-    seen.add(j.id); return true;
+  const unique = items.filter(a => {
+    if (seen.has(a.id)) return false;
+    seen.add(a.id); return true;
   });
 
-  // Apply relevance filter
-  const relevant = allJobs.filter(isRelevant);
+  // Prefer TechCabal/Techpoint first, then Dev.to, then HN
+  const priority = { TechCabal: 0, Techpoint: 1, 'Dev.to': 2, HN: 3 };
+  unique.sort((a, b) => (priority[a.source] || 9) - (priority[b.source] || 9));
 
-  // Prefer contract/freelance; fall back to all relevant if too few
-  const contractKws = ['contract','freelance','consultant','part-time','parttime'];
-  let preferred = relevant.filter(j => {
-    const t = ((j.job_type||'') + ' ' + (j.title||'')).toLowerCase();
-    return contractKws.some(k => t.includes(k));
-  });
-  const jobs = (preferred.length >= 3 ? preferred : relevant).slice(0, 7);
-  setCache(ckey, jobs);
-  return jobs;
+  const result = unique.slice(0, 8);
+  setCache(ckey, result);
+  return result;
 }
 
 async function fetchHN(filter) {
@@ -432,7 +431,9 @@ function timeAgo(dateStr) {
   if (m < 60) return m + 'm ago';
   const h = Math.floor(m/60);
   if (h < 24) return h + 'h ago';
-  return Math.floor(h/24) + 'd ago';
+  const d = Math.floor(h/24);
+  if (d < 30) return d + 'd ago';
+  return Math.floor(d/30) + 'mo ago';
 }
 
 function escHtml(s) {
@@ -450,7 +451,7 @@ function renderArticles(articles) {
   cnt.textContent = articles.length + ' articles';
   el.innerHTML = articles.map(a => {
     const tag = (a.tag_list && a.tag_list[0]) || 'dev';
-    const mins = a.reading_time_minutes ? a.reading_time_minutes + ' min read · ' : '';
+    const mins = a.reading_time_minutes ? a.reading_time_minutes + ' min · ' : '';
     const hearts = a.public_reactions_count ? '♥ ' + a.public_reactions_count + ' · ' : '';
     return '<a class="ac" href="' + escHtml(a.url) + '" target="_blank" rel="noopener">' +
       '<div class="ac-top"><span class="ac-tag">' + escHtml(tag) + '</span><div class="ac-title">' + escHtml(a.title) + '</div></div>' +
@@ -459,40 +460,28 @@ function renderArticles(articles) {
   }).join('');
 }
 
-function jobTypeClass(jt) {
-  const s = (jt||'').toLowerCase();
-  if (s.includes('contract') || s.includes('freelance')) return s.includes('freelance') ? 'freelance' : 'contract';
-  return 'full_time';
+function sourceColor(source) {
+  if (source === 'TechCabal') return 'orange';
+  if (source === 'Techpoint') return 'green';
+  return '';
 }
 
-function jobTypeLabel(jt) {
-  const s = (jt||'full_time').toLowerCase().replace('_',' ');
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
-function renderJobs(jobs) {
-  const el = document.getElementById('jobsEl');
-  const cnt = document.getElementById('jobCount');
-  if (!jobs || !jobs.length) {
-    el.innerHTML = '<div class="err-state"><div class="err-icon">📭</div><div>No roles found. Try refreshing.</div><button class="err-retry" onclick="refresh()">↺ Retry</button></div>';
-    cnt.textContent = '0 roles';
+function renderAfricaTech(items) {
+  const el = document.getElementById('africaEl');
+  const cnt = document.getElementById('africaCount');
+  if (!items || !items.length) {
+    el.innerHTML = '<div class="err-state"><div class="err-icon">🌍</div><div>No Africa tech news found</div><button class="err-retry" onclick="refresh()">↺ Retry</button></div>';
+    cnt.textContent = '0 stories';
     return;
   }
-  cnt.textContent = jobs.length + ' roles';
-  el.innerHTML = jobs.map(j => {
-    const tags = (j.tags||[]).slice(0,4).map(t => '<span class="jc-tag">' + escHtml(t) + '</span>').join('');
-    const url = j.url || '#';
-    const tc = jobTypeClass(j.job_type);
-    const tl = jobTypeLabel(j.job_type);
-    return '<div class="jc">' +
-      '<div class="jc-top">' +
-        '<div><div class="jc-type ' + tc + '">' + tl + '</div>' +
-        '<div class="jc-title">' + escHtml(j.title) + '</div>' +
-        '<div class="jc-co">' + escHtml(j.company_name||'') + ' &middot; Remote</div></div>' +
-        '<a class="jc-apply" href="' + escHtml(url) + '" target="_blank" rel="noopener">Apply →</a>' +
-      '</div>' +
-      (tags ? '<div class="jc-tags">' + tags + '</div>' : '') +
-      '</div>';
+  cnt.textContent = items.length + ' stories';
+  el.innerHTML = items.map(a => {
+    const sc = sourceColor(a.source);
+    const pts = a.points ? '▲ ' + a.points + ' · ' : '';
+    return '<a class="ac" href="' + escHtml(a.url) + '" target="_blank" rel="noopener">' +
+      '<div class="ac-top"><span class="ac-tag ' + sc + '">' + escHtml(a.source) + '</span><div class="ac-title">' + escHtml(a.title) + '</div></div>' +
+      '<div class="ac-meta">' + pts + timeAgo(a.date) + '</div>' +
+      '</a>';
   }).join('');
 }
 
@@ -522,13 +511,13 @@ function setStatus(msg) {
 function setSkeleton() {
   const skel = '<div class="skel-item"><div class="skel-line wide skeleton"></div><div class="skel-line med skeleton"></div><div class="skel-line narrow skeleton"></div></div>';
   document.getElementById('articlesEl').innerHTML = skel + skel + skel;
-  document.getElementById('jobsEl').innerHTML = skel + skel + skel;
+  document.getElementById('africaEl').innerHTML = skel + skel + skel;
   document.getElementById('hnEl').innerHTML = skel + skel;
 }
 
 async function loadAll(filter, forceRefresh) {
   if (forceRefresh) {
-    ['art_','jobs_','hn_'].forEach(p => {
+    ['art_','africa_','hn_'].forEach(p => {
       try { localStorage.removeItem('career_' + p + filter); } catch(e) {}
     });
     setSkeleton();
@@ -539,18 +528,18 @@ async function loadAll(filter, forceRefresh) {
   btn.disabled = true;
 
   try {
-    const [articles, jobs, hn] = await Promise.all([
+    const [articles, africa, hn] = await Promise.all([
       fetchArticles(filter),
-      fetchJobs(filter),
+      fetchAfricaTech(filter),
       fetchHN(filter)
     ]);
     renderArticles(articles);
-    renderJobs(jobs);
+    renderAfricaTech(africa);
     renderHN(hn);
-    lastLoaded = new Date();
-    setStatus('Updated ' + lastLoaded.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ' · ' + (articles.length + jobs.length + hn.length) + ' items');
+    const now = new Date();
+    setStatus('Updated ' + now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ' · ' + (articles.length + africa.length + hn.length) + ' items');
   } catch(e) {
-    setStatus('Some feeds failed to load. ');
+    setStatus('Some feeds failed to load.');
   } finally {
     btn.classList.remove('spinning');
     btn.disabled = false;
