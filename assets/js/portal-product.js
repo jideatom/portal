@@ -1092,7 +1092,15 @@
     document.head.appendChild(s);
   }
 
+
+  // Apply dark/light theme from localStorage on every page
+  function applyGlobalTheme(){
+    const t = localStorage.getItem('theme') || 'light';
+    document.body.classList.toggle('dark', t === 'dark');
+  }
+
   document.addEventListener('DOMContentLoaded', function(){
+    applyGlobalTheme();
     addStyles();
     addLockStyles();
     addEnhancedStyles();
@@ -1108,4 +1116,3 @@
   });
 
 })();
-
