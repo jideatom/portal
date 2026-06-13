@@ -331,27 +331,77 @@ async function fetchArticles(filter) {
   return articles;
 }
 
+// Roles that match the career path: AI/LLM, cloud, DevOps, Python, infra, networking
+const RELEVANT_KWS = [
+  'python','devops','cloud','aws','azure','gcp','ai engineer','ai specialist',
+  'machine learning','ml engineer','llm','language model','mlops',
+  'infrastructure','platform engineer','platform engineering',
+  'linux','network engineer','networking','automation engineer',
+  'backend','backend developer','backend engineer','api engineer',
+  'docker','kubernetes','k8s','site reliability','sre','devsecops',
+  'data engineer','data pipeline','data infrastructure',
+  'fastapi','langchain','langraph','rag pipeline','ai automation',
+  'cloud architect','cloud engineer','cloud infrastructure','cloud networking',
+  'solutions architect','infrastructure engineer','systems engineer',
+  'ai consultant','devops consultant','python developer','python engineer',
+  'terraform','ansible','ci/cd','cicd','github actions',
+  'software engineer','software developer'
+];
+
+// Roles that have nothing to do with the career path — exclude these
+const EXCLUDED_KWS = [
+  'copywriter','copy writer','content writer','content creator','content strategist',
+  'seo specialist','seo manager','social media','social media manager',
+  'head of sales','sales executive','sales manager','sales representative',
+  'marketing manager','digital marketing','growth marketing','email marketing',
+  'graphic designer','ux designer','ui designer','product designer','visual designer',
+  'customer success','account manager','account executive','customer support',
+  'human resources','hr manager','recruiter','talent acquisition',
+  'product manager','product owner','scrum master','agile coach',
+  'financial analyst','accountant','bookkeeper','finance manager',
+  'data entry','virtual assistant','executive assistant','administrative',
+  'technical writer','documentation writer'
+];
+
+function isRelevant(j) {
+  const title = (j.title || '').toLowerCase();
+  const tags  = ((j.tags || []).join(' ')).toLowerCase();
+  const combined = title + ' ' + tags;
+  if (EXCLUDED_KWS.some(k => title.includes(k))) return false;
+  return RELEVANT_KWS.some(k => combined.includes(k));
+}
+
 async function fetchJobs(filter) {
   const ckey = 'jobs_' + filter;
   const cached = getCached(ckey);
   if (cached) return cached;
 
-  const cats = REMOTIVE_CATS[filter] || REMOTIVE_CATS.all;
-  const unique = [...new Set(cats)];
-  const results = await Promise.all(unique.map(cat =>
-    fetch('https://remotive.com/api/remote-jobs?category=' + cat + '&limit=20')
+  // Fetch from all relevant categories to get enough volume to filter down
+  const cats = [...new Set((REMOTIVE_CATS[filter] || REMOTIVE_CATS.all).concat(['devops-sysadmin','software-dev']))];
+  const results = await Promise.all(cats.map(cat =>
+    fetch('https://remotive.com/api/remote-jobs?category=' + cat + '&limit=30')
       .then(r => r.ok ? r.json() : { jobs: [] })
       .then(d => d.jobs || [])
       .catch(() => [])
   ));
-  const allJobs = results.flat();
-  const kws = ['consultant','contractor','freelance','contract','part-time','parttime'];
-  let filtered = allJobs.filter(j => {
-    const t = ((j.job_type||'') + ' ' + (j.title||'')).toLowerCase();
-    return kws.some(k => t.includes(k));
+
+  // Deduplicate by id
+  const seen = new Set();
+  const allJobs = results.flat().filter(j => {
+    if (seen.has(j.id)) return false;
+    seen.add(j.id); return true;
   });
-  if (!filtered.length) filtered = allJobs;
-  const jobs = filtered.slice(0, 6);
+
+  // Apply relevance filter
+  const relevant = allJobs.filter(isRelevant);
+
+  // Prefer contract/freelance; fall back to all relevant if too few
+  const contractKws = ['contract','freelance','consultant','part-time','parttime'];
+  let preferred = relevant.filter(j => {
+    const t = ((j.job_type||'') + ' ' + (j.title||'')).toLowerCase();
+    return contractKws.some(k => t.includes(k));
+  });
+  const jobs = (preferred.length >= 3 ? preferred : relevant).slice(0, 7);
   setCache(ckey, jobs);
   return jobs;
 }
